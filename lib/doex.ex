@@ -19,12 +19,9 @@ defmodule Doex do
 
     defdelegate do_something, to: Doex.Client
 
-  If you API is not complete, then you would also expose direct access to your
-  Worker calls:
-
-    defdelegate http(method, data), to: Doex.Worker
-    defdelegate post(url, body, headers), to: Doex.Worker
-    defdelegate get(url, headers), to: Doex.Worker
   """
+
+  def version(), do: unquote(Mix.Project.config[:version])
+  def elixir_version(), do: unquote(System.version)
 
 end
