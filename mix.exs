@@ -1,7 +1,9 @@
 defmodule Doex.Mixfile do
   use Mix.Project
 
-  @name    :doex
+  @app :doex
+  @git_url "https://github.com/capbash/doex"
+  @home_url @git_url
   @version "0.1.0"
 
   @deps [
@@ -14,17 +16,34 @@ defmodule Doex.Mixfile do
   @aliases [
   ]
 
+  @package [
+    name: @app,
+    files: ["lib", "mix.exs", "README*", "LICENSE*"],
+    maintainers: ["Andrew Forward"],
+    licenses: ["MIT"],
+    links: %{"GitHub" => @git_url}
+  ]
+
+
   # ------------------------------------------------------------
 
   def project do
     in_production = Mix.env == :prod
     [
-      app:     @name,
+      app:     @app,
       version: @version,
-      elixir:  ">= 1.4.5",
+      elixir:  "~> 1.4",
+      name: @app,
+      description: "A Digital Ocean API v2 client for Elixir (yes, another one)",
+      package: @package,
+      source_url: @git_url,
+      homepage_url: @home_url,
+      docs: [main: "Doex",
+             extras: ["README.md"]],
+      build_embedded:  in_production,
+      start_permanent:  in_production,
       deps:    @deps,
       aliases: @aliases,
-      build_embedded:  in_production,
     ]
   end
 

@@ -4,20 +4,20 @@ defmodule Doex do
 
   The underlying HTTP calls and done through
 
-    Doex.Api
+      Doex.Api
 
   Which are wrapped in a GenServer in
 
-    Doex.Worker
+      Doex.Worker
 
   And client specific access should be placed in
 
-    Doex.Client
+      Doex.Client
 
   Your client wrapper methods should be exposed here, using defdelegate,
   for example
 
-    defdelegate do_something, to: Doex.Client
+      defdelegate do_something, to: Doex.Client
 
   """
 
