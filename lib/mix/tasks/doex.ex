@@ -6,7 +6,7 @@ defmodule Mix.Tasks.Doex do
   @moduledoc """
   Prints (doex) Digital Ocean API v2 mix client help information
 
-       mix hex
+       mix doex
 
   See `mix help dio.config` to see all available configuration options.
   """
@@ -25,10 +25,10 @@ defmodule Mix.Tasks.Doex do
     Mix.shell.info "doex is a API client for Digital Ocean's API v2."
     newline()
 
-    # Mix.shell.info "Available tasks:"
-    # newline()
-    # Mix.Task.run("help", ["--search", "dio."])
-    # newline()
+    Mix.shell.info "Available tasks:"
+    newline()
+    Mix.Task.run("help", ["--search", "dio."])
+    newline()
 
     Mix.shell.info "Further information can be found here:"
     Mix.shell.info "  -- https://hex.pm/packages/doex"
