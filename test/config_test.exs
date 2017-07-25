@@ -12,23 +12,30 @@ defmodule Doex.ConfigTest do
       File.rm("/tmp/.doex")
       File.rm_rf("/tmp/here")
       System.delete_env("DOEX_CONFIG")
+      Application.delete_env(:doex, :config)
     end
     :ok
   end
 
   test "filename (default)" do
-    assert Config.filename == "~/.doex"
+    assert Config.filename == "~/.doex" |> Path.expand
   end
 
   test "filename (local directory)" do
     File.touch(".doex")
-    assert Config.filename == ".doex"
+    assert Config.filename == ".doex" |> Path.expand
   end
 
   test "filename (SYSTEM ENV)" do
     File.touch(".doex")
     System.put_env("DOEX_CONFIG", @filename)
     assert Config.filename == @filename
+  end
+
+  test "filename (Application ENV)" do
+    File.touch(".doex")
+    Application.put_env(:doex, :config, %{token: "SHHHHH"})
+    assert Config.filename == :config
   end
 
   test "init (use default filename)" do
@@ -45,6 +52,12 @@ defmodule Doex.ConfigTest do
     assert "xxx" == File.read!("/tmp/.doex")
   end
 
+  test "init (Application :config -- do nothing)" do
+    Application.put_env(:doex, :config, %{token: "SHHHHH"})
+    Config.init
+    assert %{token: "SHHHHH"} == Config.read
+  end
+
   test "reinit (file exists -- overwrite)" do
     System.put_env("DOEX_CONFIG", "/tmp/.doex")
     File.write!("/tmp/.doex", "xxx")
@@ -52,6 +65,11 @@ defmodule Doex.ConfigTest do
     assert %{ssh_keys: [], token: "FILL_ME_IN"} == Config.read
   end
 
+  test "reinit (Application :config -- do nothing)" do
+    Application.put_env(:doex, :config, %{token: "SHHHHH"})
+    Config.reinit
+    assert %{token: "SHHHHH"} == Config.read
+  end
 
   test "edit configs" do
     @filename |> Config.init
@@ -72,5 +90,13 @@ defmodule Doex.ConfigTest do
 
   end
 
+  test "get (Application :config -- do nothing)" do
+    Application.put_env(:doex, :config, %{token: "SHHHHH", ssh_keys: ["ab1", "ab2"]})
+    assert ["ab1", "ab2"] == Config.get(:config, :ssh_keys)
+    assert %{token: "SHHHHH", ssh_keys: ["ab1", "ab2"]} == Config.read(:config)
+
+    assert ["ab1", "ab2"] == Config.get(:ssh_keys)
+    assert %{token: "SHHHHH", ssh_keys: ["ab1", "ab2"]} == Config.read
+  end
 
 end

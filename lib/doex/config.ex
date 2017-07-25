@@ -5,14 +5,18 @@ defmodule Doex.Config do
   @default_filename "~/.doex"
 
   def filename do
-    case System.get_env("DOEX_CONFIG") do
-      nil -> lookup_filename()
-      f -> f
+    case Application.get_env(:doex, :config) do
+      nil -> case System.get_env("DOEX_CONFIG") do
+               nil -> lookup_filename()
+               f -> f
+             end
+             |> Path.expand
+      _ -> :config
     end
-    |> Path.expand
   end
 
   def init(), do: filename() |> init
+  def init(:config), do: :config
   def init(filename) do
     :ok = filename |> Path.dirname |> File.mkdir_p!
     unless File.exists?(filename) do
@@ -22,12 +26,14 @@ defmodule Doex.Config do
   end
 
   def reinit(), do: filename() |> reinit
+  def reinit(:config), do: :config
   def reinit(filename) do
     :ok = write(filename, default_config())
     filename
   end
 
   def get(key), do: filename() |> get(key)
+  def get(:config, key), do: read() |> Map.get(key)
   def get(filename, key) do
     filename
     |> init
@@ -36,6 +42,7 @@ defmodule Doex.Config do
   end
 
   def put(key, value), do: filename() |> put(key, value)
+  def put(:config, _key, _value), do: {:error, :readonly}
   def put(filename, key, value) do
     filename
     |> init
@@ -45,6 +52,7 @@ defmodule Doex.Config do
   end
 
   def remove(key), do: filename() |> remove(key)
+  def remove(:config, _key), do: {:error, :readonly}
   def remove(filename, key) do
     filename
     |> init
@@ -54,6 +62,7 @@ defmodule Doex.Config do
   end
 
   def read(), do: filename() |> read
+  def read(:config), do: Application.get_env(:doex, :config)
   def read(filename) do
     filename
     |> File.read!
