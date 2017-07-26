@@ -59,7 +59,7 @@ you can add the project as a dependency.
 
 ```elixir
 @deps [
-  doex: "~> 0.1.0"
+  doex: "~> 0.1.1"
 ]
 ```
 
