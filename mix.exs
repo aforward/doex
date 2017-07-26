@@ -11,6 +11,7 @@ defmodule Doex.Mixfile do
     {:poison, "~> 3.1.0"},
     {:httpoison, "~> 0.11.1"},
     {:fn_expr, "~> 0.1.0"},
+    {:version_tasks, "~> 0.9.1"},
     {:ex_doc, ">= 0.0.0", only: :dev},
   ]
 
