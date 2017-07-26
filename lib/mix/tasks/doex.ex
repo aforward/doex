@@ -3,7 +3,7 @@ defmodule Mix.Tasks.Doex do
 
   @shortdoc "Prints Digital Ocean API v2 mix client help information"
 
-  @moduledoc """
+  @moduledoc"""
   Prints (doex) Digital Ocean API v2 mix client help information
 
        mix doex
@@ -27,7 +27,7 @@ defmodule Mix.Tasks.Doex do
 
     Mix.shell.info "Available tasks:"
     newline()
-    Mix.Task.run("help", ["--search", "dio."])
+    Mix.Task.run("help", ["--search", "doex."])
     newline()
 
     Mix.shell.info "Further information can be found here:"
