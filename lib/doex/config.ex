@@ -19,6 +19,7 @@ defmodule Doex.Config do
   def init(:config), do: :config
   def init(filename) do
     :ok = filename |> Path.dirname |> File.mkdir_p!
+
     unless File.exists?(filename) do
       filename |> reinit
     end
@@ -36,6 +37,7 @@ defmodule Doex.Config do
   def get(:config, key), do: read() |> Map.get(key)
   def get(filename, key) do
     filename
+    |> Path.expand
     |> init
     |> read
     |> Map.get(key)
@@ -45,6 +47,7 @@ defmodule Doex.Config do
   def put(:config, _key, _value), do: {:error, :readonly}
   def put(filename, key, value) do
     filename
+    |> Path.expand
     |> init
     |> read
     |> Map.merge(%{key => value})
@@ -55,6 +58,7 @@ defmodule Doex.Config do
   def remove(:config, _key), do: {:error, :readonly}
   def remove(filename, key) do
     filename
+    |> Path.expand
     |> init
     |> read
     |> Map.delete(key)
@@ -65,8 +69,14 @@ defmodule Doex.Config do
   def read(:config), do: Application.get_env(:doex, :config)
   def read(filename) do
     filename
-    |> File.read!
-    |> :erlang.binary_to_term
+    |> Path.expand
+    |> File.read
+    |> invoke(fn result ->
+         case result do
+           {:ok, content} -> :erlang.binary_to_term(content)
+           {:error, _} -> default_config()
+         end
+       end)
   end
 
   defp lookup_filename do
@@ -83,6 +93,7 @@ defmodule Doex.Config do
 
   defp write(filename, map) do
     filename
+    |> Path.expand
     |> File.write!(:erlang.term_to_binary(map))
   end
 
@@ -90,6 +101,7 @@ defmodule Doex.Config do
     %{
         token: "FILL_ME_IN",
         ssh_keys: [],
+        url: "https://api.digitalocean.com/v2"
      }
   end
 
