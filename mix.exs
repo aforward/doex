@@ -29,6 +29,7 @@ defmodule Doex.Mixfile do
   # ------------------------------------------------------------
 
   def project do
+    in_production = Mix.env == :prod
     [
       app:     @app,
       version: @version,
@@ -40,8 +41,8 @@ defmodule Doex.Mixfile do
       homepage_url: @home_url,
       docs: [main: "Doex",
              extras: ["README.md"]],
-      build_embedded: true,
-      start_permanent: true,
+      build_embedded:  in_production,
+      start_permanent:  in_production,
       deps:    @deps,
       aliases: @aliases,
     ]
