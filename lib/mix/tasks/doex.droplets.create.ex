@@ -63,7 +63,7 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
   }
 
   def run(raw_args) do
-    Application.ensure_all_started(:doex)
+    Mix.Task.run "app.start", []
 
     raw_args
     |> Helper.parse(@options)
