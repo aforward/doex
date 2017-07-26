@@ -53,6 +53,39 @@ defmodule Doex do
            "status_message" => "",
            "uuid" => "abcdefghabcdefghabcdefghabcdefghabcdefgh"}}}
 
+  To send a POST command, for example creating a new droplet, you can run
+
+      iex> Doex.Api.post(
+             "/droplets",
+             %{name: "dplet001",
+               region: "tor1",
+               size: "512mb",
+               image: "ubuntu-14-04-x64",
+               ssh_keys: [12345],
+               backups: false,
+               ipv6: true,
+               user_data: nil,
+               private_networking: nil,
+               volumes: nil,
+               tags: ["dplet001"]})
+
+  OR, you encode the method, and make the same call like
+
+      iex> Doex.Api.call(
+             :post,
+             %{source: "/droplets",
+               body: %{name: "dplet001",
+                       region: "tor1",
+                       size: "512mb",
+                       image: "ubuntu-14-04-x64",
+                       ssh_keys: [12345],
+                       backups: false,
+                       ipv6: true,
+                       user_data: nil,
+                       private_networking: nil,
+                       volumes: nil,
+                       tags: ["dplet001"]}})
+
   The underlying configs are stored in a `Doex.Worker` and can be reloaded using
 
       Doex.reload

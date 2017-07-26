@@ -79,16 +79,16 @@ defmodule Doex.Api do
       [{"Authorization", "Bearer abc123"}, {"Content-Type", "application/json"}]
 
       iex> Doex.Api.encode_headers(%{bearer: "abc123"})
-      [{"Authorization", "Bearer abc123"}]
+      [{"Authorization", "Bearer abc123"}, {"Content-Type", "application/json"}]
 
       iex> Doex.Api.encode_headers(%{})
-      [{"Authorization", "Bearer FILL_ME_IN"}]
+      [{"Authorization", "Bearer FILL_ME_IN"}, {"Content-Type", "application/json"}]
 
       iex> Doex.Api.encode_headers()
-      [{"Authorization", "Bearer FILL_ME_IN"}]
+      [{"Authorization", "Bearer FILL_ME_IN"}, {"Content-Type", "application/json"}]
 
       iex> Doex.Api.encode_headers(nil)
-      [{"Authorization", "Bearer FILL_ME_IN"}]
+      [{"Authorization", "Bearer FILL_ME_IN"}, {"Content-Type", "application/json"}]
 
   """
   def encode_headers(), do: encode_headers(%{})
@@ -104,9 +104,8 @@ defmodule Doex.Api do
   defp header({:content_type, content_type}), do: {"Content-Type", content_type}
   defp header({:body_type, _}), do: nil
 
-  defp parse({:ok, %HTTPoison.Response{body: body, status_code: 200}}) do
-    {:ok, body |> Poison.decode!}
-  end
+  defp parse({:ok, %HTTPoison.Response{status_code: 200} = resp}), do: parse(resp)
+  defp parse({:ok, %HTTPoison.Response{status_code: 202} = resp}), do: parse(resp)
   defp parse({:ok, %HTTPoison.Response{status_code: code, body: body}}) do
     message = body |> String.replace("\\\"", "\"") |> Poison.decode!
     {:error, "Expected a 200, received #{code}", message}
@@ -114,6 +113,8 @@ defmodule Doex.Api do
   defp parse({:error, %HTTPoison.Error{reason: reason}}) do
     {:error, reason, nil}
   end
+  defp parse(%HTTPoison.Response{body: body}), do: {:ok, body |> Poison.decode!}
+
 
   defp reject_nil(map) do
     map
@@ -133,6 +134,9 @@ defmodule Doex.Api do
   """
   def resolve_url(source), do: "#{Doex.config[:url]}#{source}"
 
-  defp default_headers, do: %{bearer: Doex.config[:token]}
+  defp default_headers do
+    %{bearer: Doex.config[:token],
+      content_type: "application/json"}
+  end
 
 end
