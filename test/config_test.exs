@@ -10,10 +10,12 @@ defmodule Doex.ConfigTest do
   setup do
     on_exit fn ->
       File.rm(".doex")
+      File.rm("~/.doex" |> Path.expand)
       File.rm("/tmp/.doex")
       File.rm_rf("/tmp/here")
       System.delete_env("DOEX_CONFIG")
       Application.delete_env(:doex, :config)
+      Doex.reload
     end
     :ok
   end

@@ -24,13 +24,13 @@ defmodule Doex.Config do
 
   You can achieve similar behvarious through an iEX session `iex -S mix`
 
-      iex(1)> Doex.Config.init
+      Doex.Config.init
       "/Users/aforward/.doex"
 
-      iex(2)> Doex.Config.put(:token, "ABC123")
+      Doex.Config.put(:token, "ABC123")
       :ok
 
-      iex(3)> Doex.Config.read
+      Doex.Config.read
       %{ssh_keys: [], token: "ABC123", url: "https://api.digitalocean.com/v2"}
 
   The information above is cached in the Doex.Worker, so if you are making changes
@@ -41,7 +41,7 @@ defmodule Doex.Config do
 
   And you can see the currently cached values with
 
-      iex> Doex.config
+      Doex.config
       %{ssh_keys: [], token: "ABC123", url: "https://api.digitalocean.com/v2"}
 
   The order of preference for locating the appropriate configs are
