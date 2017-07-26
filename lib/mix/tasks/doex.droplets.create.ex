@@ -26,17 +26,25 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
   For example
 
       mix doex.droplets.create mydroplet \
+
         --region tor1 \
+
         --tags myt \
+
         --image ubuntu-14-04-x64 \
+
         --size 512mb
 
   If you have a specific config file, `mix help doex.config` then add it as an environment variable
 
       DOEX_CONFIG=/tmp/my.doex mix doex.droplets.create mydroplet \
+
         --region tor1 \
+
         --tags myt \
+
         --image ubuntu-14-04-x64 \
+
         --size 512mb
 
   """
