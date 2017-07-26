@@ -2,6 +2,67 @@ defmodule Doex.Config do
 
   use FnExpr
 
+  @moduledoc"""
+  There are a few ways to configure access to your Digital Ocean
+  account.  First, you should go and find your [API TOKEN](https://www.digitalocean.com/community/tutorials/how-to-use-the-digitalocean-api-v2#how-to-generate-a-personal-access-token)
+
+  Let's say your token is ABC123, then you can configure you application
+  through Mix Tasks, as follows:
+
+      mix doex.init
+      mix doex.config token ABC123
+
+  And to confirm it's set, run
+
+      mix doex.config
+
+  And the output should look similar to:
+
+      ssh_keys: []
+      token: "ABC123"
+      url: "https://api.digitalocean.com/v2"
+
+  You can achieve similar behvarious through an iEX session `iex -S mix`
+
+      iex(1)> Doex.Config.init
+      "/Users/aforward/.doex"
+
+      iex(2)> Doex.Config.put(:token, "ABC123")
+      :ok
+
+      iex(3)> Doex.Config.read
+      %{ssh_keys: [], token: "ABC123", url: "https://api.digitalocean.com/v2"}
+
+  The information above is cached in the Doex.Worker, so if you are making changes
+  in iEX, you can reload your configs using
+
+      iex> Doex.reload
+      :ok
+
+  And you can see the currently cached values with
+
+      iex> Doex.config
+      %{ssh_keys: [], token: "ABC123", url: "https://api.digitalocean.com/v2"}
+
+  The order of preference for locating the appropriate configs are
+
+      #1 Environment variable storing the path to the file
+      DOEX_CONFIG=/tmp/my.doex
+
+      #2 Elixir built in Mix.Config
+      use Mix.Config
+      config :doex, config:  %{token: "SHHHHH"}
+
+      #3 A file within "myproject" called .doex
+      /src/myproject/.doex
+
+      # A file within the home directory called .doex
+      ~/.doex
+
+  You could overwrite the location, but that's mostly for testing, so unless you have
+  a really valid reason do to so, please don't.
+  """
+
   @default_filename "~/.doex"
 
   def filename do
