@@ -1,6 +1,5 @@
 defmodule DoexTest do
   use ExUnit.Case
-  # doctest Doex
 
   setup do
     on_exit fn ->

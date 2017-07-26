@@ -1,4 +1,5 @@
 defmodule Doex do
+
   @moduledoc"""
   A client library for interacting with the Digital Ocean API.
 

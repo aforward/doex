@@ -9,11 +9,11 @@ defmodule Doex.Api do
   the endpoint after the `/v2` in the DO API, so to access your account
   you would run
 
-      iex> Doex.Api.get("/account")
+      Doex.Api.get("/account")
 
   OR, you encode the method, and make the same call like
 
-      iex> Doex.Api.call(:get, %{source: "/account"})
+      Doex.Api.call(:get, %{source: "/account"})
 
   If your configurations are message up (or other errors occur), it will look
   similar to
@@ -32,36 +32,36 @@ defmodule Doex.Api do
 
   To send a POST command, for example creating a new droplet, you can run
 
-      iex> Doex.Api.post(
-             "/droplets",
-             %{name: "dplet001",
-               region: "tor1",
-               size: "512mb",
-               image: "ubuntu-14-04-x64",
-               ssh_keys: [12345],
-               backups: false,
-               ipv6: true,
-               user_data: nil,
-               private_networking: nil,
-               volumes: nil,
-               tags: ["dplet001"]})
+      Doex.Api.post(
+         "/droplets",
+         %{name: "dplet001",
+           region: "tor1",
+           size: "512mb",
+           image: "ubuntu-14-04-x64",
+           ssh_keys: [12345],
+           backups: false,
+           ipv6: true,
+           user_data: nil,
+           private_networking: nil,
+           volumes: nil,
+           tags: ["dplet001"]})
 
   OR, you encode the method, and make the same call like
 
-      iex> Doex.Api.call(
-             :post,
-             %{source: "/droplets",
-               body: %{name: "dplet001",
-                       region: "tor1",
-                       size: "512mb",
-                       image: "ubuntu-14-04-x64",
-                       ssh_keys: [12345],
-                       backups: false,
-                       ipv6: true,
-                       user_data: nil,
-                       private_networking: nil,
-                       volumes: nil,
-                       tags: ["dplet001"]}})
+      Doex.Api.call(
+       :post,
+       %{source: "/droplets",
+         body: %{name: "dplet001",
+                 region: "tor1",
+                 size: "512mb",
+                 image: "ubuntu-14-04-x64",
+                 ssh_keys: [12345],
+                 backups: false,
+                 ipv6: true,
+                 user_data: nil,
+                 private_networking: nil,
+                 volumes: nil,
+                 tags: ["dplet001"]}})
 
   You could also provide additional headers within the call, but the defaults of
 
@@ -71,18 +71,18 @@ defmodule Doex.Api do
   Should be sufficient.  But if you needed to make the calls directly without
   any loaded config, then you could.  For example,
 
-        iex> Doex.Api.get(
-               "/account",
-               %{bearer: "ABC123",
-                 content_type: "application/json"})
+        Doex.Api.get(
+         "/account",
+         %{bearer: "ABC123",
+           content_type: "application/json"})
 
   OR,
 
-        iex> Doex.Api.call(
-               :get,
-               %{source: "/account",
-                 header: %{bearer: "ABC123",
-                           content_type: "application/json"}})
+        Doex.Api.call(
+         :get,
+         %{source: "/account",
+           header: %{bearer: "ABC123",
+                     content_type: "application/json"}})
 
   A similar approach can be used for sending the headers via a POST call.
   """

@@ -8,7 +8,7 @@ defmodule Mix.Tasks.Doex do
 
        mix doex
 
-  See `mix help dio.config` to see all available configuration options.
+  See `mix help doex.config` to see all available configuration options.
   """
 
   def run(raw_args) do
