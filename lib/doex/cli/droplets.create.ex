@@ -60,8 +60,6 @@ defmodule Doex.Cli.Droplets.Create do
   }
 
   def run(raw_args) do
-    Mix.Task.run "app.start", []
-
     raw_args
     |> Parser.parse(@options)
     |> invoke(fn {opts, [name]} -> opts |> Map.put(:name, name) end)
