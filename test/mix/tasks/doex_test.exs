@@ -8,9 +8,4 @@ defmodule Mix.Tasks.DoexTest do
     end) =~ "doex v#{Doex.version}"
   end
 
-  test "run with invalid arguments" do
-    assert capture_io(:stderr, fn ->
-      Mix.Tasks.Doex.run(["goop"])
-    end) =~ "Invalid arguments, expected: mix dio"
-  end
 end
