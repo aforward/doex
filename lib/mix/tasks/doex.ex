@@ -11,31 +11,6 @@ defmodule Mix.Tasks.Doex do
   See `mix help doex.config` to see all available configuration options.
   """
 
-  def run(raw_args) do
-    {_opts, args, _} = OptionParser.parse(raw_args)
-
-    case args do
-      [] -> general()
-      _ -> Mix.shell.error("Invalid arguments, expected: mix dio")
-    end
-  end
-
-  defp general() do
-    Mix.shell.info "doex v" <> Doex.version
-    Mix.shell.info "doex is a API client for Digital Ocean's API v2."
-    newline()
-
-    Mix.shell.info "Available tasks:"
-    newline()
-    Mix.Task.run("help", ["--search", "doex."])
-    newline()
-
-    Mix.shell.info "Further information can be found here:"
-    Mix.shell.info "  -- https://hex.pm/packages/doex"
-    Mix.shell.info "  -- https://github.com/capbash/doex"
-    newline()
-  end
-
-  def newline(), do: Mix.shell.info ""
+  def run(args), do: Doex.Cli.Main.run({:doex, args})
 
 end

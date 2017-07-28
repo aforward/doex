@@ -26,6 +26,10 @@ defmodule Doex.Mixfile do
     links: %{"GitHub" => @git_url}
   ]
 
+  @escript [
+    main_module: Doex.Cli.Main
+  ]
+
   # ------------------------------------------------------------
 
   def project do
@@ -45,6 +49,7 @@ defmodule Doex.Mixfile do
       start_permanent:  in_production,
       deps:    @deps,
       aliases: @aliases,
+      escript: @escript,
     ]
   end
 

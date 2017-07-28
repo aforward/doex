@@ -1,13 +1,11 @@
-defmodule Mix.Tasks.Doex.Droplets.Create do
-  use Mix.Task
+defmodule Doex.Cli.Droplets.Create do
   use FnExpr
-
-  @shortdoc "Create a droplet on Digital Ocean"
+  alias Doex.Cli.Parser
 
   @moduledoc"""
   Create a new digital ocean droplet
 
-       mix doex.droplets.create <name> <options>
+       doex droplets.create <name> <options>
 
   The following options with examples are shown below:
 
@@ -24,7 +22,7 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
 
   For example
 
-      mix doex.droplets.create mydroplet \
+      doex droplets.create mydroplet \
 
         --region tor1 \
 
@@ -36,7 +34,7 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
 
   If you have a specific config file, `mix help doex.config` then add it as an environment variable
 
-      DOEX_CONFIG=/tmp/my.doex mix doex.droplets.create mydroplet \
+      DOEX_CONFIG=/tmp/my.doex doex droplets.create mydroplet \
 
         --region tor1 \
 
@@ -48,6 +46,27 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
 
   """
 
-  def run(args), do: Doex.Cli.Main.run({:droplets_create, args})
+  @options %{
+    region: :string,
+    size: :string,
+    image: :string,
+    ssh_keys: :list,
+    backups: :boolean,
+    ipv6: :boolean,
+    user_data: :string,
+    private_networking: :boolean,
+    volumes: :string,
+    tags: :list,
+  }
+
+  def run(raw_args) do
+    Mix.Task.run "app.start", []
+
+    raw_args
+    |> Parser.parse(@options)
+    |> invoke(fn {opts, [name]} -> opts |> Map.put(:name, name) end)
+    |> invoke(Doex.Api.post("/droplets", &1))
+    |> IO.inspect
+  end
 
 end

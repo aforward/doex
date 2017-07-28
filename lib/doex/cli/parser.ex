@@ -1,4 +1,4 @@
-defmodule Doex.Mix.Helper do
+defmodule Doex.Cli.Parser do
   use FnExpr
 
   def parse(raw_args, option_defn) do

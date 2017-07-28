@@ -22,68 +22,6 @@ defmodule Mix.Tasks.Doex.Config do
     * `--delete` - Remove a specific config key
   """
 
-  @switches [delete: :boolean]
+  def run(args), do: Doex.Cli.Main.run({:config, args})
 
-  def run(args) do
-    {opts, args, _} = OptionParser.parse(args, switches: @switches)
-
-    case args do
-      [] ->
-        list()
-      ["$" <> _key | _] ->
-        Mix.raise "Invalid key name"
-      [key] ->
-        if opts[:delete] do
-          delete(key)
-        else
-          read(key)
-        end
-      [key, value] ->
-        set(key, value)
-      [key | values] ->
-        set(key, values)
-      _ ->
-        Mix.raise """
-        Invalid arguments, expected:
-        mix doex.config KEY [VALUE]
-        """
-    end
-  end
-
-  defp list() do
-    Enum.each(Doex.Config.read, fn {key, value} ->
-      Mix.shell.info "#{key}: #{inspect(value, pretty: true)}"
-    end)
-  end
-
-  defp read(key) do
-    key
-    |> String.to_atom
-    |> Doex.Config.get
-    |> print(key)
-  end
-
-  defp print(nil, key) do
-    Mix.raise "Config does not contain any value for #{key}"
-  end
-
-  defp print(values, key) when is_list(values) do
-    values
-    |> Enum.join(",")
-    |> print(key)
-  end
-
-  defp print(value, _key) do
-    Mix.shell.info(value)
-  end
-
-  defp delete(key) do
-    key
-    |> String.to_atom
-    |> Doex.Config.remove
-  end
-
-  defp set(key, value) do
-    Doex.Config.put(String.to_atom(key), value)
-  end
 end
