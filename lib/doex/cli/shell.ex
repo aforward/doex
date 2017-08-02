@@ -23,6 +23,9 @@ defmodule Doex.Cli.Shell do
     end
   end
 
+  def inspect({%{quiet: true}, data}), do: data
+  def inspect({_, data}), do: IO.inspect(data)
+
   def error(msg) do
     if has_mix?() do
       Mix.shell.error(msg)
