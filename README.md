@@ -128,7 +128,40 @@ And the output should look similar to:
     token: "ABC123"
     url: "https://api.digitalocean.com/v2"
 
-To get more help on the available commands, run
+Notice the empty `ssh_keys`.  Please look at [DO documentation on SSH Keys](https://www.digitalocean.com/community/tutorials/how-to-use-ssh-keys-with-digitalocean-droplets)
+and configure them right away.  With the SSH Keys set, you will have secure
+and passwordless access to your new droplet, enabling more convient scripting.  To
+retrieve your SSH Key IDs, run the following command
+
+    # using escript
+    doex get /account/keys
+
+    # using mix tasks
+    mix doex.get /account/keys
+
+The output will be similar to the following, and it's the IDs you want.
+
+    {:ok,
+     %{"links" => %{}, "meta" => %{"total" => 2},
+       "ssh_keys" => [%{"fingerprint" => "18:19:20:21:22:23:24:25:26:27:28:29:30:31:32:33",
+          "id" => 555213, "name" => "mbp",
+          "public_key" => "ssh-dss ABC123"},
+        %{"fingerprint" => "19:20:21:22:23:24:25:26:27:28:29:30:31:32:33:34",
+          "id" => 555214, "name" => "andrew13mbp",
+          "public_key" => "ssh-rsa DEF456"}]}}
+
+
+From the example above (please adjust for your output), the IDs are `555213`, and `555214`.
+These can be set by running
+
+    mix doex.config ssh_keys 555213 555214
+
+Now, every droplet you create will, by default (and can be overwritten), be accessible
+by all computers that have those public/private keys.
+
+## Available Commands / Tasks
+
+To get help on the available commands, run
 
     # using escript
     doex
@@ -143,9 +176,10 @@ The output will look similar to the following
 
     Available tasks:
 
-    doex config           # Reads, updates or deletes Doex config
-    doex droplets.create  # Create a droplet on Digital Ocean
-    doex init             # Initialize your doex config
+    doex config          # Reads, updates or deletes Doex config
+    doex droplets.create # Create a droplet on Digital Ocean
+    doex get             # Execute a Digital Ocean API GET request
+    doex init            # Initialize your doex config
 
     Further information can be found here:
       -- https://hex.pm/packages/doex
