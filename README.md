@@ -176,6 +176,7 @@ The output will look similar to the following
 
     Available tasks:
 
+    doex block           # Block the command line until a condition is met
     doex config          # Reads, updates or deletes Doex config
     doex droplets.create # Create a droplet on Digital Ocean
     doex get             # Execute a Digital Ocean API GET request
