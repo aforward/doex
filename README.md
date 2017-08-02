@@ -95,7 +95,7 @@ to your `mix.exs` file.
 
 ```elixir
 @deps [
-  doex: "~> 0.4.1"
+  doex: "~> 0.4.2"
 ]
 ```
 
