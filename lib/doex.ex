@@ -98,7 +98,7 @@ defmodule Doex do
 
   ```elixir
   @deps [
-    doex: "~> 0.3.0"
+    {:doex, "~> 0.3.0"}
   ]
   ```
 
