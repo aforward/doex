@@ -146,9 +146,10 @@ defmodule Doex do
 
       Available tasks:
 
-      doex config           # Reads, updates or deletes Doex config
-      doex droplets.create  # Create a droplet on Digital Ocean
-      doex init             # Initialize your doex config
+      doex config          # Reads, updates or deletes Doex config
+      doex droplets.create # Create a droplet on Digital Ocean
+      doex get             # Execute a Digital Ocean API GET request
+      doex init            # Initialize your doex config
 
       Further information can be found here:
         -- https://hex.pm/packages/doex

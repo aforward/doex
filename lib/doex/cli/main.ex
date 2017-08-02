@@ -17,9 +17,11 @@ defmodule Doex.Cli.Main do
     Shell.newline
     # Run `mix help --search doex.` to get this output
     # and paste here, replacing `mix doex.` with just `doex `
-    Shell.info "#{Shell.cmd("doex config")}           # Reads, updates or deletes Doex config"
-    Shell.info "#{Shell.cmd("doex droplets.create")}  # Create a droplet on Digital Ocean"
-    Shell.info "#{Shell.cmd("doex init")}             # Initialize your doex config"
+    Shell.info "#{Shell.cmd("doex config")}          # Reads, updates or deletes Doex config"
+    Shell.info "#{Shell.cmd("doex droplets.create")} # Create a droplet on Digital Ocean"
+    Shell.info "#{Shell.cmd("doex get")}             # Execute a Digital Ocean API GET request"
+    Shell.info "#{Shell.cmd("doex init")}            # Initialize your doex config"
+
     Shell.newline
 
     Shell.info "Further information can be found here:"
@@ -31,6 +33,7 @@ defmodule Doex.Cli.Main do
   def run({:config, args}), do: Doex.Cli.Config.run(args)
   def run({:droplets_create, args}), do: Doex.Cli.Droplets.Create.run(args)
   def run({:init, args}), do: Doex.Cli.Init.run(args)
+  def run({:get, args}), do: Doex.Cli.Get.run(args)
   def run({unknown_cmd, _args}) do
     Shell.error "Unknown command, #{unknown_cmd}, check spelling and try again"
     Shell.newline
