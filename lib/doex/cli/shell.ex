@@ -23,8 +23,9 @@ defmodule Doex.Cli.Shell do
     end
   end
 
-  def inspect({%{quiet: true}, data}), do: data
-  def inspect({_, data}), do: IO.inspect(data)
+  def inspect(data, args), do: Enum.member?(args, "--quiet") |> _inspect(data)
+  defp _inspect(false, data), do: IO.inspect(data)
+  defp _inspect(true, data), do: data
 
   def error(msg) do
     if has_mix?() do

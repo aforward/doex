@@ -17,4 +17,9 @@ defmodule Doex.Cli.GetTest do
     {:ok, %{"account" => _}} = Get.run(["/account", "--quiet"])
   end
 
+  @tag :live
+  test "GET with attributes" do
+    {:ok, %{"images" => _, "links" => _, "meta" => _}} = Get.run(["/images", "--page", "1", "--per-page", "1", "--private", "--quiet"])
+  end
+
 end

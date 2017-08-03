@@ -1,16 +1,21 @@
 defmodule Doex.Cli.Parser do
   use FnExpr
 
-  def parse(raw_args, option_defn \\ %{}) do
-    {opts, args, _} = OptionParser.parse(raw_args, switches: option_defn |> Map.to_list)
+  def parse(raw_args), do: parse(raw_args, nil)
+  def parse(raw_args, nil), do: _parse(raw_args, %{}, [allow_nonexistent_atoms: true])
+  def parse(raw_args, switches), do: _parse(raw_args, switches, [switches: switches |> Map.to_list])
+
+  defp _parse(raw_args, switches, parse_opts) do
+    {opts, args, _} = OptionParser.parse(raw_args, parse_opts)
+
     config = Doex.Config.read
 
-    option_defn
+    switches
     |> Enum.map(fn {name, type} -> {name, defaulted(config, name, type)} end)
     |> Enum.into(%{})
     |> Map.merge(opts |> Enum.into(%{}))
     |> Enum.map(fn {k,v} ->
-         case option_defn[k] do
+         case switches[k] do
            :list -> {k, to_list(v)}
            _ -> {k, v}
          end

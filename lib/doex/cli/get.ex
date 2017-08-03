@@ -17,9 +17,16 @@ defmodule Doex.Cli.Get do
     {:ok, _started} = Application.ensure_all_started(:doex)
 
     raw_args
-    |> Parser.parse
-    |> invoke(fn {opts, [endpoint]} -> {opts, Doex.Api.get(endpoint)} end)
-    |> Shell.inspect
+    |> Parser.parse()
+    |> invoke(fn {opts, [endpoint]} ->
+         opts
+         |> Enum.map(fn {k,v} -> "#{k}=#{v}" end)
+         |> Enum.join("&")
+         |> invoke("#{endpoint}?#{&1}")
+         |> String.replace(~r{\?$},"")
+       end)
+    |> Doex.Api.get
+    |> Shell.inspect(raw_args)
   end
 
 end
