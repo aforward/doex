@@ -88,39 +88,31 @@ defmodule Doex.Api do
   """
 
   @doc"""
-  Retrieve data from the API using either :get or :post
+  Retrieve data from the API using any method (:get, :post, :put, :delete, etc) available
   """
-  def call(:get, %{source: source, headers: headers}), do: get(source, headers)
-  def call(:get, %{source: source}), do: get(source)
-  def call(:post, %{source: source, body: body, headers: headers}), do: post(source, body, headers)
-  def call(:post, %{source: source, body: body}), do: post(source, body)
-  def call(:post, %{source: source}), do: post(source)
+  def call(method, %{source: source, body: body, headers: headers}), do: request(method, source, body, headers)
+  def call(method, %{source: source, body: body}), do: request(method, source, body, %{})
+  def call(method, %{source: source, headers: headers}), do: request(method, source, headers)
+  def call(method, %{source: source}), do: request(method, source, %{})
 
   @doc"""
   Make an API call using GET.  Optionally provide any required headers
   """
-  def get(source), do: get(source, nil)
-  def get(source, headers) do
-    source
-    |> resolve_url
-    |> HTTPoison.get(encode_headers(headers))
-    |> parse
-  end
+  def get(source, headers \\ %{}), do: request(:get, source, headers)
 
   @doc"""
   Make an API call using POST.  Optionally provide any required data and headers
   """
   def post(source), do: post(source, %{}, %{})
   def post(source, body), do: post(source, body, %{})
-  def post(source, body, headers) do
-    source
-    |> resolve_url
-    |> HTTPoison.post(
-         encode_body(headers[:body_type] || headers[:content_type], body),
-         encode_headers(headers)
-       )
-    |> parse
-  end
+  def post(source, body, headers), do: request(:post, source, body, headers)
+
+  @doc"""
+  Make an API call using PUT.  Optionally provide any required data and headers
+  """
+  def put(source), do: put(source, %{}, %{})
+  def put(source, body), do: put(source, body, %{})
+  def put(source, body, headers), do: request(:put, source, body, headers)
 
   @doc"""
   Encode the provided hash map for the URL.
@@ -212,6 +204,25 @@ defmodule Doex.Api do
 
   """
   def resolve_url(source), do: "#{Doex.config[:url]}#{source}"
+
+  defp request(method, source, headers) do
+    source
+    |> resolve_url
+    |> invoke(HTTPoison.request(method, &1, "", encode_headers(headers)))
+    |> parse
+  end
+
+  defp request(method, source, body, headers) do
+    source
+    |> resolve_url
+    |> invoke(HTTPoison.request(
+         method,
+         &1,
+         encode_body(headers[:body_type] || headers[:content_type], body),
+         encode_headers(headers)
+       ))
+    |> parse
+  end
 
   defp default_headers do
     %{bearer: Doex.config[:token],
