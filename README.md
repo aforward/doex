@@ -150,7 +150,6 @@ The output will be similar to the following, and it's the IDs you want.
           "id" => 555214, "name" => "andrew13mbp",
           "public_key" => "ssh-rsa DEF456"}]}}
 
-
 From the example above (please adjust for your output), the IDs are `555213`, and `555214`.
 These can be set by running
 
@@ -280,8 +279,6 @@ At present, there are no client specific convenience methods, but when there are
 they will be located in
 
     iex> h Doex.Client
-
-
 
 ## License
 
