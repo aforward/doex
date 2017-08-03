@@ -103,16 +103,17 @@ defmodule Doex.Api do
   @doc"""
   Make an API call using POST.  Optionally provide any required data and headers
   """
-  def post(source), do: post(source, %{}, %{})
-  def post(source, body), do: post(source, body, %{})
-  def post(source, body, headers), do: request(:post, source, body, headers)
+  def post(source, body \\ %{}, headers \\ %{}), do: request(:post, source, body, headers)
 
   @doc"""
   Make an API call using PUT.  Optionally provide any required data and headers
   """
-  def put(source), do: put(source, %{}, %{})
-  def put(source, body), do: put(source, body, %{})
-  def put(source, body, headers), do: request(:put, source, body, headers)
+  def put(source, body \\ %{}, headers \\ %{}), do: request(:put, source, body, headers)
+
+  @doc"""
+  Make an API call using PUT.  Optionally provide any required data and headers
+  """
+  def delete(source, body \\ %{}, headers \\ %{}), do: request(:delete, source, body, headers)
 
   @doc"""
   Encode the provided hash map for the URL.
@@ -185,7 +186,6 @@ defmodule Doex.Api do
     {:error, reason, nil}
   end
   defp parse(%HTTPoison.Response{body: body}), do: {:ok, body |> Poison.decode!}
-
 
   defp reject_nil(map) do
     map
