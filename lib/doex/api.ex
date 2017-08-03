@@ -178,6 +178,7 @@ defmodule Doex.Api do
 
   defp parse({:ok, %HTTPoison.Response{status_code: 200} = resp}), do: parse(resp)
   defp parse({:ok, %HTTPoison.Response{status_code: 202} = resp}), do: parse(resp)
+  defp parse({:ok, %HTTPoison.Response{status_code: 204} = resp}), do: parse(resp)
   defp parse({:ok, %HTTPoison.Response{status_code: code, body: body}}) do
     message = body |> String.replace("\\\"", "\"") |> Poison.decode!
     {:error, "Expected a 200, received #{code}", message}
@@ -185,6 +186,8 @@ defmodule Doex.Api do
   defp parse({:error, %HTTPoison.Error{reason: reason}}) do
     {:error, reason, nil}
   end
+  defp parse(%HTTPoison.Response{body: nil}), do: {:ok, nil}
+  defp parse(%HTTPoison.Response{body: ""}), do: {:ok, nil}
   defp parse(%HTTPoison.Response{body: body}), do: {:ok, body |> Poison.decode!}
 
   defp reject_nil(map) do

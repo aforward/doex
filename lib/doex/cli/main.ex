@@ -37,6 +37,7 @@ defmodule Doex.Cli.Main do
   def run({:init, args}), do: Doex.Cli.Init.run(args)
   def run({:get, args}), do: Doex.Cli.Get.run(args)
   def run({:post, args}), do: Doex.Cli.Post.run(args)
+  def run({:delete, args}), do: Doex.Cli.Delete.run(args)
   def run({:block, args}), do: Doex.Cli.Block.run(args)
   def run({unknown_cmd, _args}) do
     Shell.error "Unknown command, #{unknown_cmd}, check spelling and try again"
