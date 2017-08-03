@@ -22,6 +22,7 @@ defmodule Doex.Cli.Main do
     Shell.info "#{Shell.cmd("doex droplets.create")} # Create a droplet on Digital Ocean"
     Shell.info "#{Shell.cmd("doex get")}             # Execute a Digital Ocean API GET request"
     Shell.info "#{Shell.cmd("doex init")}            # Initialize your doex config"
+    Shell.info "#{Shell.cmd("doex post")}            # Execute a Digital Ocean API POST request"
 
     Shell.newline
 
@@ -35,6 +36,7 @@ defmodule Doex.Cli.Main do
   def run({:droplets_create, args}), do: Doex.Cli.Droplets.Create.run(args)
   def run({:init, args}), do: Doex.Cli.Init.run(args)
   def run({:get, args}), do: Doex.Cli.Get.run(args)
+  def run({:post, args}), do: Doex.Cli.Post.run(args)
   def run({:block, args}), do: Doex.Cli.Block.run(args)
   def run({unknown_cmd, _args}) do
     Shell.error "Unknown command, #{unknown_cmd}, check spelling and try again"

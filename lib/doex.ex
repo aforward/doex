@@ -183,6 +183,7 @@ defmodule Doex do
       doex droplets.create # Create a droplet on Digital Ocean
       doex get             # Execute a Digital Ocean API GET request
       doex init            # Initialize your doex config
+      doex post            # Execute a Digital Ocean API POST request
 
       Further information can be found here:
         -- https://hex.pm/packages/doex

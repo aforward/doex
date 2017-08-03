@@ -20,7 +20,7 @@ From their documentation:
 This Elixir DigitalOcean (DO) API gives you access to the API through three means:
 
 * A command line escript tool called `doex`
-* A set of mix tasks `mix doex.*`, or
+* A set of mix tasks `doex *`, or
 * Directly from Elixir code using `Doex` module
 
 Each one of the mechanism above allow you to automate your infrastructure needs,
@@ -99,7 +99,7 @@ to your `mix.exs` file.
 ]
 ```
 
-This will give you access to `mix doex.*` tasks (instead of globally installing
+This will give you access to `doex *` tasks (instead of globally installing
 the `doex` escript). You will also have programtic access from your `Doex` module
 as well; so you could expose feature directly within your application as well.
 
@@ -115,8 +115,8 @@ Let's say your token is ABC123, then configure it as follows:
     doex config token ABC123
 
     # using mix tasks
-    mix doex.init
-    mix doex.config token ABC123
+    doex init
+    doex config token ABC123
 
 And to confirm it's set, run
 
@@ -137,7 +137,7 @@ retrieve your SSH Key IDs, run the following command
     doex get /account/keys
 
     # using mix tasks
-    mix doex.get /account/keys
+    doex get /account/keys
 
 The output will be similar to the following, and it's the IDs you want.
 
@@ -153,7 +153,7 @@ The output will be similar to the following, and it's the IDs you want.
 From the example above (please adjust for your output), the IDs are `555213`, and `555214`.
 These can be set by running
 
-    mix doex.config ssh_keys 555213 555214
+    doex config ssh_keys 555213 555214
 
 Now, every droplet you create will, by default (and can be overwritten), be accessible
 by all computers that have those public/private keys.
@@ -180,6 +180,7 @@ The output will look similar to the following
     doex droplets.create # Create a droplet on Digital Ocean
     doex get             # Execute a Digital Ocean API GET request
     doex init            # Initialize your doex config
+    doex post            # Execute a Digital Ocean API POST request
 
     Further information can be found here:
       -- https://hex.pm/packages/doex
@@ -190,7 +191,7 @@ they are just structured slightly differently.
 
 In general,
 
-* `mix doex.<sub command> <options> <args>` for mix tasks
+* `doex <sub command> <options> <args>` for mix tasks
 * `doex <sub command> <options> <args>` for escript
 
 Make sure that have installed doex correctly for mix tasks (if you want to use mix
