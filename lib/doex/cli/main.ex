@@ -34,6 +34,7 @@ defmodule Doex.Cli.Main do
 
   def run({:config, args}), do: Doex.Cli.Config.run(args)
   def run({:droplets_create, args}), do: Doex.Cli.Droplets.Create.run(args)
+  def run({:snapshots_create, args}), do: Doex.Cli.Snapshots.Create.run(args)
   def run({:init, args}), do: Doex.Cli.Init.run(args)
   def run({:get, args}), do: Doex.Cli.Get.run(args)
   def run({:post, args}), do: Doex.Cli.Post.run(args)

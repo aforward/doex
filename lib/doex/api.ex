@@ -177,6 +177,7 @@ defmodule Doex.Api do
   defp header({:body_type, _}), do: nil
 
   defp parse({:ok, %HTTPoison.Response{status_code: 200} = resp}), do: parse(resp)
+  defp parse({:ok, %HTTPoison.Response{status_code: 201} = resp}), do: parse(resp)
   defp parse({:ok, %HTTPoison.Response{status_code: 202} = resp}), do: parse(resp)
   defp parse({:ok, %HTTPoison.Response{status_code: 204} = resp}), do: parse(resp)
   defp parse({:ok, %HTTPoison.Response{status_code: code, body: body}}) do
