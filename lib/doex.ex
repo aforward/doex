@@ -289,6 +289,8 @@ defmodule Doex do
   def version(), do: unquote(Mix.Project.config[:version])
   def elixir_version(), do: unquote(System.version)
 
+  def start(), do: {:ok, _started} = Application.ensure_all_started(:doex)
+
 
   @doc"""
   Retrieve the DOEX configs.

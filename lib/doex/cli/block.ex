@@ -23,7 +23,7 @@ defmodule Doex.Cli.Block do
   """
 
   def run(raw_args) do
-    {:ok, _started} = Application.ensure_all_started(:doex)
+    Doex.start
 
     raw_args
     |> Parser.parse

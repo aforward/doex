@@ -5,7 +5,7 @@ defmodule Doex.Cli.Post do
   @moduledoc"""
   Execute a Digital Ocean API POST request
 
-       doex post <path> <attributes>
+      doex post <path> <attributes>
 
   For example
 
@@ -45,7 +45,7 @@ defmodule Doex.Cli.Post do
   """
 
   def run(raw_args) do
-    {:ok, _started} = Application.ensure_all_started(:doex)
+    Doex.start
 
     raw_args
     |> Parser.parse()
