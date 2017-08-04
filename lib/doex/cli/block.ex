@@ -48,6 +48,10 @@ defmodule Doex.Cli.Block do
     block_until({%{}, ["actions", id, "completed"]})
   end
 
+  def block_until({:ok, %{"droplet" => %{"id" => id}}}) do
+    block_until({%{}, ["droplets", id, "active"]})
+  end
+
   defp block_until(current_status, desired_status, input) do
     if desired_status != current_status do
       :timer.sleep(10000)

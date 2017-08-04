@@ -1,13 +1,13 @@
 defmodule Doex.Cli.Droplets.Create do
   use FnExpr
-  alias Doex.Cli.Parser
+  alias Doex.Cli.{Parser, Shell}
 
   @moduledoc"""
   Create a new digital ocean droplet
 
        doex droplets.create <name> <options>
 
-  The following options with examples are shown below:
+  The following Digital Ocean options (some with examples) are shown below:
 
       --region              nyc3
       --size                512mb
@@ -19,6 +19,11 @@ defmodule Doex.Cli.Droplets.Create do
       --private_networking  # add option to enable
       --volumes             # TODO figure out what this should be
       --tags                web,uat,temp
+
+  Additional `doex` options that can be used
+
+      --quiet               If set, keep output to a minimum
+      --block               If set, block the process until the droplet is active
 
   For example
 
@@ -57,14 +62,32 @@ defmodule Doex.Cli.Droplets.Create do
     private_networking: :boolean,
     volumes: :string,
     tags: :list,
+    quiet: :boolean
   }
 
   def run(raw_args) do
+    Doex.start
+
     raw_args
     |> Parser.parse(@options)
     |> invoke(fn {opts, [name]} -> opts |> Map.put(:name, name) end)
-    |> invoke(Doex.Api.post("/droplets", &1))
-    |> IO.inspect
+    |> create_droplet
+    |> invoke(fn {:ok, %{"droplet" => %{"id" => id}}} -> Shell.info(id) end)
+  end
+
+  defp create_droplet(opts) do
+    Shell.info("Creating droplet named #{opts[:name]}...", opts)
+    Doex.Api.post("/droplets", opts)
+    |> invoke(fn resp ->
+         if opts[:block] do
+           Doex.Cli.Block.block_until(resp)
+           Shell.info("DONE, Creating droplet named #{opts[:name]}.", opts)
+         else
+           Shell.info("WORKING, Creating droplet named #{opts[:name]}.", opts)
+         end
+         resp
+       end)
+    |> Shell.inspect(opts)
   end
 
 end

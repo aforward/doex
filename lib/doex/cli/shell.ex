@@ -17,13 +17,14 @@ defmodule Doex.Cli.Shell do
 
   def info(_msg, %{quiet: true}), do: nil
   def info(msg, _), do: info(msg)
-  def info(msg) do
+  def info(msg) when is_binary(msg) do
     if has_mix?() do
       Mix.shell.info(msg)
     else
       IO.puts(msg)
     end
   end
+  def info(msg), do: info("#{msg}")
 
   def inspect(data, %{quiet: true_or_false}), do: true_or_false |> _inspect(data)
   def inspect(data, args), do: Enum.member?(args, "--quiet") |> _inspect(data)
