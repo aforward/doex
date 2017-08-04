@@ -5,7 +5,7 @@ defmodule Doex.Cli.Get do
   @moduledoc"""
   Execute a Digital Ocean API GET request
 
-       doex get <path>
+      doex get <path>
 
   For example
 

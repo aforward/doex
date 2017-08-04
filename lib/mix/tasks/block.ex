@@ -8,7 +8,7 @@ defmodule Mix.Tasks.Doex.Block do
 
   For example, block until an action is complete
 
-       doex block actions 1234 complete
+       mix doex.block actions 1234 complete
 
   """
 

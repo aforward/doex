@@ -6,11 +6,11 @@ defmodule Mix.Tasks.Doex.Get do
   @moduledoc"""
   Execute a Digital Ocean API GET request
 
-       doex get <path>
+       mix doex.get <path>
 
   For example
 
-      doex get /account/keys
+      mix doex.get /account/keys
 
   """
 

@@ -6,7 +6,6 @@ defmodule Mix.Tasks.Doex.Config do
   @moduledoc """
   Reads, updates or deletes Doex configuration keys.
 
-
       mix doex.config KEY [VALUE]
 
   Look at available settings and definitions in the
