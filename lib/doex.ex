@@ -178,12 +178,15 @@ defmodule Doex do
 
       Available tasks:
 
-      doex block           # Block the command line until a condition is met
-      doex config          # Reads, updates or deletes Doex config
-      doex droplets.create # Create a droplet on Digital Ocean
-      doex get             # Execute a Digital Ocean API GET request
-      doex init            # Initialize your doex config
-      doex post            # Execute a Digital Ocean API POST request
+      doex block            # Block the command line until a condition is met
+      doex config           # Reads, updates or deletes Doex config
+      doex delete           # Execute a Digital Ocean API DELETE request
+      doex droplets.create  # Create a droplet on Digital Ocean
+      doex get              # Execute a Digital Ocean API GET request
+      doex init             # Initialize your doex config
+      doex post             # Execute a Digital Ocean API POST request
+      doex put              # Execute a Digital Ocean API PUT request
+      doex snapshots.create # Creates a snapshot of an existing Digital Ocean droplet
 
       Further information can be found here:
         -- https://hex.pm/packages/doex

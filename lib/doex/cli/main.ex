@@ -17,12 +17,15 @@ defmodule Doex.Cli.Main do
     Shell.newline
     # Run `mix help --search doex.` to get this output
     # and paste here, replacing `mix doex.` with just `doex `
-    Shell.info "#{Shell.cmd("doex block")}           # Block the command line until a condition is met"
-    Shell.info "#{Shell.cmd("doex config")}          # Reads, updates or deletes Doex config"
-    Shell.info "#{Shell.cmd("doex droplets.create")} # Create a droplet on Digital Ocean"
-    Shell.info "#{Shell.cmd("doex get")}             # Execute a Digital Ocean API GET request"
-    Shell.info "#{Shell.cmd("doex init")}            # Initialize your doex config"
-    Shell.info "#{Shell.cmd("doex post")}            # Execute a Digital Ocean API POST request"
+    Shell.info "#{Shell.cmd("doex block")}            # Block the command line until a condition is met"
+    Shell.info "#{Shell.cmd("doex config")}           # Reads, updates or deletes Doex config"
+    Shell.info "#{Shell.cmd("doex delete")}           # Execute a Digital Ocean API DELETE request"
+    Shell.info "#{Shell.cmd("doex droplets.create")}  # Create a droplet on Digital Ocean"
+    Shell.info "#{Shell.cmd("doex get")}              # Execute a Digital Ocean API GET request"
+    Shell.info "#{Shell.cmd("doex init")}             # Initialize your doex config"
+    Shell.info "#{Shell.cmd("doex post")}             # Execute a Digital Ocean API POST request"
+    Shell.info "#{Shell.cmd("doex put")}              # Execute a Digital Ocean API PUT request"
+    Shell.info "#{Shell.cmd("doex snapshots.create")} # Creates a snapshot of an existing Digital Ocean droplet"
 
     Shell.newline
 
