@@ -35,7 +35,9 @@ defmodule Doex.Cli.Main do
     Shell.newline
   end
 
+  # TODO: consider moving to macro expansion
   def run({:config, args}), do: Doex.Cli.Config.run(args)
+  def run({:droplets_id, args}), do: Doex.Cli.Droplets.Id.run(args)
   def run({:droplets_create, args}), do: Doex.Cli.Droplets.Create.run(args)
   def run({:snapshots_create, args}), do: Doex.Cli.Snapshots.Create.run(args)
   def run({:init, args}), do: Doex.Cli.Init.run(args)

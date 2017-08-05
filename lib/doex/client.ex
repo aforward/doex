@@ -1,4 +1,6 @@
 defmodule Doex.Client do
+  use FnExpr
+
   @moduledoc"""
   Access service functionality through Elixir functions,
   wrapping the underlying HTTP API calls.
@@ -17,6 +19,28 @@ defmodule Doex.Client do
       Doex.Api.get/2
       Doex.Api.post/3
   """
+
+  def find_droplet(tag, %{tag: true}) do
+    "/droplets?tag_name=#{tag}"
+    |> Doex.Api.get
+    |> invoke(fn {:ok, %{"droplets" => droplets}} -> droplets end)
+    |> List.first
+  end
+
+  def find_droplet(name, _opts) do
+    "/droplets?page=1&per_page=1000"
+    |> Doex.Api.get
+    |> invoke(fn {:ok, %{"droplets" => droplets}} -> droplets end)
+    |> Enum.filter(fn %{"name" => some_name} -> name == some_name end)
+    |> List.first
+  end
+
+  def find_droplet_id(name_or_id, opts) do
+    name_or_id
+    |> Doex.Client.find_droplet(opts)
+    |> FnExpr.default(%{"id" => name_or_id})
+    |> Map.get("id")
+  end
 
 end
 
