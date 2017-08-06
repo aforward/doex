@@ -3,6 +3,9 @@ defmodule Doex.Cli.Droplets.Tag do
   alias Doex.Cli.{Parser, Shell}
 
   @moduledoc"""
+  THIS IS CURRENTLY UNDER CONSTRUCTION, AWAITING FEEDBACK FROM DigitalOcean
+  on a possible bug in the resource tag API.
+
   Tag (or delete a tag on) a droplet.
 
        doex droplets.tag <droplet_name_or_id> <tag_name>
