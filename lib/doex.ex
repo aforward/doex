@@ -191,6 +191,7 @@ defmodule Doex do
       doex post             # Execute a Digital Ocean API POST request
       doex put              # Execute a Digital Ocean API PUT request
       doex snapshots.create # Creates a snapshot of an existing Digital Ocean droplet
+      doex ssh              # Execute a command on your droplet
 
       Further information can be found here:
         -- https://hex.pm/packages/doex
