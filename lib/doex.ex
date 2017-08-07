@@ -182,7 +182,10 @@ defmodule Doex do
       doex config           # Reads, updates or deletes Doex config
       doex delete           # Execute a Digital Ocean API DELETE request
       doex droplets.create  # Create a droplet on Digital Ocean
+      doex droplets.id      # Locate a droplet ID, by name or tag (--tag)
+      doex droplets.tag     # Tag a droplet.
       doex get              # Execute a Digital Ocean API GET request
+      doex id               # Locate a ID of a resource, by name or tag (--tag)
       doex init             # Initialize your doex config
       doex post             # Execute a Digital Ocean API POST request
       doex put              # Execute a Digital Ocean API PUT request

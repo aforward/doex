@@ -21,7 +21,10 @@ defmodule Doex.Cli.Main do
     Shell.info "#{Shell.cmd("doex config")}           # Reads, updates or deletes Doex config"
     Shell.info "#{Shell.cmd("doex delete")}           # Execute a Digital Ocean API DELETE request"
     Shell.info "#{Shell.cmd("doex droplets.create")}  # Create a droplet on Digital Ocean"
+    Shell.info "#{Shell.cmd("doex droplets.id")}      # Locate a droplet ID, by name or tag (--tag)"
+    Shell.info "#{Shell.cmd("doex droplets.tag")}     # Tag a droplet."
     Shell.info "#{Shell.cmd("doex get")}              # Execute a Digital Ocean API GET request"
+    Shell.info "#{Shell.cmd("doex id")}               # Locate a ID of a resource, by name or tag (--tag)"
     Shell.info "#{Shell.cmd("doex init")}             # Initialize your doex config"
     Shell.info "#{Shell.cmd("doex post")}             # Execute a Digital Ocean API POST request"
     Shell.info "#{Shell.cmd("doex put")}              # Execute a Digital Ocean API PUT request"
@@ -37,6 +40,7 @@ defmodule Doex.Cli.Main do
 
   # TODO: consider moving to macro expansion
   def run({:config, args}), do: Doex.Cli.Config.run(args)
+  def run({:id, args}), do: Doex.Cli.Id.run(args)
   def run({:droplets_id, args}), do: Doex.Cli.Droplets.Id.run(args)
   def run({:droplets_tag, args}), do: Doex.Cli.Droplets.Tag.run(args)
   def run({:droplets_create, args}), do: Doex.Cli.Droplets.Create.run(args)
