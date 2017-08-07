@@ -1,6 +1,6 @@
 defmodule Doex.Cli.Main do
   use FnExpr
-  alias Doex.Cli.Shell
+  alias Doex.Io.Shell
 
   def main(argv) do
     argv

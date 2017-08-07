@@ -1,4 +1,4 @@
-defmodule Doex.Cli.Shell do
+defmodule Doex.Io.Shell do
 
   def cmd("doex") do
     if has_mix?() do

@@ -1,6 +1,7 @@
 defmodule Doex.Cli.Droplets.Tag do
   use FnExpr
-  alias Doex.Cli.{Parser, Shell}
+  alias Doex.Cli.Parser
+  alias Doex.Io.Shell
 
   @moduledoc"""
   THIS IS CURRENTLY UNDER CONSTRUCTION, AWAITING FEEDBACK FROM DigitalOcean

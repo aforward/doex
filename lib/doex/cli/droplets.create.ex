@@ -1,6 +1,7 @@
 defmodule Doex.Cli.Droplets.Create do
   use FnExpr
-  alias Doex.Cli.{Parser, Shell}
+  alias Doex.Cli.Parser
+  alias Doex.Io.Shell
 
   @moduledoc"""
   Create a new digital ocean droplet

@@ -1,6 +1,7 @@
 defmodule Doex.Cli.Snapshots.Create do
   use FnExpr
-  alias Doex.Cli.{Parser, Shell}
+  alias Doex.Cli.Parser
+  alias Doex.Io.Shell
 
   @moduledoc"""
   Creates a snapshot of an existing Digital Ocean droplet.  This

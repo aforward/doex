@@ -1,6 +1,7 @@
 defmodule Doex.Cli.Post do
   use FnExpr
-  alias Doex.Cli.{Parser, Shell}
+  alias Doex.Cli.Parser
+  alias Doex.Io.Shell
 
   @moduledoc"""
   Execute a Digital Ocean API POST request

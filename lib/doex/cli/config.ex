@@ -1,6 +1,6 @@
 defmodule Doex.Cli.Config do
   use Mix.Task
-  alias Doex.Cli.Shell
+  alias Doex.Io.Shell
 
   @moduledoc"""
   Reads, updates or deletes Doex configuration keys.

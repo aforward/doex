@@ -1,6 +1,7 @@
 defmodule Doex.Cli.Id do
   use FnExpr
-  alias Doex.Cli.{Parser, Shell}
+  alias Doex.Cli.Parser
+  alias Doex.Io.Shell
 
   @moduledoc"""
   Locate a ID of a resource.  This can be done by name or tag.
