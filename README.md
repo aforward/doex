@@ -184,6 +184,7 @@ The output will look similar to the following
     doex get              # Execute a Digital Ocean API GET request
     doex id               # Locate a ID of a resource, by name or tag (--tag)
     doex init             # Initialize your doex config
+    doex ls               # List your resources.
     doex post             # Execute a Digital Ocean API POST request
     doex put              # Execute a Digital Ocean API PUT request
     doex snapshots.create # Creates a snapshot of an existing Digital Ocean droplet

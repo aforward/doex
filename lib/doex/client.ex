@@ -42,6 +42,12 @@ defmodule Doex.Client do
     |> Map.get("id")
   end
 
+  def list_droplets do
+    "/droplets?page=1&per_page=1000"
+    |> Doex.Api.get
+    |> invoke(fn {:ok, %{"droplets" => droplets}} -> droplets end)
+  end
+
 end
 
 
