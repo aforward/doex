@@ -11,7 +11,7 @@ defmodule Doex.Cli.Block do
 
   And, droplet statuses
 
-        doex block droplets <id> <status>
+        doex block droplets <droplet_id_or_name_or_tag> <status>
 
   For example,
 
@@ -30,11 +30,13 @@ defmodule Doex.Cli.Block do
     |> block_until
   end
 
-  def block_until({opts, ["droplets", id, status]} = input) do
-    Doex.Api.get("/droplets/#{id}")
-    |> invoke(fn {:ok, %{"droplet" => %{"status" => current_status}}} ->
-         block_until(current_status, status, input, opts)
-       end)
+  def block_until({opts, ["droplets", name, status]} = input) do
+   name
+   |> Doex.Client.find_droplet_id(opts)
+   |> invoke(Doex.Api.get("/droplets/#{&1}"))
+   |> invoke(fn {:ok, %{"droplet" => %{"status" => current_status}}} ->
+        block_until(current_status, status, input, opts)
+      end)
   end
 
   def block_until({opts, ["actions", id, status]} = input) do
