@@ -37,7 +37,7 @@ defmodule Doex.Client do
 
   def find_droplet_id(name_or_id, opts) do
     name_or_id
-    |> Integer.parse
+    |> parse
     |> invoke(fn input ->
          case input do
            :error -> name_or_id
@@ -45,6 +45,7 @@ defmodule Doex.Client do
                      |> FnExpr.default(%{"id" => name_or_id})
                      |> Map.get("id")
            {id, _} -> id
+           id -> id
          end
        end)
   end
@@ -65,6 +66,9 @@ defmodule Doex.Client do
     |> Doex.Api.get
     |> invoke(fn {:ok, %{"droplets" => droplets}} -> droplets end)
   end
+
+  defp parse(int) when is_integer(int), do: int
+  defp parse(str), do: Integer.parse(str)
 
 end
 

@@ -30,6 +30,14 @@ defmodule Doex.Cli.Block do
     |> block_until
   end
 
+  def block_until({:ok, %{"action" => %{"id" => id}}}, opts) do
+    block_until({opts, ["actions", id, "completed"]})
+  end
+
+  def block_until({:ok, %{"droplet" => %{"id" => id}}}, opts) do
+    block_until({opts, ["droplets", id, "active"]})
+  end
+
   def block_until({opts, ["droplets", name, status]} = input) do
    name
    |> Doex.Client.find_droplet_id(opts)
@@ -44,14 +52,6 @@ defmodule Doex.Cli.Block do
     |> invoke(fn {:ok, %{"action" => %{"status" => current_status}}} ->
          block_until(current_status, status, input, opts)
        end)
-  end
-
-  def block_until({:ok, %{"action" => %{"id" => id}}}, opts) do
-    block_until({opts, ["actions", id, "completed"]})
-  end
-
-  def block_until({:ok, %{"droplet" => %{"id" => id}}}, opts) do
-    block_until({opts, ["droplets", id, "active"]})
   end
 
   defp block_until(current_status, desired_status, input, opts) do
