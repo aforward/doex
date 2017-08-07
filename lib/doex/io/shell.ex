@@ -16,6 +16,13 @@ defmodule Doex.Io.Shell do
   end
 
   def info(_msg, %{quiet: true}), do: nil
+  def info(msg, args) when is_list(args) do
+    if Enum.member?(args, "--quiet") do
+      nil
+    else
+      info(msg)
+    end
+  end
   def info(msg, _), do: info(msg)
   def info(msg) when is_binary(msg) do
     if has_mix?() do
