@@ -42,6 +42,17 @@ defmodule Doex.Client do
     |> Map.get("id")
   end
 
+  def droplet_ip(nil), do: nil
+  def droplet_ip(info) do
+    info
+    |> get_in(["networks", "v4"])
+    |> FnExpr.default([])
+    |> Enum.filter(&(&1["type"] == "public"))
+    |> List.first
+    |> FnExpr.default(%{})
+    |> Map.get("ip_address")
+  end
+
   def list_droplets do
     "/droplets?page=1&per_page=1000"
     |> Doex.Api.get
