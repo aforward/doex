@@ -1,6 +1,5 @@
 defmodule Doex.Cli.Droplets.Id do
   use FnExpr
-  alias Doex.Cli.{Parser, Shell}
 
   @moduledoc"""
   Locate a droplet ID.  This can be done by name
@@ -21,19 +20,12 @@ defmodule Doex.Cli.Droplets.Id do
 
       DOEX_CONFIG=/tmp/my.doex doex droplets.id my_app
 
+  There is also a more generic task that you can use to locate any resource
+
+      doex id my_app --droplets
+
   """
 
-  @options %{
-    tag: :boolean,
-  }
-
-  def run(raw_args) do
-    Doex.start
-
-    raw_args
-    |> Parser.parse(@options)
-    |> invoke(fn {opts, [name]} -> Doex.Client.find_droplet_id(name, opts) end)
-    |> Shell.info
-  end
+  def run(raw_args), do: Doex.Cli.Id.run(["--droplets" | raw_args])
 
 end
