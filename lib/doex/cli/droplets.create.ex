@@ -64,7 +64,7 @@ defmodule Doex.Cli.Droplets.Create do
     volumes: :string,
     tags: :list,
     quiet: :boolean,
-    sleep: :boolean,
+    sleep: :integer,
   }
 
   def run(raw_args) do
