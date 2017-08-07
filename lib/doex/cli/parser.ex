@@ -28,6 +28,7 @@ defmodule Doex.Cli.Parser do
   defp defaulted(:boolean), do: false
   defp defaulted(:string), do: nil
   defp defaulted(:list), do: []
+  defp defaulted(:integer), do: 0
 
   defp to_list(nil), do: []
   defp to_list(l) when is_list(l), do: l

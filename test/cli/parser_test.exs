@@ -24,6 +24,10 @@ defmodule Doex.Cli.ParserTest do
       == Parser.parse(args, @opt_defn)
   end
 
+  test "parse integer" do
+    assert {%{five: 0}, []} == Parser.parse([], %{five: :integer})
+  end
+
   test "defaulted values (no overrides)" do
     args = ["dox", "three"]
     assert {%{four: [], one: nil, two: false}, ["dox", "three"]}
