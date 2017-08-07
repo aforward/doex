@@ -50,6 +50,7 @@ defmodule Doex.Mixfile do
       deps:    @deps,
       aliases: @aliases,
       escript: @escript,
+      elixirc_paths: elixirc_paths(Mix.env),
     ]
   end
 
@@ -61,5 +62,8 @@ defmodule Doex.Mixfile do
       ],
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
+  defp elixirc_paths(_),     do: ["lib", "web"]
 
 end
