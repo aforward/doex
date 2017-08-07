@@ -191,6 +191,7 @@ defmodule Doex do
       doex ls               # List your resources.
       doex post             # Execute a Digital Ocean API POST request
       doex put              # Execute a Digital Ocean API PUT request
+      doex scp              # Secure copy a file from <src> to your droplet's <target>
       doex snapshots.create # Creates a snapshot of an existing Digital Ocean droplet
       doex ssh              # Execute a command on your droplet
 
