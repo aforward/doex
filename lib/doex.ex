@@ -194,6 +194,7 @@ defmodule Doex do
       doex scp              # Secure copy a file from <src> to your droplet's <target>
       doex snapshots.create # Creates a snapshot of an existing Digital Ocean droplet
       doex ssh              # Execute a command on your droplet
+      doex ssh.hostkey      # Add the droplet hostkey to the executing server
 
       Further information can be found here:
         -- https://hex.pm/packages/doex
