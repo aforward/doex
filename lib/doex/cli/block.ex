@@ -30,33 +30,39 @@ defmodule Doex.Cli.Block do
     |> block_until
   end
 
-  def block_until({_opts, ["droplets", id, status]} = input) do
+  def block_until({opts, ["droplets", id, status]} = input) do
     Doex.Api.get("/droplets/#{id}")
     |> invoke(fn {:ok, %{"droplet" => %{"status" => current_status}}} ->
-         block_until(current_status, status, input)
+         block_until(current_status, status, input, opts)
        end)
   end
 
-  def block_until({_opts, ["actions", id, status]} = input) do
+  def block_until({opts, ["actions", id, status]} = input) do
     Doex.Api.get("/actions/#{id}")
     |> invoke(fn {:ok, %{"action" => %{"status" => current_status}}} ->
-         block_until(current_status, status, input)
+         block_until(current_status, status, input, opts)
        end)
   end
 
-  def block_until({:ok, %{"action" => %{"id" => id}}}) do
-    block_until({%{}, ["actions", id, "completed"]})
+  def block_until({:ok, %{"action" => %{"id" => id}}}, opts) do
+    block_until({%{}, ["actions", id, "completed"]}, opts)
   end
 
-  def block_until({:ok, %{"droplet" => %{"id" => id}}}) do
-    block_until({%{}, ["droplets", id, "active"]})
+  def block_until({:ok, %{"droplet" => %{"id" => id}}}, opts) do
+    block_until({%{}, ["droplets", id, "active"]}, opts)
   end
 
-  defp block_until(current_status, desired_status, input) do
+  defp block_until(current_status, desired_status, input, opts) do
     if desired_status != current_status do
-      :timer.sleep(10000)
+      sleep(10)
       block_until(input)
     end
+    sleep(opts[:sleep])
   end
+
+  defp sleep(nil), do: nil
+  defp sleep(as_str) when is_binary(as_str), do: as_str |> Integer.parse |> sleep
+  defp sleep(in_seconds) when is_integer(in_seconds), do: :timer.sleep(in_seconds * 1000)
+  defp sleep({num, _}), do: sleep(num)
 
 end

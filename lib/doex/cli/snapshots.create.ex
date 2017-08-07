@@ -31,6 +31,7 @@ defmodule Doex.Cli.Snapshots.Create do
     delete: :boolean,
     block: :boolean,
     quiet: :boolean,
+    sleep: :boolean,
   }
 
   def run(raw_args) do
@@ -50,14 +51,14 @@ defmodule Doex.Cli.Snapshots.Create do
     Shell.info("Powering off droplet #{droplet_id}...", opts)
     Doex.Api.post("/droplets/#{droplet_id}/actions", %{type: "power_off"})
     |> Shell.inspect(opts)
-    |> Doex.Cli.Block.block_until
+    |> Doex.Cli.Block.block_until(opts)
     Shell.info("DONE, Powering off droplet #{droplet_id}.", opts)
 
     Shell.info("Creating snapshot named #{snapshot_name}...", opts)
     Doex.Api.post("/droplets/#{droplet_id}/actions", %{type: "snapshot", name: snapshot_name})
     |> invoke(fn resp ->
          if opts[:delete] || opts[:block] do
-           Doex.Cli.Block.block_until(resp)
+           Doex.Cli.Block.block_until(resp, opts)
            Shell.info("DONE, Creating snapshot named #{snapshot_name}.", opts)
          else
            Shell.info("WORKING, Creating snapshot named #{snapshot_name}.", opts)

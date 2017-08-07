@@ -63,7 +63,8 @@ defmodule Doex.Cli.Droplets.Create do
     private_networking: :boolean,
     volumes: :string,
     tags: :list,
-    quiet: :boolean
+    quiet: :boolean,
+    sleep: :boolean,
   }
 
   def run(raw_args) do
@@ -81,7 +82,7 @@ defmodule Doex.Cli.Droplets.Create do
     Doex.Api.post("/droplets", opts)
     |> invoke(fn resp ->
          if opts[:block] do
-           Doex.Cli.Block.block_until(resp)
+           Doex.Cli.Block.block_until(resp, opts)
            Shell.info("DONE, Creating droplet named #{opts[:name]}.", opts)
          else
            Shell.info("WORKING, Creating droplet named #{opts[:name]}.", opts)
