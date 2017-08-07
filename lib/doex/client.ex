@@ -37,9 +37,16 @@ defmodule Doex.Client do
 
   def find_droplet_id(name_or_id, opts) do
     name_or_id
-    |> Doex.Client.find_droplet(opts)
-    |> FnExpr.default(%{"id" => name_or_id})
-    |> Map.get("id")
+    |> Integer.parse
+    |> invoke(fn input ->
+         case input do
+           :error -> name_or_id
+                     |> Doex.Client.find_droplet(opts)
+                     |> FnExpr.default(%{"id" => name_or_id})
+                     |> Map.get("id")
+           {id, _} -> id
+         end
+       end)
   end
 
   def droplet_ip(nil), do: nil
