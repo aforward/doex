@@ -4,6 +4,7 @@ defmodule DoexTest do
   setup do
     on_exit fn ->
       Application.delete_env(:doex, :config)
+      Doex.reload
     end
     :ok
   end
