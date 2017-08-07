@@ -45,11 +45,11 @@ defmodule Doex.Cli.Block do
   end
 
   def block_until({:ok, %{"action" => %{"id" => id}}}, opts) do
-    block_until({%{}, ["actions", id, "completed"]}, opts)
+    block_until({opts, ["actions", id, "completed"]})
   end
 
   def block_until({:ok, %{"droplet" => %{"id" => id}}}, opts) do
-    block_until({%{}, ["droplets", id, "active"]}, opts)
+    block_until({opts, ["droplets", id, "active"]})
   end
 
   defp block_until(current_status, desired_status, input, opts) do
