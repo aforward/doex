@@ -68,7 +68,7 @@ defmodule Doex.Client do
     |> invoke(fn {:ok, %{"droplets" => droplets}} -> droplets end)
   end
 
-  defp parse(int) when is_integer(int), do: int
+  defp parse(int) when is_integer(int), do: {int, ""}
   defp parse(str), do: Integer.parse(str)
 
 end
