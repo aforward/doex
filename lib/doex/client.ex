@@ -28,26 +28,27 @@ defmodule Doex.Client do
   end
 
   def find_droplet(name, _opts) do
-    "/droplets?page=1&per_page=1000"
-    |> Doex.Api.get
-    |> invoke(fn {:ok, %{"droplets" => droplets}} -> droplets end)
-    |> Enum.filter(fn %{"name" => some_name} -> name == some_name end)
-    |> List.first
+    case parse(name) do
+      :error -> "/droplets?page=1&per_page=1000"
+        |> Doex.Api.get
+        |> invoke(fn {:ok, %{"droplets" => droplets}} -> droplets end)
+        |> Enum.filter(fn %{"name" => some_name} -> name == some_name end)
+        |> List.first
+      {id, ""} -> "/droplets/#{id}"
+        |> Doex.Api.get
+        |> invoke(fn
+             {:ok, %{"droplet" => droplet}} -> droplet
+             _ -> nil
+           end)
+    end
+
   end
 
   def find_droplet_id(name_or_id, opts) do
     name_or_id
-    |> parse
-    |> invoke(fn input ->
-         case input do
-           :error -> name_or_id
-                     |> Doex.Client.find_droplet(opts)
-                     |> FnExpr.default(%{"id" => name_or_id})
-                     |> Map.get("id")
-           {id, _} -> id
-           id -> id
-         end
-       end)
+    |> find_droplet(opts)
+    |> FnExpr.default(%{"id" => nil})
+    |> Map.get("id")
   end
 
   def droplet_ip(nil), do: nil
