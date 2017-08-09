@@ -42,11 +42,15 @@ defmodule Doex.Cli.Snapshots.Create do
     |> invoke(fn {opts, [droplet_name, snapshot_name]} ->
          droplet_name
          |> Doex.Client.find_droplet_id(opts)
+         |> invoke(fn
+              nil -> Shell.unknown_droplet(droplet_name, ["snapshots.create" | raw_args])
+              id -> id
+            end)
          |> create_snapshot(snapshot_name, opts)
        end)
   end
 
-  defp create_snapshot(nil, _snapshot_name, _opts), do: "Unable to locate droplet, aborting"
+  defp create_snapshot(nil, _snapshot_name, _opts), do: nil
   defp create_snapshot(droplet_id, snapshot_name, opts) do
     Shell.info("Powering off droplet #{droplet_id}...", opts)
     Doex.Api.post("/droplets/#{droplet_id}/actions", %{type: "power_off"})

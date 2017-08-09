@@ -32,13 +32,17 @@ defmodule Doex.Cli.Scp do
     |> invoke(fn {opts, [name, src, target]} ->
          name
          |> Doex.Client.find_droplet(opts)
+         |> invoke(fn
+              nil -> Shell.unknown_droplet(name, ["scp" | raw_args])
+              id -> id
+            end)
          |> Doex.Client.droplet_ip
          |> scp(src, target)
        end)
     |> Shell.info(raw_args)
   end
 
-  def scp(nil, _src, _target), do: "Unable to locate droplet, aborting"
+  def scp(nil, _src, _target), do: nil
   def scp(ip, src, target) do
     {_, 0} = System.cmd("scp", [src, "root@#{ip}:#{target}"])
     "scp #{src} root@#{ip}:#{target}"

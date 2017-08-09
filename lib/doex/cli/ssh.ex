@@ -32,13 +32,17 @@ defmodule Doex.Cli.Ssh do
     |> invoke(fn {opts, [name, cmd]} ->
          name
          |> Doex.Client.find_droplet(opts)
+         |> invoke(fn
+              nil -> Shell.unknown_droplet(name, ["ssh" | raw_args])
+              id -> id
+            end)
          |> Doex.Client.droplet_ip
          |> ssh(cmd)
        end)
     |> Shell.info(raw_args)
   end
 
-  def ssh(nil, _cmd), do: "Unable to locate droplet, aborting"
+  def ssh(nil, _cmd), do: nil
   def ssh(ip, cmd) do
     SSHEx.connect(ip: ip, user: "root")
     |> invoke(fn {:ok, conn} -> SSHEx.cmd!(conn, cmd) end)

@@ -39,13 +39,17 @@ defmodule Doex.Cli.Ssh.Hostkey do
     |> invoke(fn {opts, [name]} ->
          name
          |> Doex.Client.find_droplet(opts)
+         |> invoke(fn
+              nil -> Shell.unknown_droplet(name, ["scp.hostkey" | raw_args])
+              id -> id
+            end)
          |> Doex.Client.droplet_ip
          |> ssh_hostkey
        end)
     |> Shell.info(raw_args)
   end
 
-  def ssh_hostkey(nil), do: "Unable to locate droplet, aborting"
+  def ssh_hostkey(nil), do: nil
   def ssh_hostkey(ip) do
     {_, 0} = System.cmd("ssh", ["-o", "StrictHostKeyChecking no", "root@#{ip}", "uname -a"])
     "Added hostkey for droplet #{ip}"

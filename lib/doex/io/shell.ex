@@ -32,6 +32,12 @@ defmodule Doex.Io.Shell do
   defp _inspect(false, data), do: IO.inspect(data)
   defp _inspect(true, data), do: data
 
+  def unknown_droplet(droplet_id, args) do
+    "Unable to locate droplet (#{droplet_id}), aborting [#{args |> Enum.join(" ")}]"
+    |> error(args)
+    nil
+  end
+
   def error(raw_msg, args \\ %{}) do
     case parse(raw_msg, args) do
       {:quiet, msg} -> msg
