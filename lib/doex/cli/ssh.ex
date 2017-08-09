@@ -20,8 +20,11 @@ defmodule Doex.Cli.Ssh do
 
   """
 
+  @default_timeout 3000
+
   @options %{
     tag: :boolean,
+    timeout: :integer,
   }
 
   def run(raw_args) do
@@ -37,15 +40,20 @@ defmodule Doex.Cli.Ssh do
               id -> id
             end)
          |> Doex.Client.droplet_ip
-         |> ssh(cmd)
+         |> ssh(cmd, opts)
        end)
     |> Shell.info(raw_args)
   end
 
-  def ssh(nil, _cmd), do: nil
-  def ssh(ip, cmd) do
+  def ssh(nil, _cmd, _opts), do: nil
+  def ssh(ip, cmd, opts) do
+    timeout = opts[:timeout]
+    |> invoke(fn
+         0 -> @default_timeout
+         t -> t
+       end)
     SSHEx.connect(ip: ip, user: "root")
-    |> invoke(fn {:ok, conn} -> SSHEx.cmd!(conn, cmd) end)
+    |> invoke(fn {:ok, conn} -> SSHEx.cmd!(conn, cmd, exec_timeout: timeout) end)
   end
 
 end
