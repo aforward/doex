@@ -31,7 +31,7 @@ defmodule Doex.Cli.Snapshots.Create do
     delete: :boolean,
     block: :boolean,
     quiet: :boolean,
-    sleep: :boolean,
+    sleep: :integer,
   }
 
   def run(raw_args) do
