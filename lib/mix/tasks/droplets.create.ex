@@ -13,7 +13,7 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
 
       --region              nyc3
       --size                512mb
-      --image               ubuntu-14-04-x64
+      --image               ubuntu-16-04-x64
       --ssh_keys            1234,5467
       --backups             # add option to enable
       --ipv6                # add option to enable
@@ -30,7 +30,7 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
 
         --tags myt \
 
-        --image ubuntu-14-04-x64 \
+        --image ubuntu-16-04-x64 \
 
         --size 512mb
 
@@ -42,7 +42,7 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
 
         --tags myt \
 
-        --image ubuntu-14-04-x64 \
+        --image ubuntu-16-04-x64 \
 
         --size 512mb
 
