@@ -5,6 +5,8 @@ defmodule Doex.Cli.Imagelets.Create do
 
   @default_erlang "19.3-1"
   @default_elixir "1.5.1"
+  @default_phoenix "1.3.0"
+  @default_postgres "9.6"
 
   @moduledoc"""
   Create a DitigalOcean snapshot based on a select (opinionated) templates
@@ -31,11 +33,14 @@ defmodule Doex.Cli.Imagelets.Create do
   We support the following templates.
 
       elixir                Creates a (relatively) barebones elixir server
+      phoenix               Creates an elixir/phoenix ready application server
 
   The templates above support additional flags including
 
       --erlang              #{@default_erlang}
       --elixir              #{@default_elixir}
+      --phoenix             #{@default_phoenix}
+      --postgres            #{@default_postgres}
 
   Additional `doex` options that can be used
 
@@ -81,11 +86,7 @@ defmodule Doex.Cli.Imagelets.Create do
     Doex.Cli.Droplets.Create.run([droplet_name, "--block", "--sleep", "10" | raw_args])
 
     droplet_name
-    |> Doex.Client.find_droplet_id(opts)
-    |> invoke(fn
-         nil -> Shell.unknown_droplet(droplet_name, ["imagelets.create", "elixir" | raw_args])
-         id -> id
-       end)
+    |> id("elixir", opts, raw_args)
     |> ssh(
          [
             "bash <(curl -s https://raw.githubusercontent.com/capbash/bits/master/bits-installer)",
@@ -93,16 +94,61 @@ defmodule Doex.Cli.Imagelets.Create do
          ],
          other_opts
        )
-    |> invoke(fn
-         nil -> nil
-         id -> Doex.Cli.Snapshots.Create.run([id, droplet_name, "--block", "--delete" | other_opts])
-       end)
+    |> snapshot(droplet_name, other_opts)
+  end
+
+  defp create_imagelet(["phoenix" | raw_args]) do
+    {opts, _} = raw_args |> Parser.parse
+    other_opts = if opts[:quiet], do: ["--quiet"], else: []
+
+    erlang_version = opts[:erlang] || @default_erlang
+    elixir_version = opts[:elixir] || @default_elixir
+    phoenix_version = opts[:phoenix] || @default_phoenix
+    postgres_version = opts[:postgres] || @default_postgres
+
+    droplet_name = "erlang#{erlang_version}elixir#{elixir_version}phoenix#{phoenix_version}postgres#{postgres_version}" |> String.replace(~r{[-.]}, "")
+
+    Doex.Cli.Droplets.Create.run([droplet_name, "--block", "--sleep", "10" | raw_args])
+
+    Shell.info("damnit ERLANG_VERSION=#{erlang_version} ELIXIR_VERSION=#{elixir_version} PHOENIX_VERSION=#{phoenix_version} POSTGRES_VERSION=#{postgres_version} bits install-if phoenix")
+
+    droplet_name
+    |> id("phoenix", opts, raw_args)
+    |> ssh(
+         [
+            "bash <(curl -s https://raw.githubusercontent.com/capbash/bits/master/bits-installer)",
+            "ERLANG_VERSION=#{erlang_version} ELIXIR_VERSION=#{elixir_version} PHOENIX_VERSION=#{phoenix_version} POSTGRES_VERSION=#{postgres_version} bits install-if phoenix",
+         ],
+         other_opts
+       )
+    |> snapshot(droplet_name, other_opts)
   end
 
   defp ssh(nil, _cmds, _opts), do: nil
   defp ssh(id, cmds, opts) do
     Doex.Cli.Ssh.Hostkey.run([id | opts])
-    Enum.each(cmds, fn cmd -> Doex.Cli.Ssh.run([id, cmd, "--timeout", "1200000" | opts]) end)
+    Enum.each(cmds, fn cmd ->
+      Shell.info("-----------------")
+      Shell.info(cmd)
+      Shell.info("-----------------")
+      Doex.Cli.Ssh.run([id, cmd, "--timeout", "1200" | opts])
+      Shell.info("-----------------")
+    end)
+    id
+  end
+
+  def id(name, template, opts, raw_args) do
+    name
+    |> Doex.Client.find_droplet_id(opts)
+    |> invoke(fn
+         nil -> Shell.unknown_droplet(name, ["imagelets.create", template | raw_args])
+         id -> id
+       end)
+  end
+
+  def snapshot(nil, _name, _other_opts), do: nil
+  def snapshot(id, name, other_opts) do
+    Doex.Cli.Snapshots.Create.run([id, name, "--block", "--delete" | other_opts])
     id
   end
 

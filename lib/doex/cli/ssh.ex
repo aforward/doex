@@ -20,8 +20,6 @@ defmodule Doex.Cli.Ssh do
 
   """
 
-  @default_timeout 3000
-
   @options %{
     tag: :boolean,
     timeout: :integer,
@@ -46,14 +44,26 @@ defmodule Doex.Cli.Ssh do
   end
 
   def ssh(nil, _cmd, _opts), do: nil
-  def ssh(ip, cmd, opts) do
-    timeout = opts[:timeout]
-    |> invoke(fn
-         0 -> @default_timeout
-         t -> t
-       end)
-    SSHEx.connect(ip: ip, user: "root")
-    |> invoke(fn {:ok, conn} -> SSHEx.cmd!(conn, cmd, exec_timeout: timeout) end)
+  def ssh(ip, cmd, _opts) do
+    # TODO: move System.cmd to Port to allow for timeout
+    # @default_timeout 30 # <--- move that back to the top when fixed
+    # timeout = opts[:timeout]
+    # |> invoke(fn
+    #      0 -> @default_timeout
+    #      t -> t
+    #    end)
+    {output, _exit} = System.cmd(
+      "ssh",
+      [
+        "-o", "TCPKeepAlive=yes",
+        "-o", "ServerAliveInterval=30",
+        "-o", "ConnectTimeout=30",
+        "-o", "BatchMode=yes",
+        "root@#{ip}",
+        cmd
+      ]
+    )
+    Shell.info(output)
   end
 
 end

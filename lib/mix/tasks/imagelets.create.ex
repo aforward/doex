@@ -6,6 +6,8 @@ defmodule Mix.Tasks.Doex.Imagelets.Create do
 
   @default_erlang "19.3-1"
   @default_elixir "1.5.1"
+  @default_phoenix "1.3.0"
+  @default_postgres "9.6"
 
   @moduledoc"""
   Create a DitigalOcean snapshot based on a select (opinionated) templates
@@ -32,11 +34,14 @@ defmodule Mix.Tasks.Doex.Imagelets.Create do
   We support the following templates.
 
       elixir                Creates a (relatively) barebones elixir server
+      phoenix               Creates an elixir/phoenix ready application server
 
   The templates above support additional flags including
 
       --erlang              #{@default_erlang}
       --elixir              #{@default_elixir}
+      --phoenix             #{@default_phoenix}
+      --postgres            #{@default_postgres}
 
   Additional `doex` options that can be used
 
