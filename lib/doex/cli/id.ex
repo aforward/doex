@@ -14,7 +14,10 @@ defmodule Doex.Cli.Id do
 
   If by tag, it will grab the `latest`.
 
-  Currently, the only supported resource type is a `--droplets`, but more are coming.
+  The supported resources include
+
+        --droplets       # Locate a droplet's ID
+        --snapshots      # Locate a private image's ID (aka snapshot ID)
 
   For example
 
@@ -34,6 +37,8 @@ defmodule Doex.Cli.Id do
     tag: :boolean,
     droplets: :boolean,
     droplet: :boolean,
+    snapshots: :boolean,
+    snapshot: :boolean,
   }
 
   def run(raw_args) do
@@ -47,6 +52,8 @@ defmodule Doex.Cli.Id do
 
   def find_id(name, %{droplets: true} = opts), do: Doex.Client.find_droplet_id(name, opts)
   def find_id(name, %{droplet: true} = opts), do: Doex.Client.find_droplet_id(name, opts)
+  def find_id(name, %{snapshots: true} = opts), do: Doex.Client.find_snapshot_id(name, opts)
+  def find_id(name, %{snapshot: true} = opts), do: Doex.Client.find_snapshot_id(name, opts)
   def find_id(name, opts), do: Doex.Client.find_droplet_id(name, opts)
 
 end

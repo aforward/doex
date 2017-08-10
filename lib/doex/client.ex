@@ -51,6 +51,19 @@ defmodule Doex.Client do
     |> Map.get("id")
   end
 
+  def find_snapshot_id(name, _opts \\ %{}) do
+    case parse(name) do
+      :error -> "/snapshots?page=1&per_page=1000"
+        |> Doex.Api.get
+        |> invoke(fn {:ok, %{"snapshots" => snapshots}} -> snapshots end)
+        |> Enum.filter(fn %{"name" => some_name} -> name == some_name end)
+        |> List.first
+        |> FnExpr.default(%{"id" => nil})
+        |> Map.get("id")
+      {id, ""} -> id
+    end
+  end
+
   def droplet_ip(nil), do: nil
   def droplet_ip(info) do
     info

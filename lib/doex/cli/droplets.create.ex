@@ -23,6 +23,7 @@ defmodule Doex.Cli.Droplets.Create do
 
   Additional `doex` options that can be used
 
+      --snapshot            The snapshot name to use (will looking the image ID for you)
       --quiet               If set, keep output to a minimum
       --block               If set, block the process until the droplet is active
 
@@ -56,6 +57,7 @@ defmodule Doex.Cli.Droplets.Create do
     region: :string,
     size: :string,
     image: :string,
+    snapshot: :string,
     ssh_keys: :list,
     backups: :boolean,
     ipv6: :boolean,
@@ -79,7 +81,17 @@ defmodule Doex.Cli.Droplets.Create do
 
   defp create_droplet(opts) do
     Shell.info("Creating droplet named #{opts[:name]}...", opts)
-    Doex.Api.post("/droplets", opts)
+    opts
+    |> invoke(fn opts ->
+         if opts[:snapshot] do
+           opts
+           |> Map.put(:image, opts[:snapshot] |> Doex.Client.find_snapshot_id)
+           |> Map.delete(:snapshot)
+         else
+           opts
+         end
+       end)
+    |> invoke(Doex.Api.post("/droplets", &1))
     |> invoke(fn resp ->
          if opts[:block] do
            Doex.Cli.Block.block_until(resp, opts)
