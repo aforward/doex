@@ -170,7 +170,7 @@ To get help on the available commands, run
 
 The output will look similar to the following
 
-    doex v0.3.0
+    doex v0.6.1
     doex is a API client for Digital Ocean's API v2.
 
     Available tasks:
