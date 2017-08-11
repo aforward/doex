@@ -202,7 +202,7 @@ they are just structured slightly differently.
 
 In general,
 
-* `doex <sub command> <options> <args>` for mix tasks
+* `mix doex.<sub command> <options> <args>` for mix tasks
 * `doex <sub command> <options> <args>` for escript
 
 Make sure that have installed doex correctly for mix tasks (if you want to use mix
