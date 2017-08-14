@@ -26,4 +26,12 @@ defmodule DoexTest do
     assert Doex.config == %{token: "NEW_SHHH"}
   end
 
+  test "testing .git/hooks/post-commit" do
+    # TESTING, that fail on purpose to ensure we don't publish
+    # assert 1 == 2
+
+    # TESTING, that passing and we do publish
+    assert 1 == 1
+  end
+
 end
