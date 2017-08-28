@@ -6,9 +6,9 @@ defmodule Mix.Tasks.Doex.Block do
   @moduledoc"""
   Block the command line until a condition is met.
 
-  For example, block until an action is complete
+  For example, block until an action is completed
 
-       mix doex.block actions 1234 complete
+       mix doex.block actions 1234 completed
 
   """
 
