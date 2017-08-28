@@ -21,3 +21,5 @@ erl_crash.dump
 
 # For local testing, otherwise should be set by the calling application
 config/dev.exs
+
+.doex
