@@ -46,6 +46,13 @@ defmodule Doex.Cli.Imagelets.Create do
 
       --quiet               If set, keep output to a minimum
 
+  Release information (and available version numbers) is available at
+
+      Erlang    https://packages.erlang-solutions.com/erlang
+      Elixir    https://github.com/elixir-lang/elixir/releases
+      Phoenix   https://github.com/phoenixframework/phoenix/releases
+      Postgres  http://apt.postgresql.org/pub/repos/apt/dists/xenial-pgdg/
+
   For example
 
       doex imagelets.create phoenix \
