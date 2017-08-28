@@ -17,6 +17,7 @@ defmodule Doex.Cli.Main do
     Shell.newline
     # Run `mix help --search doex.` to get this output
     # and paste here, replacing `mix doex.` with just `doex `
+
     Shell.info "#{Shell.cmd("doex block")}            # Block the command line until a condition is met"
     Shell.info "#{Shell.cmd("doex config")}           # Reads, updates or deletes Doex config"
     Shell.info "#{Shell.cmd("doex delete")}           # Execute a Digital Ocean API DELETE request"
@@ -25,12 +26,13 @@ defmodule Doex.Cli.Main do
     Shell.info "#{Shell.cmd("doex droplets.tag")}     # Tag a droplet."
     Shell.info "#{Shell.cmd("doex get")}              # Execute a Digital Ocean API GET request"
     Shell.info "#{Shell.cmd("doex id")}               # Locate a ID of a resource, by name or tag (--tag)"
+    Shell.info "#{Shell.cmd("doex imagelets.create")} # Create a DitigalOcean snapshot based on available templates"
     Shell.info "#{Shell.cmd("doex init")}             # Initialize your doex config"
     Shell.info "#{Shell.cmd("doex ip")}               # Get the IP of a droplet"
     Shell.info "#{Shell.cmd("doex ls")}               # List your resources."
     Shell.info "#{Shell.cmd("doex post")}             # Execute a Digital Ocean API POST request"
     Shell.info "#{Shell.cmd("doex put")}              # Execute a Digital Ocean API PUT request"
-    Shell.info "#{Shell.cmd("doex scp")}             # Secure copy a file from <src> to your droplet's <target>"
+    Shell.info "#{Shell.cmd("doex scp")}              # Secure copy a file from <src> to your droplet's <target>"
     Shell.info "#{Shell.cmd("doex snapshots.create")} # Creates a snapshot of an existing Digital Ocean droplet"
     Shell.info "#{Shell.cmd("doex ssh")}              # Execute a command on your droplet"
     Shell.info "#{Shell.cmd("doex ssh.hostkey")}      # Add the droplet hostkey to the executing server"

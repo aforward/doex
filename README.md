@@ -183,6 +183,7 @@ The output will look similar to the following
     doex droplets.tag     # Tag a droplet.
     doex get              # Execute a Digital Ocean API GET request
     doex id               # Locate a ID of a resource, by name or tag (--tag)
+    doex imagelets.create # Create a DitigalOcean snapshot based on available templates
     doex init             # Initialize your doex config
     doex ip               # Get the IP of a droplet
     doex ls               # List your resources.
