@@ -29,26 +29,18 @@ defmodule Doex.Cli.Droplets.Create do
 
   For example
 
-      doex droplets.create mydroplet \
-
-        --region tor1 \
-
-        --tags myt \
-
-        --image ubuntu-16-04-x64 \
-
+      doex droplets.create mydroplet \\
+        --region tor1 \\
+        --tags myt \\
+        --image ubuntu-16-04-x64 \\
         --size 512mb
 
   If you have a specific config file, `mix help doex.config` then add it as an environment variable
 
-      DOEX_CONFIG=/tmp/my.doex doex droplets.create mydroplet \
-
-        --region tor1 \
-
-        --tags myt \
-
-        --image ubuntu-16-04-x64 \
-
+      DOEX_CONFIG=/tmp/my.doex doex droplets.create mydroplet \\
+        --region tor1 \\
+        --tags myt \\
+        --image ubuntu-16-04-x64 \\
         --size 512mb
 
   """
