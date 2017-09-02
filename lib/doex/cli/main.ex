@@ -8,7 +8,7 @@ defmodule Doex.Cli.Main do
     |> run
   end
 
-  def run({:doex, _}) do
+  def run({:doex, []}) do
     Shell.info "doex v" <> Doex.version
     Shell.info "doex is a API client for Digital Ocean's API v2."
     Shell.newline
@@ -44,6 +44,7 @@ defmodule Doex.Cli.Main do
     Shell.info "  -- https://github.com/capbash/doex"
     Shell.newline
   end
+  def run({:doex, [cmd | args]}), do: run({:unknown, cmd, args})
 
   # TODO: consider moving to macro expansion
   def run({:config, args}), do: Doex.Cli.Config.run(args)
@@ -64,12 +65,20 @@ defmodule Doex.Cli.Main do
   def run({:put, args}), do: Doex.Cli.Put.run(args)
   def run({:delete, args}), do: Doex.Cli.Delete.run(args)
   def run({:block, args}), do: Doex.Cli.Block.run(args)
-  def run({unknown_cmd, _args}) do
-    Shell.error "Unknown command, #{unknown_cmd}, check spelling and try again"
+  def run({:unknown, "dexter", _args}) do
+    Shell.error "You following me?"
     Shell.newline
+  end
+  def run({:unknown, "doakes", _args}) do
+    Shell.error "Surprise muthaf*cka."
+    Shell.newline
+  end
+  def run({:unknown, unknown_cmd, _args}) do
+    Shell.error "We couldn't process #{unknown_cmd}, so kinda check your spelling and try again"
     Shell.newline
     run({:doex, []})
   end
+  def run({cmd, args}), do: run({:unknown, cmd, args})
 
   defp parse([]), do: {:doex, []}
   defp parse([subcommand | subargs]) do
