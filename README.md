@@ -26,6 +26,11 @@ This Elixir DigitalOcean (DO) API gives you access to the API through three mean
 Each one of the mechanism above allow you to automate your infrastructure needs,
 it more comes down to preference and environment.
 
+The library name is somewhat of an acryonym for Digital Ocean (do) and Elixir (ex).
+It is pronounced "Doakes" after the excellent character in Dexter,
+no other symbolism to the character, just liked it and it followed with the
+Elixir convention of putting 'ex' somewhere in the library name.
+
 ## Installation
 
 ### Command Line (Latest Version)
