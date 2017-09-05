@@ -64,6 +64,20 @@ defmodule Doex.Client do
     end
   end
 
+  def find_floating_ip_id(name_or_id, opts \\ %{}) do
+    droplet_id = find_droplet_id(name_or_id, opts)
+    "/floating_ips?page=1&per_page=1000"
+    |> Doex.Api.get
+    |> invoke(fn {:ok, %{"floating_ips" => floating_ips}} -> floating_ips end)
+    |> Enum.filter(fn
+         %{"droplet" => %{"id" => ^droplet_id}} -> true
+         _ -> false
+       end)
+    |> List.first
+    |> FnExpr.default(%{"ip" => nil})
+    |> Map.get("ip")
+  end
+
   def droplet_ip(nil), do: nil
   def droplet_ip(info) do
     info

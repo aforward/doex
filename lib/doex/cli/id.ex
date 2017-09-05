@@ -18,6 +18,7 @@ defmodule Doex.Cli.Id do
 
         --droplets       # Locate a droplet's ID
         --snapshots      # Locate a private image's ID (aka snapshot ID)
+        --floating-ips   # Locate a floating ip ID (aka snapshot ID)
 
   For example
 
@@ -39,6 +40,8 @@ defmodule Doex.Cli.Id do
     droplet: :boolean,
     snapshots: :boolean,
     snapshot: :boolean,
+    floating_ips: :boolean,
+    floating_ip: :boolean,
   }
 
   def run(raw_args) do
@@ -54,6 +57,8 @@ defmodule Doex.Cli.Id do
   def find_id(name, %{droplet: true} = opts), do: Doex.Client.find_droplet_id(name, opts)
   def find_id(name, %{snapshots: true} = opts), do: Doex.Client.find_snapshot_id(name, opts)
   def find_id(name, %{snapshot: true} = opts), do: Doex.Client.find_snapshot_id(name, opts)
+  def find_id(name, %{floating_ips: true} = opts), do: Doex.Client.find_floating_ip_id(name, opts)
+  def find_id(name, %{floating_ip: true} = opts), do: Doex.Client.find_floating_ip_id(name, opts)
   def find_id(name, opts), do: Doex.Client.find_droplet_id(name, opts)
 
 end
