@@ -58,6 +58,7 @@ defmodule Doex.Cli.Main do
   def run({:droplets_tag, args}), do: Doex.Cli.Droplets.Tag.run(args)
   def run({:droplets_create, args}), do: Doex.Cli.Droplets.Create.run(args)
   def run({:floating_ip_id, args}), do: Doex.Cli.FloatingIp.Id.run(args)
+  def run({:floating_ip_reassign, args}), do: Doex.Cli.FloatingIp.Reassign.run(args)
   def run({:snapshots_create, args}), do: Doex.Cli.Snapshots.Create.run(args)
   def run({:imagelets_create, args}), do: Doex.Cli.Imagelets.Create.run(args)
   def run({:init, args}), do: Doex.Cli.Init.run(args)

@@ -78,6 +78,20 @@ defmodule Doex.Client do
     |> Map.get("ip")
   end
 
+
+  def reassign_floating_ip(from_name, to_name, opts \\ %{}) do
+    from_floating_id = find_floating_ip_id(from_name, opts)
+    assign_floating_ip(from_floating_id, to_name, opts)
+  end
+
+  def assign_floating_ip(from_floating_id, to_name, opts \\ %{}) do
+    to_droplet_id = find_droplet_id(to_name, opts)
+    "/floating_ips/#{from_floating_id}/actions"
+    |> Doex.Api.post(%{
+        type: "assign",
+        droplet_id: to_droplet_id})
+  end
+
   def droplet_ip(nil), do: nil
   def droplet_ip(info) do
     info
