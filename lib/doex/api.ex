@@ -121,7 +121,7 @@ defmodule Doex.Api do
   ## Examples
 
       iex> Doex.Api.encode_body(%{a: "one", b: "two"})
-      "{\\"b\\":\\"two\\",\\"a\\":\\"one\\"}"
+      "{\\"a\\":\\"one\\",\\"b\\":\\"two\\"}"
 
       iex> Doex.Api.encode_body(%{a: "o ne"})
       "{\\"a\\":\\"o ne\\"}"
@@ -139,7 +139,7 @@ defmodule Doex.Api do
   def encode_body(map), do: encode_body(nil, map)
   def encode_body(nil, map), do: encode_body("application/json", map)
   def encode_body("application/x-www-form-urlencoded", map), do: URI.encode_query(map)
-  def encode_body("application/json", map), do: Poison.encode!(map)
+  def encode_body("application/json", map), do: Jason.encode!(map)
   def encode_body(_, map), do: encode_body(nil, map)
 
   @doc"""
@@ -181,7 +181,7 @@ defmodule Doex.Api do
   defp parse({:ok, %HTTPoison.Response{status_code: 202} = resp}), do: parse(resp)
   defp parse({:ok, %HTTPoison.Response{status_code: 204} = resp}), do: parse(resp)
   defp parse({:ok, %HTTPoison.Response{status_code: code, body: body}}) do
-    message = body |> String.replace("\\\"", "\"") |> Poison.decode!
+    message = body |> String.replace("\\\"", "\"") |> Jason.decode!
     {:error, "Expected a 200, received #{code}", message}
   end
   defp parse({:error, %HTTPoison.Error{reason: reason}}) do
@@ -189,7 +189,7 @@ defmodule Doex.Api do
   end
   defp parse(%HTTPoison.Response{body: nil}), do: {:ok, nil}
   defp parse(%HTTPoison.Response{body: ""}), do: {:ok, nil}
-  defp parse(%HTTPoison.Response{body: body}), do: {:ok, body |> Poison.decode!}
+  defp parse(%HTTPoison.Response{body: body}), do: {:ok, body |> Jason.decode!}
 
   defp reject_nil(map) do
     map

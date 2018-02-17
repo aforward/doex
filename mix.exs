@@ -8,8 +8,8 @@ defmodule Doex.Mixfile do
 
   @deps [
     {:mix_test_watch, "~> 0.3", only: :dev, runtime: false},
-    {:poison, "~> 3.1.0"},
-    {:httpoison, "~> 0.11.1"},
+    {:jason, "~> 1.0"},
+    {:httpoison, "~> 1.0"},
     {:fn_expr, "~> 0.2"},
     {:version_tasks, "~> 0.10"},
     {:ex_doc, ">= 0.0.0", only: :dev},
