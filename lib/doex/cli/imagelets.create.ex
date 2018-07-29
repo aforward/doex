@@ -3,7 +3,7 @@ defmodule Doex.Cli.Imagelets.Create do
   alias Doex.Cli.Parser
   alias Doex.Io.Shell
 
-  @default_erlang "19.3-1"
+  @default_erlang "21.0-1"
   @default_elixir "1.5.1"
   @default_phoenix "1.3.0"
   @default_postgres "9.6"
@@ -80,7 +80,9 @@ defmodule Doex.Cli.Imagelets.Create do
     erlang_version = opts[:erlang] || @default_erlang
     elixir_version = opts[:elixir] || @default_elixir
 
-    droplet_name = "erlang#{erlang_version}elixir#{elixir_version}" |> String.replace(~r{[-.]}, "")
+    droplet_name = "erlang#{erlang_version}elixir#{elixir_version}"
+      |> String.replace(~r{[-.]}, "")
+      |> String.downcase()
 
     Doex.Cli.Droplets.Create.run([droplet_name, "--block", "--sleep", "10" | raw_args])
 
