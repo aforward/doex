@@ -2,7 +2,7 @@ defmodule Doex.Cli.Parser do
   use FnExpr
 
   def parse(raw_args), do: parse(raw_args, nil)
-  def parse(raw_args, nil), do: _parse(raw_args, %{}, [allow_nonexistent_atoms: true])
+  def parse(raw_args, nil), do: _parse(raw_args, %{}, [switches: [], allow_nonexistent_atoms: true])
   def parse(raw_args, switches), do: _parse(raw_args, switches, [switches: switches |> Map.to_list])
 
   defp _parse(raw_args, switches, parse_opts) do

@@ -7,11 +7,11 @@ defmodule Doex.Mixfile do
   @version "0.8.0"
 
   @deps [
-    {:mix_test_watch, "~> 0.3", only: :dev, runtime: false},
-    {:jason, "~> 1.0"},
-    {:httpoison, "~> 1.0"},
-    {:fn_expr, "~> 0.2"},
-    {:version_tasks, "~> 0.10"},
+    {:mix_test_watch, "~> 0.7", only: :dev, runtime: false},
+    {:jason, "~> 1.1"},
+    {:httpoison, "~> 1.2"},
+    {:fn_expr, "~> 0.3"},
+    {:version_tasks, "~> 0.11"},
     {:ex_doc, ">= 0.0.0", only: :dev},
   ]
 
