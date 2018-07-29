@@ -118,7 +118,7 @@ defmodule Doex.Cli.Imagelets.Create do
     Doex.Cli.Droplets.Create.run([droplet_name, "--block", "--sleep", "10" | raw_args])
 
     Shell.info(
-      "damnit ERLANG_VERSION=#{erlang_version} ELIXIR_VERSION=#{elixir_version} PHOENIX_VERSION=#{
+      "ERLANG_VERSION=#{erlang_version} ELIXIR_VERSION=#{elixir_version} PHOENIX_VERSION=#{
         phoenix_version
       } POSTGRES_VERSION=#{postgres_version} bits install-if phoenix"
     )
