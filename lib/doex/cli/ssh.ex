@@ -3,7 +3,7 @@ defmodule Doex.Cli.Ssh do
   alias Doex.Cli.Parser
   alias Doex.Io.Shell
 
-  @moduledoc"""
+  @moduledoc """
   Execute a command on your droplet
 
        doex ssh <droplet_id_or_name_or_tag> <cmd>
@@ -22,28 +22,29 @@ defmodule Doex.Cli.Ssh do
 
   @options %{
     tag: :boolean,
-    timeout: :integer,
+    timeout: :integer
   }
 
   def run(raw_args) do
-    Doex.start
+    Doex.start()
 
     raw_args
     |> Parser.parse(@options)
     |> invoke(fn {opts, [name, cmd]} ->
-         name
-         |> Doex.Client.find_droplet(opts)
-         |> invoke(fn
-              nil -> Shell.unknown_droplet(name, ["ssh" | raw_args])
-              id -> id
-            end)
-         |> Doex.Client.droplet_ip
-         |> ssh(cmd, opts)
-       end)
+      name
+      |> Doex.Client.find_droplet(opts)
+      |> invoke(fn
+        nil -> Shell.unknown_droplet(name, ["ssh" | raw_args])
+        id -> id
+      end)
+      |> Doex.Client.droplet_ip()
+      |> ssh(cmd, opts)
+    end)
     |> Shell.info(raw_args)
   end
 
   def ssh(nil, _cmd, _opts), do: nil
+
   def ssh(ip, cmd, _opts) do
     # TODO: move System.cmd to Port to allow for timeout
     # @default_timeout 30 # <--- move that back to the top when fixed
@@ -52,18 +53,23 @@ defmodule Doex.Cli.Ssh do
     #      0 -> @default_timeout
     #      t -> t
     #    end)
-    {output, _exit} = System.cmd(
-      "ssh",
-      [
-        "-o", "TCPKeepAlive=yes",
-        "-o", "ServerAliveInterval=30",
-        "-o", "ConnectTimeout=30",
-        "-o", "BatchMode=yes",
-        "root@#{ip}",
-        cmd
-      ]
-    )
+    {output, _exit} =
+      System.cmd(
+        "ssh",
+        [
+          "-o",
+          "TCPKeepAlive=yes",
+          "-o",
+          "ServerAliveInterval=30",
+          "-o",
+          "ConnectTimeout=30",
+          "-o",
+          "BatchMode=yes",
+          "root@#{ip}",
+          cmd
+        ]
+      )
+
     Shell.info(output)
   end
-
 end

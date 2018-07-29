@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Doex.Droplets.Id do
 
   @shortdoc "Locate a droplet ID, by name or tag (--tag)"
 
-  @moduledoc"""
+  @moduledoc """
   Locate a droplet ID.  This can be done by name
 
        doex droplets.id <droplet_name>
@@ -26,5 +26,4 @@ defmodule Mix.Tasks.Doex.Droplets.Id do
   """
 
   def run(args), do: Doex.Cli.Main.run({:droplets_id, args})
-
 end

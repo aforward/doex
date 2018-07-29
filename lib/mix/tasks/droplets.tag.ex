@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Doex.Droplets.Tag do
 
   @shortdoc "Tag a droplet."
 
-  @moduledoc"""
+  @moduledoc """
   Tag a droplet.
 
        doex droplets.tag <droplet_name_or_id> <tag_name>
@@ -20,5 +20,4 @@ defmodule Mix.Tasks.Doex.Droplets.Tag do
   """
 
   def run(args), do: Doex.Cli.Main.run({:droplets_tag, args})
-
 end

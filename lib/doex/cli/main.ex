@@ -9,41 +9,70 @@ defmodule Doex.Cli.Main do
   end
 
   def run({:doex, []}) do
-    Shell.info "doex v" <> Doex.version
-    Shell.info "doex is a API client for Digital Ocean's API v2."
-    Shell.newline
+    Shell.info("doex v" <> Doex.version())
+    Shell.info("doex is a API client for Digital Ocean's API v2.")
+    Shell.newline()
 
-    Shell.info "Available tasks:"
-    Shell.newline
+    Shell.info("Available tasks:")
+    Shell.newline()
     # Run `mix help --search doex.` to get this output
     # and paste here, replacing `mix doex.` with just `doex `
 
-    Shell.info "#{Shell.cmd("doex block")}            # Block the command line until a condition is met"
-    Shell.info "#{Shell.cmd("doex config")}           # Reads, updates or deletes Doex config"
-    Shell.info "#{Shell.cmd("doex delete")}           # Execute a Digital Ocean API DELETE request"
-    Shell.info "#{Shell.cmd("doex droplets.create")}  # Create a droplet on Digital Ocean"
-    Shell.info "#{Shell.cmd("doex droplets.id")}      # Locate a droplet ID, by name or tag (--tag)"
-    Shell.info "#{Shell.cmd("doex droplets.tag")}     # Tag a droplet."
-    Shell.info "#{Shell.cmd("doex get")}              # Execute a Digital Ocean API GET request"
-    Shell.info "#{Shell.cmd("doex id")}               # Locate a ID of a resource, by name or tag (--tag)"
-    Shell.info "#{Shell.cmd("doex imagelets.create")} # Create a DitigalOcean snapshot based on available templates"
-    Shell.info "#{Shell.cmd("doex init")}             # Initialize your doex config"
-    Shell.info "#{Shell.cmd("doex ip")}               # Get the IP of a droplet"
-    Shell.info "#{Shell.cmd("doex ls")}               # List your resources."
-    Shell.info "#{Shell.cmd("doex post")}             # Execute a Digital Ocean API POST request"
-    Shell.info "#{Shell.cmd("doex put")}              # Execute a Digital Ocean API PUT request"
-    Shell.info "#{Shell.cmd("doex scp")}              # Secure copy a file from <src> to your droplet's <target>"
-    Shell.info "#{Shell.cmd("doex snapshots.create")} # Creates a snapshot of an existing Digital Ocean droplet"
-    Shell.info "#{Shell.cmd("doex ssh")}              # Execute a command on your droplet"
-    Shell.info "#{Shell.cmd("doex ssh.hostkey")}      # Add the droplet hostkey to the executing server"
+    Shell.info(
+      "#{Shell.cmd("doex block")}            # Block the command line until a condition is met"
+    )
 
-    Shell.newline
+    Shell.info("#{Shell.cmd("doex config")}           # Reads, updates or deletes Doex config")
 
-    Shell.info "Further information can be found here:"
-    Shell.info "  -- https://hex.pm/packages/doex"
-    Shell.info "  -- https://github.com/capbash/doex"
-    Shell.newline
+    Shell.info(
+      "#{Shell.cmd("doex delete")}           # Execute a Digital Ocean API DELETE request"
+    )
+
+    Shell.info("#{Shell.cmd("doex droplets.create")}  # Create a droplet on Digital Ocean")
+
+    Shell.info(
+      "#{Shell.cmd("doex droplets.id")}      # Locate a droplet ID, by name or tag (--tag)"
+    )
+
+    Shell.info("#{Shell.cmd("doex droplets.tag")}     # Tag a droplet.")
+    Shell.info("#{Shell.cmd("doex get")}              # Execute a Digital Ocean API GET request")
+
+    Shell.info(
+      "#{Shell.cmd("doex id")}               # Locate a ID of a resource, by name or tag (--tag)"
+    )
+
+    Shell.info(
+      "#{Shell.cmd("doex imagelets.create")} # Create a DitigalOcean snapshot based on available templates"
+    )
+
+    Shell.info("#{Shell.cmd("doex init")}             # Initialize your doex config")
+    Shell.info("#{Shell.cmd("doex ip")}               # Get the IP of a droplet")
+    Shell.info("#{Shell.cmd("doex ls")}               # List your resources.")
+    Shell.info("#{Shell.cmd("doex post")}             # Execute a Digital Ocean API POST request")
+    Shell.info("#{Shell.cmd("doex put")}              # Execute a Digital Ocean API PUT request")
+
+    Shell.info(
+      "#{Shell.cmd("doex scp")}              # Secure copy a file from <src> to your droplet's <target>"
+    )
+
+    Shell.info(
+      "#{Shell.cmd("doex snapshots.create")} # Creates a snapshot of an existing Digital Ocean droplet"
+    )
+
+    Shell.info("#{Shell.cmd("doex ssh")}              # Execute a command on your droplet")
+
+    Shell.info(
+      "#{Shell.cmd("doex ssh.hostkey")}      # Add the droplet hostkey to the executing server"
+    )
+
+    Shell.newline()
+
+    Shell.info("Further information can be found here:")
+    Shell.info("  -- https://hex.pm/packages/doex")
+    Shell.info("  -- https://github.com/capbash/doex")
+    Shell.newline()
   end
+
   def run({:doex, [cmd | args]}), do: run({:unknown, cmd, args})
 
   # TODO: consider moving to macro expansion
@@ -67,27 +96,31 @@ defmodule Doex.Cli.Main do
   def run({:put, args}), do: Doex.Cli.Put.run(args)
   def run({:delete, args}), do: Doex.Cli.Delete.run(args)
   def run({:block, args}), do: Doex.Cli.Block.run(args)
+
   def run({:unknown, "dexter", _args}) do
-    Shell.error "You following me?"
-    Shell.newline
+    Shell.error("You following me?")
+    Shell.newline()
   end
+
   def run({:unknown, "doakes", _args}) do
-    Shell.error "Surprise muthaf*cka."
-    Shell.newline
+    Shell.error("Surprise muthaf*cka.")
+    Shell.newline()
   end
+
   def run({:unknown, unknown_cmd, _args}) do
-    Shell.error "We couldn't process #{unknown_cmd}, so kinda check your spelling and try again"
-    Shell.newline
+    Shell.error("We couldn't process #{unknown_cmd}, so kinda check your spelling and try again")
+    Shell.newline()
     run({:doex, []})
   end
+
   def run({cmd, args}), do: run({:unknown, cmd, args})
 
   defp parse([]), do: {:doex, []}
+
   defp parse([subcommand | subargs]) do
     subcommand
     |> String.replace(".", "_")
-    |> String.to_atom
+    |> String.to_atom()
     |> invoke({&1, subargs})
   end
-
 end

@@ -3,7 +3,7 @@ defmodule Doex.Cli.Scp do
   alias Doex.Cli.Parser
   alias Doex.Io.Shell
 
-  @moduledoc"""
+  @moduledoc """
   Secure copy a file from <src> to your droplet's <target>
 
        doex scp <droplet_name> <src> <target>
@@ -21,31 +21,31 @@ defmodule Doex.Cli.Scp do
   """
 
   @options %{
-    tag: :boolean,
+    tag: :boolean
   }
 
   def run(raw_args) do
-    Doex.start
+    Doex.start()
 
     raw_args
     |> Parser.parse(@options)
     |> invoke(fn {opts, [name, src, target]} ->
-         name
-         |> Doex.Client.find_droplet(opts)
-         |> invoke(fn
-              nil -> Shell.unknown_droplet(name, ["scp" | raw_args])
-              id -> id
-            end)
-         |> Doex.Client.droplet_ip
-         |> scp(src, target)
-       end)
+      name
+      |> Doex.Client.find_droplet(opts)
+      |> invoke(fn
+        nil -> Shell.unknown_droplet(name, ["scp" | raw_args])
+        id -> id
+      end)
+      |> Doex.Client.droplet_ip()
+      |> scp(src, target)
+    end)
     |> Shell.info(raw_args)
   end
 
   def scp(nil, _src, _target), do: nil
+
   def scp(ip, src, target) do
     {_, 0} = System.cmd("scp", [src, "root@#{ip}:#{target}"])
     "scp #{src} root@#{ip}:#{target}"
   end
-
 end

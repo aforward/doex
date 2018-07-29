@@ -3,7 +3,7 @@ defmodule Mix.Tasks.Doex do
 
   @shortdoc "Prints Digital Ocean API v2 mix client help information"
 
-  @moduledoc"""
+  @moduledoc """
   Prints (doex) Digital Ocean API v2 mix client help information
 
        mix doex
@@ -12,5 +12,4 @@ defmodule Mix.Tasks.Doex do
   """
 
   def run(args), do: Doex.Cli.Main.run({:doex, args})
-
 end

@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Doex.Snapshots.Create do
 
   @shortdoc "Creates a snapshot of an existing Digital Ocean droplet"
 
-  @moduledoc"""
+  @moduledoc """
   Creates a snapshot of an existing Digital Ocean droplet.  This
   differs from the underlying snapshot API, as it will ensure all
   necessary preconditions are set, and can (if desired) block until
@@ -28,5 +28,4 @@ defmodule Mix.Tasks.Doex.Snapshots.Create do
   """
 
   def run(args), do: Doex.Cli.Main.run({:snapshots_create, args})
-
 end

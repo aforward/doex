@@ -1,7 +1,7 @@
 defmodule Doex.Cli.Droplets.Id do
   use FnExpr
 
-  @moduledoc"""
+  @moduledoc """
   Locate a droplet ID.  This can be done by name
 
        doex droplets.id <droplet_name>
@@ -27,5 +27,4 @@ defmodule Doex.Cli.Droplets.Id do
   """
 
   def run(raw_args), do: Doex.Cli.Id.run(["--droplets" | raw_args])
-
 end

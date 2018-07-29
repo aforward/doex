@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Doex.Ip do
 
   @shortdoc "Get the IP of a droplet"
 
-  @moduledoc"""
+  @moduledoc """
   Get the IP of a droplet
 
        doex ip <droplet_id_or_name_or_tag> <shell_command>?
@@ -24,5 +24,4 @@ defmodule Mix.Tasks.Doex.Ip do
   """
 
   def run(args), do: Doex.Cli.Main.run({:ip, args})
-
 end

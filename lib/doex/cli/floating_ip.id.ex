@@ -1,7 +1,7 @@
 defmodule Doex.Cli.FloatingIp.Id do
   use FnExpr
 
-  @moduledoc"""
+  @moduledoc """
   Locate a floating ip ID.  This can be done by name
 
        doex floating_ip.id <droplet_name>
@@ -23,5 +23,4 @@ defmodule Doex.Cli.FloatingIp.Id do
   """
 
   def run(raw_args), do: Doex.Cli.Id.run(["--floating-ip" | raw_args])
-
 end

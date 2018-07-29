@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
 
   @shortdoc "Create a droplet on Digital Ocean"
 
-  @moduledoc"""
+  @moduledoc """
   Create a new digital ocean droplet
 
        mix doex.droplets.create <name> <options>
@@ -41,5 +41,4 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
   """
 
   def run(args), do: Doex.Cli.Main.run({:droplets_create, args})
-
 end

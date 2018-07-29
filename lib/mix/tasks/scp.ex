@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Doex.Scp do
 
   @shortdoc "Secure copy a file from <src> to your droplet's <target>"
 
-  @moduledoc"""
+  @moduledoc """
   Secure copy a file from <src> to your droplet's <target>
 
        doex scp <droplet_name> <src> <target>
@@ -22,5 +22,4 @@ defmodule Mix.Tasks.Doex.Scp do
   """
 
   def run(args), do: Doex.Cli.Main.run({:scp, args})
-
 end

@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Doex.Ssh do
 
   @shortdoc "Execute a command on your droplet"
 
-  @moduledoc"""
+  @moduledoc """
   Execute a command on your droplet
 
        doex ssh <droplet_id_or_name_or_tag> <cmd>
@@ -22,5 +22,4 @@ defmodule Mix.Tasks.Doex.Ssh do
   """
 
   def run(args), do: Doex.Cli.Main.run({:ssh, args})
-
 end

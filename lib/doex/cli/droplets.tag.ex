@@ -3,7 +3,7 @@ defmodule Doex.Cli.Droplets.Tag do
   alias Doex.Cli.Parser
   alias Doex.Io.Shell
 
-  @moduledoc"""
+  @moduledoc """
   THIS IS CURRENTLY UNDER CONSTRUCTION, AWAITING FEEDBACK FROM DigitalOcean
   on a possible bug in the resource tag API.
 
@@ -29,11 +29,12 @@ defmodule Doex.Cli.Droplets.Tag do
 
   @options %{
     delete: :boolean,
-    tag: :boolean,
+    tag: :boolean
   }
 
   def run(raw_args) do
-    Doex.start
+    Doex.start()
+
     raw_args
     |> Parser.parse(@options)
     |> tag_droplet
@@ -44,9 +45,10 @@ defmodule Doex.Cli.Droplets.Tag do
     name_or_id
     |> Doex.Client.find_droplet_id(opts)
     |> invoke(
-         Doex.Api.post(
-           "/tags/#{tag_name}/resources",
-           %{resources: [%{resource_type: "droplet", resource_id: &1}]}))
+      Doex.Api.post(
+        "/tags/#{tag_name}/resources",
+        %{resources: [%{resource_type: "droplet", resource_id: &1}]}
+      )
+    )
   end
-
 end

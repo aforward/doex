@@ -9,7 +9,7 @@ defmodule Mix.Tasks.Doex.Imagelets.Create do
   @default_phoenix "1.3.0"
   @default_postgres "9.6"
 
-  @moduledoc"""
+  @moduledoc """
   Create a DitigalOcean snapshot based on a select (opinionated) templates
 
        mix doex.imagelets.create <template> <options>
@@ -69,5 +69,4 @@ defmodule Mix.Tasks.Doex.Imagelets.Create do
   """
 
   def run(args), do: Doex.Cli.Main.run({:imagelets_create, args})
-
 end

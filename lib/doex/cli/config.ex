@@ -2,7 +2,7 @@ defmodule Doex.Cli.Config do
   use Mix.Task
   alias Doex.Io.Shell
 
-  @moduledoc"""
+  @moduledoc """
   Reads, updates or deletes Doex configuration keys.
 
       doex config KEY [VALUE]
@@ -28,41 +28,46 @@ defmodule Doex.Cli.Config do
     case args do
       [] ->
         list()
+
       ["$" <> _key | _] ->
-        Mix.raise "Invalid key name"
+        Mix.raise("Invalid key name")
+
       [key] ->
         if opts[:delete] do
           delete(key)
         else
           read(key)
         end
+
       [key, value] ->
         set(key, value)
+
       [key | values] ->
         set(key, values)
+
       _ ->
-        Shell.raise """
+        Shell.raise("""
         Invalid arguments, expected:
         #{Shell.cmd("doex config KEY [VALUE]")}
-        """
+        """)
     end
   end
 
   defp list() do
-    Enum.each(Doex.Config.read, fn {key, value} ->
-      Shell.info "#{key}: #{inspect(value, pretty: true)}"
+    Enum.each(Doex.Config.read(), fn {key, value} ->
+      Shell.info("#{key}: #{inspect(value, pretty: true)}")
     end)
   end
 
   defp read(key) do
     key
-    |> String.to_atom
-    |> Doex.Config.get
+    |> String.to_atom()
+    |> Doex.Config.get()
     |> print(key)
   end
 
   defp print(nil, key) do
-    Mix.raise "Config does not contain any value for #{key}"
+    Mix.raise("Config does not contain any value for #{key}")
   end
 
   defp print(values, key) when is_list(values) do
@@ -77,8 +82,8 @@ defmodule Doex.Cli.Config do
 
   defp delete(key) do
     key
-    |> String.to_atom
-    |> Doex.Config.remove
+    |> String.to_atom()
+    |> Doex.Config.remove()
   end
 
   defp set(key, value) do

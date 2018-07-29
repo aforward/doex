@@ -1,8 +1,7 @@
 defmodule Doex.Api do
-
   use FnExpr
 
-  @moduledoc"""
+  @moduledoc """
   Make almost direct calls to the Digital Ocean API.
 
   Assuming your configs are properly setup, then you only need to provide
@@ -87,35 +86,37 @@ defmodule Doex.Api do
   A similar approach can be used for sending the headers via a POST call.
   """
 
-  @doc"""
+  @doc """
   Retrieve data from the API using any method (:get, :post, :put, :delete, etc) available
   """
-  def call(method, %{source: source, body: body, headers: headers}), do: request(method, source, body, headers)
+  def call(method, %{source: source, body: body, headers: headers}),
+    do: request(method, source, body, headers)
+
   def call(method, %{source: source, body: body}), do: request(method, source, body, %{})
   def call(method, %{source: source, headers: headers}), do: request(method, source, headers)
   def call(method, %{source: source}), do: request(method, source, %{})
 
-  @doc"""
+  @doc """
   Make an API call using GET.  Optionally provide any required headers
   """
   def get(source, headers \\ %{}), do: request(:get, source, headers)
 
-  @doc"""
+  @doc """
   Make an API call using POST.  Optionally provide any required data and headers
   """
   def post(source, body \\ %{}, headers \\ %{}), do: request(:post, source, body, headers)
 
-  @doc"""
+  @doc """
   Make an API call using PUT.  Optionally provide any required data and headers
   """
   def put(source, body \\ %{}, headers \\ %{}), do: request(:put, source, body, headers)
 
-  @doc"""
+  @doc """
   Make an API call using PUT.  Optionally provide any required data and headers
   """
   def delete(source, body \\ %{}, headers \\ %{}), do: request(:delete, source, body, headers)
 
-  @doc"""
+  @doc """
   Encode the provided hash map for the URL.
 
   ## Examples
@@ -142,7 +143,7 @@ defmodule Doex.Api do
   def encode_body("application/json", map), do: Jason.encode!(map)
   def encode_body(_, map), do: encode_body(nil, map)
 
-  @doc"""
+  @doc """
   Build the headers for your API
 
   ## Examples
@@ -165,6 +166,7 @@ defmodule Doex.Api do
   """
   def encode_headers(), do: encode_headers(%{})
   def encode_headers(nil), do: encode_headers(%{})
+
   def encode_headers(data) do
     data
     |> reject_nil
@@ -172,6 +174,7 @@ defmodule Doex.Api do
     |> Enum.map(&header/1)
     |> Enum.reject(&is_nil/1)
   end
+
   defp header({:bearer, bearer}), do: {"Authorization", "Bearer #{bearer}"}
   defp header({:content_type, content_type}), do: {"Content-Type", content_type}
   defp header({:body_type, _}), do: nil
@@ -180,24 +183,27 @@ defmodule Doex.Api do
   defp parse({:ok, %HTTPoison.Response{status_code: 201} = resp}), do: parse(resp)
   defp parse({:ok, %HTTPoison.Response{status_code: 202} = resp}), do: parse(resp)
   defp parse({:ok, %HTTPoison.Response{status_code: 204} = resp}), do: parse(resp)
+
   defp parse({:ok, %HTTPoison.Response{status_code: code, body: body}}) do
-    message = body |> String.replace("\\\"", "\"") |> Jason.decode!
+    message = body |> String.replace("\\\"", "\"") |> Jason.decode!()
     {:error, "Expected a 200, received #{code}", message}
   end
+
   defp parse({:error, %HTTPoison.Error{reason: reason}}) do
     {:error, reason, nil}
   end
+
   defp parse(%HTTPoison.Response{body: nil}), do: {:ok, nil}
   defp parse(%HTTPoison.Response{body: ""}), do: {:ok, nil}
-  defp parse(%HTTPoison.Response{body: body}), do: {:ok, body |> Jason.decode!}
+  defp parse(%HTTPoison.Response{body: body}), do: {:ok, body |> Jason.decode!()}
 
   defp reject_nil(map) do
     map
-    |> Enum.reject(fn{_k,v} -> v == nil end)
+    |> Enum.reject(fn {_k, v} -> v == nil end)
     |> Enum.into(%{})
   end
 
-  @doc"""
+  @doc """
   Provided the relative path of the Digital Ocean API, resolve the
   full URL
 
@@ -207,7 +213,7 @@ defmodule Doex.Api do
       "https://api.digitalocean.com/v2/accounts"
 
   """
-  def resolve_url(source), do: "#{Doex.config[:url]}#{source}"
+  def resolve_url(source), do: "#{Doex.config()[:url]}#{source}"
 
   defp request(method, source, headers) do
     source
@@ -219,18 +225,18 @@ defmodule Doex.Api do
   defp request(method, source, body, headers) do
     source
     |> resolve_url
-    |> invoke(HTTPoison.request(
-         method,
-         &1,
-         encode_body(headers[:body_type] || headers[:content_type], body),
-         encode_headers(headers)
-       ))
+    |> invoke(
+      HTTPoison.request(
+        method,
+        &1,
+        encode_body(headers[:body_type] || headers[:content_type], body),
+        encode_headers(headers)
+      )
+    )
     |> parse
   end
 
   defp default_headers do
-    %{bearer: Doex.config[:token],
-      content_type: "application/json"}
+    %{bearer: Doex.config()[:token], content_type: "application/json"}
   end
-
 end

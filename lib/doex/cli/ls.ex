@@ -3,7 +3,7 @@ defmodule Doex.Cli.Ls do
   alias Doex.Cli.Parser
   alias Doex.Io.{Shell, Table}
 
-  @moduledoc"""
+  @moduledoc """
   List your resources.
 
        doex ls <--resource_type>
@@ -26,11 +26,11 @@ defmodule Doex.Cli.Ls do
 
   @options %{
     droplets: :boolean,
-    droplet: :boolean,
+    droplet: :boolean
   }
 
   def run(raw_args) do
-    Doex.start
+    Doex.start()
 
     raw_args
     |> Parser.parse(@options)
@@ -39,11 +39,10 @@ defmodule Doex.Cli.Ls do
     |> invoke([["------", "------", "------"] | &1])
     |> invoke([["name", "id", "status"] | &1])
     |> Table.format(padding: 4)
-    |> Shell.info
+    |> Shell.info()
   end
 
-  def ls(%{droplets: true}), do: Doex.Client.list_droplets
-  def ls(%{droplet: true}), do: Doex.Client.list_droplets
-  def ls(_), do: Doex.Client.list_droplets
-
+  def ls(%{droplets: true}), do: Doex.Client.list_droplets()
+  def ls(%{droplet: true}), do: Doex.Client.list_droplets()
+  def ls(_), do: Doex.Client.list_droplets()
 end

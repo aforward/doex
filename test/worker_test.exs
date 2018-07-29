@@ -4,16 +4,17 @@ defmodule Doex.WorkerTest do
   alias Doex.Worker
 
   setup do
-    on_exit fn ->
+    on_exit(fn ->
       Application.delete_env(:doex, :config)
-      Doex.reload
-    end
+      Doex.reload()
+    end)
+
     :ok
   end
 
   test "Store :config in worker" do
     Application.put_env(:doex, :config, %{token: "SHHHHH"})
-    Doex.reload
+    Doex.reload()
     assert GenServer.call(Worker, :config) == %{token: "SHHHHH"}
 
     Application.put_env(:doex, :config, %{token: "NEW_SHHH"})

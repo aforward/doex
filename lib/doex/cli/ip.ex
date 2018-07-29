@@ -3,7 +3,7 @@ defmodule Doex.Cli.Ip do
   alias Doex.Cli.Parser
   alias Doex.Io.Shell
 
-  @moduledoc"""
+  @moduledoc """
   Get the IP of a droplet
 
        doex ip <droplet_id_or_name_or_tag>
@@ -23,20 +23,19 @@ defmodule Doex.Cli.Ip do
   """
 
   @options %{
-    tag: :boolean,
+    tag: :boolean
   }
 
   def run(raw_args) do
-    Doex.start
+    Doex.start()
 
     raw_args
     |> Parser.parse(@options)
     |> invoke(fn {opts, [name]} ->
-         name
-         |> Doex.Client.find_droplet(opts)
-         |> Doex.Client.droplet_ip
-       end)
+      name
+      |> Doex.Client.find_droplet(opts)
+      |> Doex.Client.droplet_ip()
+    end)
     |> Shell.info(raw_args)
   end
-
 end

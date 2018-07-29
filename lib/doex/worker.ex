@@ -1,7 +1,7 @@
 defmodule Doex.Worker do
   use GenServer
 
-  @moduledoc"""
+  @moduledoc """
   Provides global access to the loaded configs, the API
   is available directly with `Doex`, so there is little need to
   dive too deep into here to learn how to use the API, but
@@ -48,7 +48,7 @@ defmodule Doex.Worker do
   end
 
   def handle_call(:reload, _from, _state) do
-    {:reply, :ok, %{config: Doex.Config.read}}
+    {:reply, :ok, %{config: Doex.Config.read()}}
   end
 
   def handle_call({:reload, filename}, _from, _state) do
@@ -56,9 +56,7 @@ defmodule Doex.Worker do
   end
 
   defp read_config(state) do
-    config = Doex.Config.read
+    config = Doex.Config.read()
     {:reply, config, Map.put(state, :config, config)}
   end
-
-
 end

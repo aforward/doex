@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Doex.FloatingIp.Id do
 
   @shortdoc "Locate a floating ip ID, by droplet name (or --tag) that it's assigned to"
 
-  @moduledoc"""
+  @moduledoc """
   Locate a floating ip ID.  This can be done by name
 
        doex floating_ip.id <droplet_name>
@@ -26,5 +26,4 @@ defmodule Mix.Tasks.Doex.FloatingIp.Id do
   """
 
   def run(args), do: Doex.Cli.Main.run({:floating_ip_id, args})
-
 end

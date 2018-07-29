@@ -1,5 +1,5 @@
 defmodule Doex.Io.Table do
-  @moduledoc"""
+  @moduledoc """
   Takes a list of rows (themselves a list of columns) and returns
   iodata containing an aligned ASCII table with `padding` spaces
   between each column.
@@ -16,8 +16,9 @@ defmodule Doex.Io.Table do
   """
   def format(rows, opts \\ []) do
     padding = Keyword.get(opts, :padding, 1)
-    rows    = stringify(rows)
-    widths  = rows |> transpose |> column_widths
+    rows = stringify(rows)
+    widths = rows |> transpose |> column_widths
+
     rows
     |> pad_cells(widths, padding)
     |> Enum.map(&[&1, ?\n])
@@ -44,29 +45,31 @@ defmodule Doex.Io.Table do
 
   defp column_widths(columns) do
     Enum.map(columns, fn column ->
-      column |> Enum.map(&String.length/1) |> Enum.max
+      column |> Enum.map(&String.length/1) |> Enum.max()
     end)
   end
 
   defp transpose(rows) do
     rows
-    |> List.zip
+    |> List.zip()
     |> Enum.map(&Tuple.to_list(&1))
   end
 
   # Map elements in `enumerable` with `fun1` except for the last element
   # which is mapped with `fun2`.
   defp map_special(enumerable, fun1, fun2) do
-    do_map_special(enumerable, [], fun1, fun2) |> :lists.reverse
+    do_map_special(enumerable, [], fun1, fun2) |> :lists.reverse()
   end
 
   defp do_map_special([], _acc, _fun1, _fun2) do
     []
   end
+
   defp do_map_special([t], acc, _fun1, fun2) do
     [fun2.(t) | acc]
   end
-  defp do_map_special([h|t], acc, fun1, fun2) do
+
+  defp do_map_special([h | t], acc, fun1, fun2) do
     do_map_special(t, [fun1.(h) | acc], fun1, fun2)
   end
 end

@@ -3,7 +3,7 @@ defmodule Doex.Cli.Id do
   alias Doex.Cli.Parser
   alias Doex.Io.Shell
 
-  @moduledoc"""
+  @moduledoc """
   Locate a ID of a resource.  This can be done by name or tag.
 
        doex id <--resource_type> <resource_name>
@@ -41,16 +41,16 @@ defmodule Doex.Cli.Id do
     snapshots: :boolean,
     snapshot: :boolean,
     floating_ips: :boolean,
-    floating_ip: :boolean,
+    floating_ip: :boolean
   }
 
   def run(raw_args) do
-    Doex.start
+    Doex.start()
 
     raw_args
     |> Parser.parse(@options)
     |> invoke(fn {opts, [name]} -> find_id(name, opts) end)
-    |> Shell.info
+    |> Shell.info()
   end
 
   def find_id(name, %{droplets: true} = opts), do: Doex.Client.find_droplet_id(name, opts)
@@ -60,5 +60,4 @@ defmodule Doex.Cli.Id do
   def find_id(name, %{floating_ips: true} = opts), do: Doex.Client.find_floating_ip_id(name, opts)
   def find_id(name, %{floating_ip: true} = opts), do: Doex.Client.find_floating_ip_id(name, opts)
   def find_id(name, opts), do: Doex.Client.find_droplet_id(name, opts)
-
 end

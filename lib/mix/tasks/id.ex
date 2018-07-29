@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Doex.Id do
 
   @shortdoc "Locate a ID of a resource, by name or tag (--tag)"
 
-  @moduledoc"""
+  @moduledoc """
   Locate a ID of a resource.  This can be done by name or tag.
 
        doex id <--resource_type> <resource_name>
@@ -32,5 +32,4 @@ defmodule Mix.Tasks.Doex.Id do
   """
 
   def run(args), do: Doex.Cli.Main.run({:id, args})
-
 end

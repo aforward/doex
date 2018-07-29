@@ -3,7 +3,7 @@ defmodule Doex.Cli.Post do
   alias Doex.Cli.Parser
   alias Doex.Io.Shell
 
-  @moduledoc"""
+  @moduledoc """
   Execute a Digital Ocean API POST request
 
       doex post <path> <attributes>
@@ -46,12 +46,11 @@ defmodule Doex.Cli.Post do
   """
 
   def run(raw_args) do
-    Doex.start
+    Doex.start()
 
     raw_args
     |> Parser.parse()
     |> invoke(fn {body, [endpoint]} -> Doex.Api.post(endpoint, body) end)
     |> Shell.inspect(raw_args)
   end
-
 end

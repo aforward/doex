@@ -4,8 +4,7 @@ defmodule Mix.Tasks.DoexTest do
 
   test "run without args shows help" do
     assert capture_io(fn ->
-      Mix.Tasks.Doex.run([])
-    end) =~ "doex v#{Doex.version}"
+             Mix.Tasks.Doex.run([])
+           end) =~ "doex v#{Doex.version()}"
   end
-
 end

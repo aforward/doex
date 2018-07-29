@@ -3,7 +3,7 @@ defmodule Mix.Tasks.Doex.Block do
 
   @shortdoc "Block the command line until a condition is met"
 
-  @moduledoc"""
+  @moduledoc """
   Block the command line until a condition is met,
 
   Currently, we support blocking on action statuses,
@@ -24,5 +24,4 @@ defmodule Mix.Tasks.Doex.Block do
   """
 
   def run(args), do: Doex.Cli.Main.run({:block, args})
-
 end

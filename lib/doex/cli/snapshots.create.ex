@@ -3,7 +3,7 @@ defmodule Doex.Cli.Snapshots.Create do
   alias Doex.Cli.Parser
   alias Doex.Io.Shell
 
-  @moduledoc"""
+  @moduledoc """
   Creates a snapshot of an existing Digital Ocean droplet.  This
   differs from the underlying snapshot API, as it will ensure all
   necessary preconditions are set, and can (if desired) block until
@@ -31,43 +31,47 @@ defmodule Doex.Cli.Snapshots.Create do
     delete: :boolean,
     block: :boolean,
     quiet: :boolean,
-    sleep: :integer,
+    sleep: :integer
   }
 
   def run(raw_args) do
-    Doex.start
+    Doex.start()
 
     raw_args
     |> Parser.parse(@options)
     |> invoke(fn {opts, [droplet_name, snapshot_name]} ->
-         droplet_name
-         |> Doex.Client.find_droplet_id(opts)
-         |> invoke(fn
-              nil -> Shell.unknown_droplet(droplet_name, ["snapshots.create" | raw_args])
-              id -> id
-            end)
-         |> create_snapshot(snapshot_name, opts)
-       end)
+      droplet_name
+      |> Doex.Client.find_droplet_id(opts)
+      |> invoke(fn
+        nil -> Shell.unknown_droplet(droplet_name, ["snapshots.create" | raw_args])
+        id -> id
+      end)
+      |> create_snapshot(snapshot_name, opts)
+    end)
   end
 
   defp create_snapshot(nil, _snapshot_name, _opts), do: nil
+
   defp create_snapshot(droplet_id, snapshot_name, opts) do
     Shell.info("Powering off droplet #{droplet_id}...", opts)
+
     Doex.Api.post("/droplets/#{droplet_id}/actions", %{type: "power_off"})
     |> Shell.inspect(opts)
     |> Doex.Cli.Block.block_until(opts)
+
     Shell.info("DONE, Powering off droplet #{droplet_id}.", opts)
 
     Shell.info("Creating snapshot named #{snapshot_name}...", opts)
+
     Doex.Api.post("/droplets/#{droplet_id}/actions", %{type: "snapshot", name: snapshot_name})
     |> invoke(fn resp ->
-         if opts[:delete] || opts[:block] do
-           Doex.Cli.Block.block_until(resp, opts)
-           Shell.info("DONE, Creating snapshot named #{snapshot_name}.", opts)
-         else
-           Shell.info("WORKING, Creating snapshot named #{snapshot_name}.", opts)
-         end
-       end)
+      if opts[:delete] || opts[:block] do
+        Doex.Cli.Block.block_until(resp, opts)
+        Shell.info("DONE, Creating snapshot named #{snapshot_name}.", opts)
+      else
+        Shell.info("WORKING, Creating snapshot named #{snapshot_name}.", opts)
+      end
+    end)
 
     if opts[:delete] do
       Shell.info("Deleting droplet #{droplet_id}...", opts)
@@ -76,5 +80,4 @@ defmodule Doex.Cli.Snapshots.Create do
 
     snapshot_name
   end
-
 end

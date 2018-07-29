@@ -3,7 +3,7 @@ defmodule Doex.Cli.Get do
   alias Doex.Cli.Parser
   alias Doex.Io.Shell
 
-  @moduledoc"""
+  @moduledoc """
   Execute a Digital Ocean API GET request
 
       doex get <path>
@@ -33,19 +33,18 @@ defmodule Doex.Cli.Get do
   """
 
   def run(raw_args) do
-    Doex.start
+    Doex.start()
 
     raw_args
     |> Parser.parse()
     |> invoke(fn {opts, [endpoint]} ->
-         opts
-         |> Enum.map(fn {k,v} -> "#{k}=#{v}" end)
-         |> Enum.join("&")
-         |> invoke("#{endpoint}?#{&1}")
-         |> String.replace(~r{\?$},"")
-       end)
-    |> Doex.Api.get
+      opts
+      |> Enum.map(fn {k, v} -> "#{k}=#{v}" end)
+      |> Enum.join("&")
+      |> invoke("#{endpoint}?#{&1}")
+      |> String.replace(~r{\?$}, "")
+    end)
+    |> Doex.Api.get()
     |> Shell.inspect(raw_args)
   end
-
 end

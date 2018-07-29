@@ -3,7 +3,7 @@ defmodule Doex.Cli.Ssh.Hostkey do
   alias Doex.Cli.Parser
   alias Doex.Io.Shell
 
-  @moduledoc"""
+  @moduledoc """
   Add the droplet hostkey to the executing server
 
        doex ssh.hostkey <droplet_id_or_name_or_tag>
@@ -28,31 +28,31 @@ defmodule Doex.Cli.Ssh.Hostkey do
   """
 
   @options %{
-    tag: :boolean,
+    tag: :boolean
   }
 
   def run(raw_args) do
-    Doex.start
+    Doex.start()
 
     raw_args
     |> Parser.parse(@options)
     |> invoke(fn {opts, [name]} ->
-         name
-         |> Doex.Client.find_droplet(opts)
-         |> invoke(fn
-              nil -> Shell.unknown_droplet(name, ["scp.hostkey" | raw_args])
-              id -> id
-            end)
-         |> Doex.Client.droplet_ip
-         |> ssh_hostkey
-       end)
+      name
+      |> Doex.Client.find_droplet(opts)
+      |> invoke(fn
+        nil -> Shell.unknown_droplet(name, ["scp.hostkey" | raw_args])
+        id -> id
+      end)
+      |> Doex.Client.droplet_ip()
+      |> ssh_hostkey
+    end)
     |> Shell.info(raw_args)
   end
 
   def ssh_hostkey(nil), do: nil
+
   def ssh_hostkey(ip) do
     {_, 0} = System.cmd("ssh", ["-o", "StrictHostKeyChecking no", "root@#{ip}", "uname -a"])
     "Added hostkey for droplet #{ip}"
   end
-
 end

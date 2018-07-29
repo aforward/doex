@@ -3,7 +3,7 @@ defmodule Doex.Cli.Delete do
   alias Doex.Cli.Parser
   alias Doex.Io.Shell
 
-  @moduledoc"""
+  @moduledoc """
   Execute a Digital Ocean API DELETE request
 
        doex delete <path> <attributes>
@@ -19,12 +19,11 @@ defmodule Doex.Cli.Delete do
   """
 
   def run(raw_args) do
-    Doex.start
+    Doex.start()
 
     raw_args
     |> Parser.parse()
     |> invoke(fn {body, [endpoint]} -> Doex.Api.delete(endpoint, body) end)
     |> Shell.inspect(raw_args)
   end
-
 end

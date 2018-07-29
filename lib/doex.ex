@@ -1,6 +1,5 @@
 defmodule Doex do
-
-  @moduledoc"""
+  @moduledoc """
 
   An elixir implementation of the
   [DigitalOcean API v2](https://developers.digitalocean.com/documentation/v2/). From
@@ -302,23 +301,21 @@ defmodule Doex do
 
   """
 
-  def version(), do: unquote(Mix.Project.config[:version])
-  def elixir_version(), do: unquote(System.version)
+  def version(), do: unquote(Mix.Project.config()[:version])
+  def elixir_version(), do: unquote(System.version())
 
   def start(), do: {:ok, _started} = Application.ensure_all_started(:doex)
 
-
-  @doc"""
+  @doc """
   Retrieve the DOEX configs.
   """
   def config do
     GenServer.call(Doex.Worker, :config)
   end
 
-  @doc"""
+  @doc """
   Reload the DOEX configs from the defaulted location
   """
   def reload, do: GenServer.call(Doex.Worker, :reload)
   def reload(filename), do: GenServer.call(Doex.Worker, {:reload, filename})
-
 end

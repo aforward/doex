@@ -8,74 +8,75 @@ defmodule Doex.ConfigTest do
   @default_config %{ssh_keys: [], token: "FILL_ME_IN", url: "https://api.digitalocean.com/v2"}
 
   setup do
-    on_exit fn ->
+    on_exit(fn ->
       File.rm(".doex")
-      File.rm("~/.doex" |> Path.expand)
+      File.rm("~/.doex" |> Path.expand())
       File.rm("/tmp/.doex")
       File.rm_rf("/tmp/here")
       System.delete_env("DOEX_CONFIG")
       Application.delete_env(:doex, :config)
-      Doex.reload
-    end
+      Doex.reload()
+    end)
+
     :ok
   end
 
   test "filename (default)" do
-    assert Config.filename == "~/.doex" |> Path.expand
+    assert Config.filename() == "~/.doex" |> Path.expand()
   end
 
   test "filename (local directory)" do
     File.touch(".doex")
-    assert Config.filename == ".doex" |> Path.expand
+    assert Config.filename() == ".doex" |> Path.expand()
   end
 
   test "filename (SYSTEM ENV)" do
     File.touch(".doex")
     System.put_env("DOEX_CONFIG", @filename)
-    assert Config.filename == @filename
+    assert Config.filename() == @filename
   end
 
   test "filename (Application ENV)" do
     File.touch(".doex")
     Application.put_env(:doex, :config, %{token: "SHHHHH"})
-    assert Config.filename == :config
+    assert Config.filename() == :config
   end
 
   test "init (use default filename)" do
     System.put_env("DOEX_CONFIG", @filename)
-    Config.init
+    Config.init()
     assert File.exists?(@filename)
-    assert @default_config == Config.read
+    assert @default_config == Config.read()
   end
 
   test "init (file exists -- do nothing)" do
     System.put_env("DOEX_CONFIG", "/tmp/.doex")
     File.write!("/tmp/.doex", "xxx")
-    Config.init
+    Config.init()
     assert "xxx" == File.read!("/tmp/.doex")
   end
 
   test "init (Application :config -- do nothing)" do
     Application.put_env(:doex, :config, %{token: "SHHHHH"})
-    Config.init
-    assert %{token: "SHHHHH"} == Config.read
+    Config.init()
+    assert %{token: "SHHHHH"} == Config.read()
   end
 
   test "reinit (file exists -- overwrite)" do
     System.put_env("DOEX_CONFIG", "/tmp/.doex")
     File.write!("/tmp/.doex", "xxx")
-    Config.reinit
-    assert @default_config == Config.read
+    Config.reinit()
+    assert @default_config == Config.read()
   end
 
   test "reinit (Application :config -- do nothing)" do
     Application.put_env(:doex, :config, %{token: "SHHHHH"})
-    Config.reinit
-    assert %{token: "SHHHHH"} == Config.read
+    Config.reinit()
+    assert %{token: "SHHHHH"} == Config.read()
   end
 
   test "edit configs" do
-    @filename |> Config.init
+    @filename |> Config.init()
 
     :ok = Config.put(@filename, :token, "I_AM_FULL")
     assert "I_AM_FULL" == Config.get(@filename, :token)
@@ -90,7 +91,6 @@ defmodule Doex.ConfigTest do
     :ok = Config.remove(@filename, :ssh_keys)
     assert nil == Config.get(@filename, :ssh_keys)
     assert %{token: "I_AM_FULL", url: "https://api.digitalocean.com/v2"} == Config.read(@filename)
-
   end
 
   test "get (Application :config -- do nothing)" do
@@ -99,9 +99,8 @@ defmodule Doex.ConfigTest do
     assert %{token: "SHHHHH", ssh_keys: ["ab1", "ab2"]} == Config.read(:config)
 
     assert ["ab1", "ab2"] == Config.get(:ssh_keys)
-    assert %{token: "SHHHHH", ssh_keys: ["ab1", "ab2"]} == Config.read
+    assert %{token: "SHHHHH", ssh_keys: ["ab1", "ab2"]} == Config.read()
   end
 
   defp my_config(changes), do: Map.merge(@default_config, changes)
-
 end

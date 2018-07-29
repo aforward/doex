@@ -5,7 +5,7 @@ defmodule Doex.Cli.FloatingIp.Reassign do
   alias Doex.Io.Shell
   alias Doex.Client
 
-  @moduledoc"""
+  @moduledoc """
   Reassign a floating IP from one droplet to another
 
        doex floating_ip.reassign <old_droplet_name> <new_droplet_name>
@@ -27,18 +27,17 @@ defmodule Doex.Cli.FloatingIp.Reassign do
   """
 
   @options %{
-    tag: :boolean,
+    tag: :boolean
   }
 
   def run(raw_args) do
-    Doex.start
+    Doex.start()
 
     raw_args
     |> Parser.parse(@options)
     |> invoke(fn {opts, [from_name, to_name]} ->
-          Client.reassign_floating_ip(from_name, to_name, opts)
-       end)
+      Client.reassign_floating_ip(from_name, to_name, opts)
+    end)
     |> Shell.inspect(raw_args)
   end
-
 end

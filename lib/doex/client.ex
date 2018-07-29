@@ -1,7 +1,7 @@
 defmodule Doex.Client do
   use FnExpr
 
-  @moduledoc"""
+  @moduledoc """
   Access service functionality through Elixir functions,
   wrapping the underlying HTTP API calls.
 
@@ -22,26 +22,28 @@ defmodule Doex.Client do
 
   def find_droplet(tag, %{tag: true}) do
     "/droplets?tag_name=#{tag}"
-    |> Doex.Api.get
+    |> Doex.Api.get()
     |> invoke(fn {:ok, %{"droplets" => droplets}} -> droplets end)
-    |> List.first
+    |> List.first()
   end
 
   def find_droplet(name, _opts) do
     case parse(name) do
-      :error -> "/droplets?page=1&per_page=1000"
-        |> Doex.Api.get
+      :error ->
+        "/droplets?page=1&per_page=1000"
+        |> Doex.Api.get()
         |> invoke(fn {:ok, %{"droplets" => droplets}} -> droplets end)
         |> Enum.filter(fn %{"name" => some_name} -> name == some_name end)
-        |> List.first
-      {id, ""} -> "/droplets/#{id}"
-        |> Doex.Api.get
-        |> invoke(fn
-             {:ok, %{"droplet" => droplet}} -> droplet
-             _ -> nil
-           end)
-    end
+        |> List.first()
 
+      {id, ""} ->
+        "/droplets/#{id}"
+        |> Doex.Api.get()
+        |> invoke(fn
+          {:ok, %{"droplet" => droplet}} -> droplet
+          _ -> nil
+        end)
+    end
   end
 
   def find_droplet_id(name_or_id, opts) do
@@ -53,31 +55,34 @@ defmodule Doex.Client do
 
   def find_snapshot_id(name, _opts \\ %{}) do
     case parse(name) do
-      :error -> "/snapshots?page=1&per_page=1000"
-        |> Doex.Api.get
+      :error ->
+        "/snapshots?page=1&per_page=1000"
+        |> Doex.Api.get()
         |> invoke(fn {:ok, %{"snapshots" => snapshots}} -> snapshots end)
         |> Enum.filter(fn %{"name" => some_name} -> name == some_name end)
-        |> List.first
+        |> List.first()
         |> FnExpr.default(%{"id" => nil})
         |> Map.get("id")
-      {id, ""} -> id
+
+      {id, ""} ->
+        id
     end
   end
 
   def find_floating_ip_id(name_or_id, opts \\ %{}) do
     droplet_id = find_droplet_id(name_or_id, opts)
+
     "/floating_ips?page=1&per_page=1000"
-    |> Doex.Api.get
+    |> Doex.Api.get()
     |> invoke(fn {:ok, %{"floating_ips" => floating_ips}} -> floating_ips end)
     |> Enum.filter(fn
-         %{"droplet" => %{"id" => ^droplet_id}} -> true
-         _ -> false
-       end)
-    |> List.first
+      %{"droplet" => %{"id" => ^droplet_id}} -> true
+      _ -> false
+    end)
+    |> List.first()
     |> FnExpr.default(%{"ip" => nil})
     |> Map.get("ip")
   end
-
 
   def reassign_floating_ip(from_name, to_name, opts \\ %{}) do
     from_floating_id = find_floating_ip_id(from_name, opts)
@@ -86,32 +91,29 @@ defmodule Doex.Client do
 
   def assign_floating_ip(from_floating_id, to_name, opts \\ %{}) do
     to_droplet_id = find_droplet_id(to_name, opts)
+
     "/floating_ips/#{from_floating_id}/actions"
-    |> Doex.Api.post(%{
-        type: "assign",
-        droplet_id: to_droplet_id})
+    |> Doex.Api.post(%{type: "assign", droplet_id: to_droplet_id})
   end
 
   def droplet_ip(nil), do: nil
+
   def droplet_ip(info) do
     info
     |> get_in(["networks", "v4"])
     |> FnExpr.default([])
     |> Enum.filter(&(&1["type"] == "public"))
-    |> List.first
+    |> List.first()
     |> FnExpr.default(%{})
     |> Map.get("ip_address")
   end
 
   def list_droplets do
     "/droplets?page=1&per_page=1000"
-    |> Doex.Api.get
+    |> Doex.Api.get()
     |> invoke(fn {:ok, %{"droplets" => droplets}} -> droplets end)
   end
 
   defp parse(int) when is_integer(int), do: {int, ""}
   defp parse(str), do: Integer.parse(str)
-
 end
-
-

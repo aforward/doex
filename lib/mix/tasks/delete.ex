@@ -3,7 +3,7 @@ defmodule Mix.Tasks.Doex.Delete do
 
   @shortdoc "Execute a Digital Ocean API DELETE request"
 
-  @moduledoc"""
+  @moduledoc """
   Execute a Digital Ocean API DELETE request
 
       mix doex.delete <path> <attributes>
@@ -19,5 +19,4 @@ defmodule Mix.Tasks.Doex.Delete do
   """
 
   def run(args), do: Doex.Cli.Main.run({:delete, args})
-
 end

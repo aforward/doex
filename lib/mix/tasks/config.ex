@@ -22,5 +22,4 @@ defmodule Mix.Tasks.Doex.Config do
   """
 
   def run(args), do: Doex.Cli.Main.run({:config, args})
-
 end

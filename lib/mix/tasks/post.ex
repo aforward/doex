@@ -3,7 +3,7 @@ defmodule Mix.Tasks.Doex.Post do
 
   @shortdoc "Execute a Digital Ocean API POST request"
 
-  @moduledoc"""
+  @moduledoc """
   Execute a Digital Ocean API POST request
 
        doex post <path> <attributes>
@@ -46,5 +46,4 @@ defmodule Mix.Tasks.Doex.Post do
   """
 
   def run(args), do: Doex.Cli.Main.run({:post, args})
-
 end

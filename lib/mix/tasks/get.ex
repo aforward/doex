@@ -3,7 +3,7 @@ defmodule Mix.Tasks.Doex.Get do
 
   @shortdoc "Execute a Digital Ocean API GET request"
 
-  @moduledoc"""
+  @moduledoc """
   Execute a Digital Ocean API GET request
 
        mix doex.get <path>
@@ -15,5 +15,4 @@ defmodule Mix.Tasks.Doex.Get do
   """
 
   def run(args), do: Doex.Cli.Main.run({:get, args})
-
 end

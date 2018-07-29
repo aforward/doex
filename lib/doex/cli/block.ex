@@ -2,7 +2,7 @@ defmodule Doex.Cli.Block do
   use FnExpr
   alias Doex.Cli.{Parser}
 
-  @moduledoc"""
+  @moduledoc """
   Block the command line until a condition is met,
 
   Currently, we support blocking on action statuses,
@@ -23,10 +23,10 @@ defmodule Doex.Cli.Block do
   """
 
   def run(raw_args) do
-    Doex.start
+    Doex.start()
 
     raw_args
-    |> Parser.parse
+    |> Parser.parse()
     |> block_until
   end
 
@@ -39,19 +39,19 @@ defmodule Doex.Cli.Block do
   end
 
   def block_until({opts, ["droplets", name, status]} = input) do
-   name
-   |> Doex.Client.find_droplet_id(opts)
-   |> invoke(Doex.Api.get("/droplets/#{&1}"))
-   |> invoke(fn {:ok, %{"droplet" => %{"status" => current_status}}} ->
-        block_until(current_status, status, input, opts)
-      end)
+    name
+    |> Doex.Client.find_droplet_id(opts)
+    |> invoke(Doex.Api.get("/droplets/#{&1}"))
+    |> invoke(fn {:ok, %{"droplet" => %{"status" => current_status}}} ->
+      block_until(current_status, status, input, opts)
+    end)
   end
 
   def block_until({opts, ["actions", id, status]} = input) do
     Doex.Api.get("/actions/#{id}")
     |> invoke(fn {:ok, %{"action" => %{"status" => current_status}}} ->
-         block_until(current_status, status, input, opts)
-       end)
+      block_until(current_status, status, input, opts)
+    end)
   end
 
   defp block_until(current_status, desired_status, input, opts) do
@@ -59,12 +59,12 @@ defmodule Doex.Cli.Block do
       sleep(10)
       block_until(input)
     end
+
     sleep(opts[:sleep])
   end
 
   defp sleep(nil), do: nil
-  defp sleep(as_str) when is_binary(as_str), do: as_str |> Integer.parse |> sleep
+  defp sleep(as_str) when is_binary(as_str), do: as_str |> Integer.parse() |> sleep
   defp sleep(in_seconds) when is_integer(in_seconds), do: :timer.sleep(in_seconds * 1000)
   defp sleep({num, _}), do: sleep(num)
-
 end

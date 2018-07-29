@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Doex.Ls do
 
   @shortdoc "List your resources."
 
-  @moduledoc"""
+  @moduledoc """
   List your resources.
 
        doex ls <--resource_type>
@@ -26,5 +26,4 @@ defmodule Mix.Tasks.Doex.Ls do
   """
 
   def run(args), do: Doex.Cli.Main.run({:ls, args})
-
 end

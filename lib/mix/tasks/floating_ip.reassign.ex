@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Doex.FloatingIp.Reassign do
 
   @shortdoc "Reassign a floating IP from one droplet to another"
 
-  @moduledoc"""
+  @moduledoc """
   Reassign a floating IP from one droplet to another
 
        doex floating_ip.reassign <old_droplet_name> <new_droplet_name>
@@ -26,5 +26,4 @@ defmodule Mix.Tasks.Doex.FloatingIp.Reassign do
   """
 
   def run(args), do: Doex.Cli.Main.run({:floating_ip_reassign, args})
-
 end

@@ -3,7 +3,7 @@ defmodule Doex.Cli.Droplets.Create do
   alias Doex.Cli.Parser
   alias Doex.Io.Shell
 
-  @moduledoc"""
+  @moduledoc """
   Create a new digital ocean droplet
 
        doex droplets.create <name> <options>
@@ -58,11 +58,11 @@ defmodule Doex.Cli.Droplets.Create do
     volumes: :string,
     tags: :list,
     quiet: :boolean,
-    sleep: :integer,
+    sleep: :integer
   }
 
   def run(raw_args) do
-    Doex.start
+    Doex.start()
 
     raw_args
     |> Parser.parse(@options)
@@ -73,27 +73,28 @@ defmodule Doex.Cli.Droplets.Create do
 
   defp create_droplet(opts) do
     Shell.info("Creating droplet named #{opts[:name]}...", opts)
+
     opts
     |> invoke(fn opts ->
-         if opts[:snapshot] do
-           opts
-           |> Map.put(:image, opts[:snapshot] |> Doex.Client.find_snapshot_id)
-           |> Map.delete(:snapshot)
-         else
-           opts
-         end
-       end)
+      if opts[:snapshot] do
+        opts
+        |> Map.put(:image, opts[:snapshot] |> Doex.Client.find_snapshot_id())
+        |> Map.delete(:snapshot)
+      else
+        opts
+      end
+    end)
     |> invoke(Doex.Api.post("/droplets", &1))
     |> invoke(fn resp ->
-         if opts[:block] do
-           Doex.Cli.Block.block_until(resp, opts)
-           Shell.info("DONE, Creating droplet named #{opts[:name]}.", opts)
-         else
-           Shell.info("WORKING, Creating droplet named #{opts[:name]}.", opts)
-         end
-         resp
-       end)
+      if opts[:block] do
+        Doex.Cli.Block.block_until(resp, opts)
+        Shell.info("DONE, Creating droplet named #{opts[:name]}.", opts)
+      else
+        Shell.info("WORKING, Creating droplet named #{opts[:name]}.", opts)
+      end
+
+      resp
+    end)
     |> Shell.inspect(opts)
   end
-
 end

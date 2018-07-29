@@ -1,5 +1,4 @@
 defmodule Doex.Application do
-
   @moduledoc false
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
@@ -9,12 +8,12 @@ defmodule Doex.Application do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(Doex.Worker, []),
+      worker(Doex.Worker, [])
     ]
 
     opts = [
       strategy: :one_for_one,
-      name:     Doex.Supervisor
+      name: Doex.Supervisor
     ]
 
     Supervisor.start_link(children, opts)

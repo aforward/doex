@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Doex.Ssh.Hostkey do
 
   @shortdoc "Add the droplet hostkey to the executing server"
 
-  @moduledoc"""
+  @moduledoc """
   Add the droplet hostkey to the executing server
 
        doex ssh.hostkey <droplet_id_or_name_or_tag>
@@ -29,5 +29,4 @@ defmodule Mix.Tasks.Doex.Ssh.Hostkey do
   """
 
   def run(args), do: Doex.Cli.Main.run({:ssh_hostkey, args})
-
 end
