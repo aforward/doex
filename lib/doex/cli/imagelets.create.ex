@@ -113,6 +113,7 @@ defmodule Doex.Cli.Imagelets.Create do
         postgres_version
       }"
       |> String.replace(~r{[-.]}, "")
+      |> String.downcase()
 
     Doex.Cli.Droplets.Create.run([droplet_name, "--block", "--sleep", "10" | raw_args])
 
