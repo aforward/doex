@@ -9,7 +9,7 @@ defmodule Doex.Mixfile do
   @deps [
     {:mix_test_watch, "~> 0.7", only: :dev, runtime: false},
     {:jason, "~> 1.1"},
-    {:httpoison, "~> 1.2"},
+    {:httpoison, "~> 1.4"},
     {:fn_expr, "~> 0.3"},
     {:version_tasks, "~> 0.11"},
     {:ex_doc, ">= 0.0.0", only: :dev}
