@@ -4,7 +4,7 @@ defmodule Doex.Mixfile do
   @app :doex
   @git_url "https://github.com/capbash/doex"
   @home_url @git_url
-  @version "0.8.3"
+  @version "0.9.0"
 
   @deps [
     {:mix_test_watch, "~> 0.7", only: :dev, runtime: false},
