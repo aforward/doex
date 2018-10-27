@@ -108,6 +108,14 @@ defmodule Doex.Cli.Imagelets.Create do
     phoenix_version = opts[:phoenix] || @default_phoenix
     postgres_version = opts[:postgres] || @default_postgres
 
+    linux_dist =
+      opts[:image]
+      |> linux_distribution()
+      |> case do
+        nil -> ""
+        name -> " LINUX_DISTRIBUTION=#{name}"
+      end
+
     droplet_name =
       "erlang#{erlang_version}elixir#{elixir_version}phoenix#{phoenix_version}postgres#{
         postgres_version
@@ -120,7 +128,7 @@ defmodule Doex.Cli.Imagelets.Create do
     Shell.info(
       "ERLANG_VERSION=#{erlang_version} ELIXIR_VERSION=#{elixir_version} PHOENIX_VERSION=#{
         phoenix_version
-      } POSTGRES_VERSION=#{postgres_version} bits install-if phoenix"
+      } POSTGRES_VERSION=#{postgres_version} #{linux_dist} bits install-if phoenix"
     )
 
     droplet_name
@@ -130,7 +138,7 @@ defmodule Doex.Cli.Imagelets.Create do
         "bash <(curl -s https://raw.githubusercontent.com/capbash/bits/master/bits-installer)",
         "ERLANG_VERSION=#{erlang_version} ELIXIR_VERSION=#{elixir_version} PHOENIX_VERSION=#{
           phoenix_version
-        } POSTGRES_VERSION=#{postgres_version} bits install-if phoenix"
+        } POSTGRES_VERSION=#{postgres_version} #{linux_dist} bits install-if phoenix"
       ],
       other_opts
     )
@@ -167,5 +175,16 @@ defmodule Doex.Cli.Imagelets.Create do
   def snapshot(id, name, other_opts) do
     Doex.Cli.Snapshots.Create.run([id, name, "--block", "--delete" | other_opts])
     id
+  end
+
+  def linux_distribution(nil), do: nil
+
+  def linux_distribution(name) do
+    case Regex.run(~r/ubuntu-([^-]*)/, name) do
+      [_, "14"] -> :trusty
+      [_, "16"] -> :xenial
+      [_, "18"] -> :bionic
+      _ -> nil
+    end
   end
 end
