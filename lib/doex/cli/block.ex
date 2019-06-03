@@ -38,6 +38,10 @@ defmodule Doex.Cli.Block do
     block_until({opts, ["droplets", id, "active"]})
   end
 
+  def block_until({:ok, %{"droplets" => [%{"id" => id}]}}, opts) do
+    block_until({opts, ["droplets", id, "active"]})
+  end
+
   def block_until({opts, ["droplets", name, status]} = input) do
     name
     |> Doex.Client.find_droplet_id(opts)
