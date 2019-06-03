@@ -108,7 +108,7 @@ defmodule Doex.Cli.Main do
   end
 
   def run({:unknown, unknown_cmd, _args}) do
-    Shell.error("We couldn't process #{unknown_cmd}, so kinda check your spelling and try again")
+    Shell.error("We couldn't process #{unknown_cmd}, so kindly check your spelling and try again")
     Shell.newline()
     run({:doex, []})
   end
