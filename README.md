@@ -1,5 +1,7 @@
 # Doex
 
+[![Build Status](https://api.travis-ci.org/capbash/doex.svg?branch=master)](https://travis-ci.org/capbash/doex)
+
 An elixir implementation of the [DigitalOcean API v2](https://developers.digitalocean.com/documentation/v2/).
 
 From their documentation:
@@ -301,4 +303,3 @@ they will be located in
 ## License
 
 MIT License
-
