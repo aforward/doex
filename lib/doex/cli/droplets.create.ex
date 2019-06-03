@@ -3,7 +3,7 @@ defmodule Doex.Cli.Droplets.Create do
   alias Doex.Cli.Parser
   alias Doex.Io.Shell
 
-  @moduledoc """
+  @help """
   Create a new digital ocean droplet
 
        doex droplets.create <name> <options>
@@ -42,8 +42,9 @@ defmodule Doex.Cli.Droplets.Create do
         --tags myt \\
         --image ubuntu-16-04-x64 \\
         --size 512mb
-
   """
+
+  @moduledoc @help
 
   @options %{
     region: :string,
@@ -60,6 +61,11 @@ defmodule Doex.Cli.Droplets.Create do
     quiet: :boolean,
     sleep: :integer
   }
+  def run([]), do: run(["help"])
+
+  def run(["help"]) do
+    Shell.info(@help)
+  end
 
   def run(raw_args) do
     Doex.start()
