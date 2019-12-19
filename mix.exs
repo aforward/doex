@@ -4,12 +4,12 @@ defmodule Doex.Mixfile do
   @app :doex
   @git_url "https://github.com/capbash/doex"
   @home_url @git_url
-  @version "0.9.0"
+  @version "0.10.0"
 
   @deps [
     {:mix_test_watch, "~> 0.7", only: :dev, runtime: false},
     {:jason, "~> 1.1"},
-    {:httpoison, "~> 1.4"},
+    {:httpoison, "~> 1.6"},
     {:fn_expr, "~> 0.3"},
     {:version_tasks, "~> 0.11"},
     {:ex_doc, ">= 0.0.0", only: :dev}
@@ -37,7 +37,7 @@ defmodule Doex.Mixfile do
     [
       app: @app,
       version: @version,
-      elixir: "~> 1.4",
+      elixir: "~> 1.9",
       name: @app,
       description: "A Digital Ocean API v2 client for Elixir (yes, another one)",
       package: @package,
