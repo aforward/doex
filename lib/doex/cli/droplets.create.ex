@@ -74,7 +74,10 @@ defmodule Doex.Cli.Droplets.Create do
     |> Parser.parse(@options)
     |> invoke(fn {opts, [name]} -> opts |> Map.put(:name, name) end)
     |> create_droplet
-    |> invoke(fn {:ok, %{"droplet" => %{"id" => id}}} -> Shell.info(id) end)
+    |> invoke(fn
+        {:ok, %{"droplet" => %{"id" => id}}} -> Shell.info(id)
+        {:error, message, details} -> Shell.info("Call failed due to #{message} (#{details |> inspect})\n")
+      end)
   end
 
   defp create_droplet(opts) do

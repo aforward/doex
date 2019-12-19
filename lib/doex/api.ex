@@ -185,8 +185,13 @@ defmodule Doex.Api do
   defp parse({:ok, %HTTPoison.Response{status_code: 204} = resp}), do: parse(resp)
 
   defp parse({:ok, %HTTPoison.Response{status_code: code, body: body}}) do
-    message = body |> String.replace("\\\"", "\"") |> Jason.decode!()
-    {:error, "Expected a 200, received #{code}", message}
+    body
+    |> String.replace("\\\"", "\"")
+    |> Jason.decode()
+    |> case do
+      {:ok, message} -> {:error, "Expected a 200, received #{code}", message}
+      {:error, _} -> {:error, "Expected a 200, received #{code}", body}
+    end
   end
 
   defp parse({:error, %HTTPoison.Error{reason: reason}}) do

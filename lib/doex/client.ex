@@ -1,5 +1,6 @@
 defmodule Doex.Client do
   use FnExpr
+  alias Doex.Io.Shell
 
   @moduledoc """
   Access service functionality through Elixir functions,
@@ -23,7 +24,10 @@ defmodule Doex.Client do
   def find_droplet(tag, %{tag: true}) do
     "/droplets?tag_name=#{tag}"
     |> Doex.Api.get()
-    |> invoke(fn {:ok, %{"droplets" => droplets}} -> droplets end)
+    |> analyze_result(%{"droplets" => []})
+    |> case do
+      %{"droplets" => droplets} -> droplets
+    end
     |> List.first()
   end
 
@@ -32,17 +36,20 @@ defmodule Doex.Client do
       :error ->
         "/droplets?page=1&per_page=1000"
         |> Doex.Api.get()
-        |> invoke(fn {:ok, %{"droplets" => droplets}} -> droplets end)
+        |> analyze_result(%{"droplets" => []})
+        |> case do
+          %{"droplets" => droplets} -> droplets
+        end
         |> Enum.filter(fn %{"name" => some_name} -> name == some_name end)
         |> List.first()
 
       {id, ""} ->
         "/droplets/#{id}"
         |> Doex.Api.get()
-        |> invoke(fn
-          {:ok, %{"droplet" => droplet}} -> droplet
-          _ -> nil
-        end)
+        |> analyze_result(%{"droplets" => nil})
+        |> case do
+          %{"droplet" => droplet} -> droplet
+        end
     end
   end
 
@@ -58,7 +65,10 @@ defmodule Doex.Client do
       :error ->
         "/snapshots?page=1&per_page=1000"
         |> Doex.Api.get()
-        |> invoke(fn {:ok, %{"snapshots" => snapshots}} -> snapshots end)
+        |> analyze_result(%{"snapshots" => []})
+        |> case do
+          %{"snapshots" => snapshots} -> snapshots
+        end
         |> Enum.filter(fn %{"name" => some_name} -> name == some_name end)
         |> List.first()
         |> FnExpr.default(%{"id" => nil})
@@ -74,7 +84,10 @@ defmodule Doex.Client do
 
     "/floating_ips?page=1&per_page=1000"
     |> Doex.Api.get()
-    |> invoke(fn {:ok, %{"floating_ips" => floating_ips}} -> floating_ips end)
+    |> analyze_result(%{"floating_ips" => []})
+    |> case do
+      %{"floating_ips" => floating_ips} -> floating_ips
+    end
     |> Enum.filter(fn
       %{"droplet" => %{"id" => ^droplet_id}} -> true
       _ -> false
@@ -111,9 +124,19 @@ defmodule Doex.Client do
   def list_droplets do
     "/droplets?page=1&per_page=1000"
     |> Doex.Api.get()
-    |> invoke(fn {:ok, %{"droplets" => droplets}} -> droplets end)
+    |> analyze_result(%{"droplets" => []})
+    |> case do
+      %{"droplets" => droplets} -> droplets
+    end
   end
 
   defp parse(int) when is_integer(int), do: {int, ""}
   defp parse(str), do: Integer.parse(str)
+
+  defp analyze_result({:ok, data}, _), do: data
+
+  defp analyze_result({:error, message, details}, default_data) do
+    Shell.info("Call failed due to #{message} (#{details})\n")
+    default_data
+  end
 end
