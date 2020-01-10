@@ -54,9 +54,15 @@ defmodule Doex.Cli.Config do
   end
 
   defp list() do
+    Shell.info("See your configurations below:")
+    Shell.info("#{Doex.Config.filename()}\n")
+
     Enum.each(Doex.Config.read(), fn {key, value} ->
-      Shell.info("#{key}: #{inspect(value, pretty: true)}")
+      Shell.info("  #{key}: #{inspect(value, pretty: true)}")
     end)
+
+    Shell.info("\nTo change a config value, run (for example):")
+    Shell.info("  doex config token abc123\n")
   end
 
   defp read(key) do
