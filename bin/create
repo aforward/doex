@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VERSION=$(MIX_QUIET=1 mix version.current)
-NAME=${1-marketplace-v${VERSION//[.|-]/}}
+NAME=${NAME-marketplace-v${VERSION//[.|-]/}}
 
 doex droplets.create $NAME \
   --region tor1 \
