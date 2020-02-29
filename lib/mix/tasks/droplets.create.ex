@@ -13,7 +13,7 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
 
       --region              nyc3
       --size                512mb
-      --image               ubuntu-16-04-x64
+      --image               ubuntu-18-04-x64
       --ssh_keys            1234,5467
       --backups             # add option to enable
       --ipv6                # add option to enable
@@ -27,7 +27,7 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
       mix doex.droplets.create mydroplet \\
         --region tor1 \\
         --tags myt \\
-        --image ubuntu-16-04-x64 \\
+        --image ubuntu-18-04-x64 \\
         --size 512mb
 
   If you have a specific config file, `mix help doex.config` then add it as an environment variable
@@ -35,7 +35,7 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
       DOEX_CONFIG=/tmp/my.doex mix doex.droplets.create mydroplet \
         --region tor1 \\
         --tags myt \\
-        --image ubuntu-16-04-x64 \\
+        --image ubuntu-18-04-x64 \\
         --size 512mb
 
   """

@@ -17,7 +17,7 @@ defmodule Doex.Cli.Imagelets.Create do
 
       --region              nyc3
       --size                512mb
-      --image               ubuntu-16-04-x64
+      --image               ubuntu-18-04-x64
       --ssh_keys            1234,5467
       --backups             # add option to enable
       --ipv6                # add option to enable
@@ -58,7 +58,7 @@ defmodule Doex.Cli.Imagelets.Create do
       doex imagelets.create phoenix \\
         --region tor1 \\
         --tags myt \\
-        --image ubuntu-16-04-x64 \\
+        --image ubuntu-18-04-x64 \\
         --size 512mb \\
         --erlang #{@default_erlang} \\
         --elixir #{@default_elixir} \\

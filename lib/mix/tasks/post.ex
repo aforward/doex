@@ -10,7 +10,7 @@ defmodule Mix.Tasks.Doex.Post do
 
   For example
 
-      mix doex.post /droplets --name mydroplet --size 512mb --image ubuntu-16-04-x64 --region nyc3 --private-networking
+      mix doex.post /droplets --name mydroplet --size 512mb --image ubuntu-18-04-x64 --region nyc3 --private-networking
 
   The output will be similar to the following, and it's the IDs you want.
 
@@ -22,7 +22,7 @@ defmodule Mix.Tasks.Doex.Post do
              "name" => "14.04.5 x64", "public" => true,
              "regions" => ["nyc1", "sfo1", "nyc2", "ams2", "sgp1", "lon1", "nyc3",
               "ams3", "fra1", "tor1", "sfo2", "blr1"], "size_gigabytes" => 0.27,
-             "slug" => "ubuntu-16-04-x64", "type" => "snapshot"}, "kernel" => nil,
+             "slug" => "ubuntu-18-04-x64", "type" => "snapshot"}, "kernel" => nil,
            "locked" => true, "memory" => 512, "name" => "mydroplet",
            "networks" => %{"v4" => [], "v6" => []}, "next_backup_window" => nil,
            "region" => %{"available" => true,
