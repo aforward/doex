@@ -1,16 +1,19 @@
 #!/bin/bash
 
-doex droplets.create mp \
+VERSION=$(MIX_QUIET=1 mix version.current)
+NAME=${1-marketplace-v${VERSION//[.|-]/}}
+
+doex droplets.create $NAME \
   --region tor1 \
   --tags marketplace \
   --image ubuntu-18-04-x64 \
   --size s-1vcpu-1gb
 
-doex block droplets --sleep 30 mp active && \
-  doex scp mp ./bin/bootstrap /tmp/bootstrap && \
-  doex ssh mp "/tmp/bootstrap"
+doex block droplets $NAME active --sleep 30 && \
+  doex scp $NAME ./bin/bootstrap /tmp/bootstrap && \
+  doex ssh $NAME "/tmp/bootstrap"
 
-IP=$(MIX=quiet doex ip mp)
+IP=$(MIX=quiet doex ip $NAME)
 echo "All done... to access the droplet run:"
 echo "  ssh root@${IP}"
 
