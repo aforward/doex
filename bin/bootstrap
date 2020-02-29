@@ -1,0 +1,6 @@
+#!/bin/bash
+
+bash <(curl -s https://raw.githubusercontent.com/capbash/bits/master/bits-installer)
+
+bits install gitprompt
+bits install marketplace-partners
