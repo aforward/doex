@@ -2,5 +2,9 @@
 
 bash <(curl -s https://raw.githubusercontent.com/capbash/bits/master/bits-installer)
 
-bits install gitprompt
-bits install marketplace-partners
+bits install gitprompt && \
+  bits install marketplace-partners && \
+  echo > /var/log/auth.log && \
+  echo > /var/log/kern.log && \
+  echo > /var/log/ufw.log
+
