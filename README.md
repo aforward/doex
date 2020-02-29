@@ -79,7 +79,7 @@ To install a specific version, branch, tag or commit, adjust any one of the foll
 
 ```bash
 # Install from a specific version
-mix escript.install hex doex 1.2.3
+mix escript.install hex doex 0.11.0
 
 # Install from the latest of a specific branch
 mix escript.install github capbash/doex branch git_branch
