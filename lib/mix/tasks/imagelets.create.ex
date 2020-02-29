@@ -17,7 +17,7 @@ defmodule Mix.Tasks.Doex.Imagelets.Create do
   The following Digital Ocean options (with examples) are available:
 
       --region              nyc3
-      --size                512mb
+      --size                s-1vcpu-1gb
       --image               ubuntu-18-04-x64
       --ssh_keys            1234,5467
       --backups             # add option to enable
@@ -60,7 +60,7 @@ defmodule Mix.Tasks.Doex.Imagelets.Create do
         --region tor1 \\
         --tags myt \\
         --image ubuntu-18-04-x64 \\
-        --size 512mb \\
+        --size s-1vcpu-1gb \\
         --erlang #{@default_erlang} \\
         --elixir #{@default_elixir} \\
         --phoenix #{@default_phoenix} \\

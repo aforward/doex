@@ -12,7 +12,7 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
   The following options with examples are shown below:
 
       --region              nyc3
-      --size                512mb
+      --size                s-1vcpu-1gb
       --image               ubuntu-18-04-x64
       --ssh_keys            1234,5467
       --backups             # add option to enable
@@ -28,7 +28,7 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
         --region tor1 \\
         --tags myt \\
         --image ubuntu-18-04-x64 \\
-        --size 512mb
+        --size s-1vcpu-1gb
 
   If you have a specific config file, `mix help doex.config` then add it as an environment variable
 
@@ -36,7 +36,7 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
         --region tor1 \\
         --tags myt \\
         --image ubuntu-18-04-x64 \\
-        --size 512mb
+        --size s-1vcpu-1gb
 
   """
 
