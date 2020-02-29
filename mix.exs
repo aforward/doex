@@ -37,7 +37,7 @@ defmodule Doex.Mixfile do
     [
       app: @app,
       version: @version,
-      elixir: "~> 1.9",
+      elixir: "~> 1.10",
       name: @app,
       description: "A Digital Ocean API v2 client for Elixir (yes, another one)",
       package: @package,
