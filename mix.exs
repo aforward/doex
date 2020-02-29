@@ -7,7 +7,7 @@ defmodule Doex.Mixfile do
   @version "0.10.2"
 
   @deps [
-    {:mix_test_watch, "~> 0.7", only: :dev, runtime: false},
+    {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
     {:jason, "~> 1.1"},
     {:httpoison, "~> 1.6"},
     {:fn_expr, "~> 0.3"},
