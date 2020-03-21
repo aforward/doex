@@ -4,7 +4,6 @@ elixir:
 otp_release:
   - 21.0
   - 22.0
-  - 23.0
 matrix:
   exclude:
 sudo: false
