@@ -11,7 +11,7 @@ defmodule Doex.Mixfile do
     {:jason, "~> 1.1"},
     {:httpoison, "~> 1.6"},
     {:fn_expr, "~> 0.3"},
-    {:version_tasks, "~> 0.11"},
+    {:version_tasks, "~> 0.12"},
     {:ex_doc, ">= 0.0.0", only: :dev}
   ]
 
