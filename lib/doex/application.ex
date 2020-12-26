@@ -8,7 +8,7 @@ defmodule Doex.Application do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(Doex.Worker, [])
+      {Doex.Worker, []}
     ]
 
     opts = [

@@ -32,7 +32,7 @@ defmodule Doex.Worker do
         GenServer.call(Doex.Worker, {:reload, "/path/to/new/file.doex"})
   """
 
-  def start_link() do
+  def start_link(_) do
     {:ok, _pid} = GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
