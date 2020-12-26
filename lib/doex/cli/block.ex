@@ -38,7 +38,7 @@ defmodule Doex.Cli.Block do
     block_until({opts, ["droplets", id, "active"]})
   end
 
-  def block_until({:ok, %{"droplets" => [%{"id" => id} | t]}}, opts) do
+  def block_until({:ok, %{"droplets" => [%{"id" => id} | _t]}}, opts) do
     block_until({opts, ["droplets", id, "active"]})
   end
 
