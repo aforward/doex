@@ -69,7 +69,7 @@ defmodule Doex.Cli.Main do
 
     Shell.info("Further information can be found here:")
     Shell.info("  -- https://hex.pm/packages/doex")
-    Shell.info("  -- https://github.com/capbash/doex")
+    Shell.info("  -- https://github.com/aforward/doex")
     Shell.newline()
   end
 

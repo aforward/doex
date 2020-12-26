@@ -1,6 +1,6 @@
 # Doex
 
-[![Build Status](https://api.travis-ci.org/capbash/doex.svg?branch=master)](https://travis-ci.org/capbash/doex)
+[![Build Status](https://api.travis-ci.org/aforward/doex.svg?branch=main)](https://travis-ci.org/aforward/doex)
 
 An elixir implementation of the [DigitalOcean API v2](https://developers.digitalocean.com/documentation/v2/).
 
@@ -43,7 +43,7 @@ you can [install it using escript](https://hexdocs.pm/mix/master/Mix.Tasks.Escri
 
 ```bash
 # Install from GitHub
-mix escript.install github capbash/doex
+mix escript.install github aforward/doex
 
 # Install form HEX.pm
 mix escript.install hex doex
@@ -82,13 +82,13 @@ To install a specific version, branch, tag or commit, adjust any one of the foll
 mix escript.install hex doex 0.11.0
 
 # Install from the latest of a specific branch
-mix escript.install github capbash/doex branch git_branch
+mix escript.install github aforward/doex branch git_branch
 
 # Install from a specific tag
-mix escript.install github capbash/doex tag git_tag
+mix escript.install github aforward/doex tag git_tag
 
 # Install from a specific commit
-mix escript.install github capbash/doex ref git_ref
+mix escript.install github aforward/doex ref git_ref
 ```
 
 Again, checkout [mix escript.install](https://hexdocs.pm/mix/Mix.Tasks.Escript.Install.html) for
@@ -203,7 +203,7 @@ The output will look similar to the following
 
     Further information can be found here:
       -- https://hex.pm/packages/doex
-      -- https://github.com/capbash/doex
+      -- https://github.com/aforward/doex
 
 Please note that the mix tasks and doex scripts provide identical functionality,
 they are just structured slightly differently.

@@ -2,7 +2,7 @@ defmodule Doex.Mixfile do
   use Mix.Project
 
   @app :doex
-  @git_url "https://github.com/capbash/doex"
+  @git_url "https://github.com/aforward/doex"
   @home_url @git_url
   @version "0.12.1"
 

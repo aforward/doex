@@ -42,7 +42,7 @@ defmodule Doex do
 
   ```bash
   # Install from GitHub
-  mix escript.install github capbash/doex
+  mix escript.install github aforward/doex
 
   # Install form HEX.pm
   mix escript.install hex doex
@@ -81,13 +81,13 @@ defmodule Doex do
   mix escript.install hex doex 0.11.0
 
   # Install from the latest of a specific branch
-  mix escript.install github capbash/doex branch git_branch
+  mix escript.install github aforward/doex branch git_branch
 
   # Install from a specific tag
-  mix escript.install github capbash/doex tag git_tag
+  mix escript.install github aforward/doex tag git_tag
 
   # Install from a specific commit
-  mix escript.install github capbash/doex ref git_ref
+  mix escript.install github aforward/doex ref git_ref
   ```
 
   Again, checkout [mix escript.install](https://hexdocs.pm/mix/Mix.Tasks.Escript.Install.html) for
@@ -202,7 +202,7 @@ defmodule Doex do
 
       Further information can be found here:
         -- https://hex.pm/packages/doex
-        -- https://github.com/capbash/doex
+        -- https://github.com/aforward/doex
 
   Please note that the mix tasks and doex scripts provide identical functionality,
   they are just structured slightly differently.
