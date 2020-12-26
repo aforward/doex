@@ -136,7 +136,7 @@ defmodule Doex.Client do
   defp analyze_result({:ok, data}, _), do: data
 
   defp analyze_result({:error, message, details}, default_data) do
-    Shell.info("Call failed due to #{message} (#{details})\n")
+    Shell.info("Call failed due to #{message} (#{details |> inspect()})\n")
     default_data
   end
 end
