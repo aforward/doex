@@ -42,7 +42,7 @@ defmodule Doex.Cli.Post do
               "id" => 5431515, "rel" => "create"}]}}}
 
   Note that `private_networking` DO parameter is changed to dash case `private-networking`
-  and it's a boolean paramater, so it defaults to true if set)
+  and it's a boolean parameter, so it defaults to true if set)
   """
 
   def run(raw_args) do

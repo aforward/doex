@@ -25,6 +25,17 @@ defmodule Doex.Mixfile do
     links: %{"GitHub" => @git_url}
   ]
 
+  @docs [
+    extras: [
+      "LICENSE.md": [title: "License"],
+      "README.md": [title: "Overview"]
+    ],
+    main: "readme",
+    source_url: @git_url,
+    source_ref: "v#{@version}",
+    formatters: ["html"]
+  ]
+
   @escript [
     main_module: Doex.Cli.Main
   ]
@@ -43,7 +54,7 @@ defmodule Doex.Mixfile do
       package: @package,
       source_url: @git_url,
       homepage_url: @home_url,
-      docs: [main: "Doex", extras: ["README.md"]],
+      docs: @docs,
       build_embedded: in_production,
       start_permanent: in_production,
       deps: @deps,

@@ -5,21 +5,23 @@ defmodule Mix.Tasks.Doex.Ls do
   @shortdoc "List your resources."
 
   @moduledoc """
-  List your resources.
+  List your resources:
 
-       doex ls <--resource_type>
+      doex ls <--resource_type>
 
-  Currently, the only supported resource type is a `--droplets`, but more are coming.
+  Currently, the only supported resource type is a `--droplets`, but more are
+  coming.
 
-  For example
+  For example:
 
       doex ls my_app --droplets
 
-  Droplets are also the default, so the `--droplets` can be omitted.
+  Droplets are also the default, so the `--droplets` can be omitted:
 
       doex ls my_app
 
-  If you have a specific config file, `mix help doex.config` then add it as an environment variable
+  If you have a specific config file, `mix help doex.config` then add it as an
+  environment variable:
 
       DOEX_CONFIG=/tmp/my.doex doex ls
 

@@ -2,12 +2,12 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
   use Mix.Task
   use FnExpr
 
-  @shortdoc "Create a droplet on Digital Ocean"
+  @shortdoc "Create a droplet on Digital Ocean."
 
   @moduledoc """
-  Create a new digital ocean droplet
+  Create a new digital ocean droplet:
 
-       mix doex.droplets.create <name> <options>
+      mix doex.droplets.create <name> <options>
 
   The following options with examples are shown below:
 
@@ -22,7 +22,7 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
       --volumes             # TODO figure out what this should be
       --tags                web,uat,temp
 
-  For example
+  For example:
 
       mix doex.droplets.create mydroplet \\
         --region tor1 \\
@@ -30,7 +30,8 @@ defmodule Mix.Tasks.Doex.Droplets.Create do
         --image ubuntu-18-04-x64 \\
         --size s-1vcpu-1gb
 
-  If you have a specific config file, `mix help doex.config` then add it as an environment variable
+  If you have a specific config file, `mix help doex.config` then add it as an
+  environment variable:
 
       DOEX_CONFIG=/tmp/my.doex mix doex.droplets.create mydroplet \
         --region tor1 \\

@@ -8,7 +8,7 @@ defmodule Doex.Cli.Ssh do
 
        doex ssh <droplet_id_or_name_or_tag> <cmd>
 
-  You can provide the droplet ID, referenece it by name, or by tag (if you add the --tag option)
+  You can provide the droplet ID, reference it by name, or by tag (if you add the --tag option)
 
   For example
 

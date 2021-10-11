@@ -5,15 +5,16 @@ defmodule Mix.Tasks.Doex.Droplets.Tag do
   @shortdoc "Tag a droplet."
 
   @moduledoc """
-  Tag a droplet.
+  Tag a droplet:
 
-       doex droplets.tag <droplet_name_or_id> <tag_name>
+      doex droplets.tag <droplet_name_or_id> <tag_name>
 
-  For example
+  For example:
 
       doex droplets.tag my_app production
 
-  If you have a specific config file, `mix help doex.config` then add it as an environment variable
+  If you have a specific config file, `mix help doex.config` then add it as an
+  environment variable:
 
       DOEX_CONFIG=/tmp/my.doex doex droplets.tag my_app production
 
