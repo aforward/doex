@@ -7,8 +7,22 @@ defmodule Doex.Cli.Parser do
   def parse(raw_args, switches),
     do: _parse(raw_args, switches, switches: switches |> Map.to_list())
 
+  defp to_option_parser_opts(parse_opts) do
+    Enum.map(parse_opts, fn
+      {:switches, switches} ->
+        {:switches,
+         Enum.map(switches, fn
+           {k, :list} -> {k, :string}
+           asis -> asis
+         end)}
+
+      asis ->
+        asis
+    end)
+  end
+
   defp _parse(raw_args, switches, parse_opts) do
-    {opts, args, _} = OptionParser.parse(raw_args, parse_opts)
+    {opts, args, _} = OptionParser.parse(raw_args, to_option_parser_opts(parse_opts))
 
     config = Doex.Config.read()
 
