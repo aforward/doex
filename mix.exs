@@ -4,7 +4,7 @@ defmodule Doex.Mixfile do
   @app :doex
   @git_url "https://github.com/aforward/doex"
   @home_url @git_url
-  @version "0.12.2"
+  @version "0.13.0"
 
   @deps [
     {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
@@ -37,7 +37,7 @@ defmodule Doex.Mixfile do
     [
       app: @app,
       version: @version,
-      elixir: "~> 1.11",
+      elixir: "~> 1.13",
       name: @app,
       description: "A Digital Ocean API v2 client for Elixir (yes, another one)",
       package: @package,
