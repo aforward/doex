@@ -8,7 +8,7 @@ defmodule Doex.Cli.Scp do
 
        doex scp <droplet_name> <src> <target>
 
-  You can provide the droplet ID, referenece it by name, or by tag (if you add the --tag option)
+  You can provide the droplet ID, reference it by name, or by tag (if you add the --tag option)
 
   For example
 

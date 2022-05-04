@@ -12,7 +12,7 @@ defmodule Doex.Cli.Config do
 
   ## Config keys
 
-    * `token` - Digitial Ocean Token ()
+    * `token` - Digital Ocean Token ()
     * `ssh_keys` - The SSH Key "IDs" stored in Digital Ocean to grant to new droplets
 
   ## Command line options

@@ -1,8 +1,15 @@
 # Doex
 
 [![Build Status](https://api.travis-ci.org/aforward/doex.svg?branch=main)](https://travis-ci.org/aforward/doex)
+[![Module Version](https://img.shields.io/hexpm/v/doex.svg)](https://hex.pm/packages/doex)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/doex/)
+[![Total Download](https://img.shields.io/hexpm/dt/doex.svg)](https://hex.pm/packages/doex)
+[![License](https://img.shields.io/hexpm/l/doex.svg)](https://github.com/aforward/doex/blob/master/LICENSE.md)
+[![Last Updated](https://img.shields.io/github/last-commit/aforward/doex.svg)](https://github.com/aforward/doex/commits/master)
 
-An elixir implementation of the [DigitalOcean API v2](https://developers.digitalocean.com/documentation/v2/).
+<!-- MDOC !-->
+
+An Elixir implementation of the [DigitalOcean API v2](https://developers.digitalocean.com/documentation/v2/).
 
 From their documentation:
 
@@ -219,7 +226,7 @@ tasks), or escript (if you want to use escript).
 ## Elixir API
 
 These features are also available from within Elixir through `Doex` modules,
-this gives you better programatic access to return data (presented as a map),
+this gives you better programmatic access to return data (presented as a map),
 but in most cases probably is not required to automate your infrastructure.
 
 If we start an iEX session in your project that includes the doex dependency,
@@ -300,6 +307,11 @@ they will be located in
 
     iex> h Doex.Client
 
-## License
+<!-- MDOC !-->
 
-MIT License
+## Copyright and License
+
+Copyright (c) 2017 Andrew Forward
+
+This work is free. You can redistribute it and/or modify it under the
+terms of the MIT License. See the [LICENSE.md](./LICENSE.md) file for more details.

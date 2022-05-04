@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Doex.Config do
   use Mix.Task
 
-  @shortdoc "Reads, updates or deletes Doex config"
+  @shortdoc "Reads, updates or deletes Doex config."
 
   @moduledoc """
   Reads, updates or deletes Doex configuration keys.
@@ -13,7 +13,7 @@ defmodule Mix.Tasks.Doex.Config do
 
   ## Config keys
 
-    * `token` - Digitial Ocean Token ()
+    * `token` - Digital Ocean Token ()
     * `ssh_keys` - The SSH Key "IDs" stored in Digital Ocean to grant to new droplets
 
   ## Command line options

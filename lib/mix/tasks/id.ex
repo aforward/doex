@@ -7,25 +7,27 @@ defmodule Mix.Tasks.Doex.Id do
   @moduledoc """
   Locate a ID of a resource.  This can be done by name or tag.
 
-       doex id <--resource_type> <resource_name>
+      doex id <--resource_type> <resource_name>
 
-  Or, by tag
+  Or, by tag:
 
       doex droplets.id <--resource_type> <tag> --tag
 
   If by tag, it will grab the `latest`.
 
-  Currently, the only supported resource type is a `--droplets`, but more are coming.
+  Currently, the only supported resource type is a `--droplets`, but more are
+  coming.
 
-  For example
+  For example:
 
       doex id my_app --droplets
 
-  Droplets are also the default, so the `--droplets` can be omitted.
+  Droplets are also the default, so the `--droplets` can be omitted:
 
       doex id my_app
 
-  If you have a specific config file, `mix help doex.config` then add it as an environment variable
+  If you have a specific config file, `mix help doex.config` then add it as an
+  environment variable:
 
       DOEX_CONFIG=/tmp/my.doex doex id my_app
 

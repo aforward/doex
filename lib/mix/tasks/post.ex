@@ -1,18 +1,18 @@
 defmodule Mix.Tasks.Doex.Post do
   use Mix.Task
 
-  @shortdoc "Execute a Digital Ocean API POST request"
+  @shortdoc "Execute a Digital Ocean API POST request."
 
   @moduledoc """
-  Execute a Digital Ocean API POST request
+  Execute a Digital Ocean API POST request:
 
-       doex post <path> <attributes>
+      doex post <path> <attributes>
 
-  For example
+  For example:
 
       mix doex.post /droplets --name mydroplet --size s-1vcpu-1gb --image ubuntu-18-04-x64 --region nyc3 --private-networking
 
-  The output will be similar to the following, and it's the IDs you want.
+  The output will be similar to the following, and it's the IDs you want:
 
       {:ok,
        %{"droplet" => %{"backup_ids" => [], "created_at" => "2017-08-03T13:37:27Z",
@@ -41,8 +41,9 @@ defmodule Mix.Tasks.Doex.Post do
          "links" => %{"actions" => [%{"href" => "https://api.digitalocean.com/v2/actions/5431515",
               "id" => 5431515, "rel" => "create"}]}}}
 
-  Note that `private_networking` DO parameter is changed to dash case `private-networking`
-  and it's a boolean paramater, so it defaults to true if set)
+  Note that `private_networking` DO parameter is changed to dash case
+  `private-networking` and it's a boolean parameter, so it defaults to true if
+  set)
   """
 
   def run(args), do: Doex.Cli.Main.run({:post, args})

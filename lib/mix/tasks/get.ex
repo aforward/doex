@@ -1,14 +1,14 @@
 defmodule Mix.Tasks.Doex.Get do
   use Mix.Task
 
-  @shortdoc "Execute a Digital Ocean API GET request"
+  @shortdoc "Execute a Digital Ocean API GET request."
 
   @moduledoc """
-  Execute a Digital Ocean API GET request
+  Execute a Digital Ocean API GET request:
 
-       mix doex.get <path>
+      mix doex.get <path>
 
-  For example
+  For example:
 
       mix doex.get /account/keys
 
