@@ -50,8 +50,12 @@ defmodule Doex.Cli.Block do
     name
     |> Doex.Client.find_droplet_id(opts)
     |> invoke(Doex.Api.get("/droplets/#{&1}"))
-    |> invoke(fn {:ok, %{"droplet" => %{"status" => current_status}}} ->
-      block_until(current_status, status, input, opts)
+    |> invoke(fn
+      {:ok, %{"droplets" => [%{"status" => current_status} | _t]}} ->
+        block_until(current_status, status, input, opts)
+
+      {:ok, %{"droplet" => %{"status" => current_status}}} ->
+        block_until(current_status, status, input, opts)
     end)
   end
 
